@@ -163,20 +163,6 @@ class Setting {
         return $isThreeDaysOnCart;
     }
     
-
-    public static function belowReorderTotal()
-    {
-        $products = Product::all();
-        $x = 0;
-        foreach($products as $product){
-            if($product->reorder_point > 0 && $product->Inventory <= $product->reorder_point){
-                $x++;           
-            }
-        }
-
-        return $x;
-    }
-
     public static function bannerTransition($id)
     {
         $transition = Option::find($id);

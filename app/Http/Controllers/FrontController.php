@@ -161,15 +161,10 @@ class FrontController extends Controller
         }
         $breadcrumb = $this->breadcrumb($page);
 
-        //FOR BANNER ADS
-        $used_page = BannerAdPage::where('page_id', $page->id)->first();
-        $banner_ads = BannerAd::where('id', $used_page->banner_ad_id ?? 0)->where('status', 1)->where('expiration_date', '>', now())->get();
-        //END BANNER ADS
-
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
 
         if (!empty($page->template)) {
-            return view('theme.pages.'.$page->template, compact('footer', 'page', 'breadcrumb', 'banner_ads'));
+            return view('theme.pages.'.$page->template, compact('footer', 'page', 'breadcrumb'));
         }
 
         $parentPage = null;
@@ -191,7 +186,7 @@ class FrontController extends Controller
             }
         }
 
-        return view('theme.page', compact('footer', 'page', 'parentPage', 'breadcrumb', 'currentPageItems', 'parentPageName', 'banner_ads'));
+        return view('theme.page', compact('footer', 'page', 'parentPage', 'breadcrumb', 'currentPageItems', 'parentPageName'));
     }
 
     

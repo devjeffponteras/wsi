@@ -67,7 +67,7 @@
                 <div class="row clearfix">
                     <div class="col-12 col-md-4 center customers-count">
                         <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="567" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
-                        <p class="opac-8" style="font-family: 'Montserrat', sans !important;">employees from 157+ countries</p>
+                        <p class="opac-8">employees from 157+ countries</p>
                     </div>
                     <div class="col-12 col-md-4 center customers-count">
                         <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="751" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>

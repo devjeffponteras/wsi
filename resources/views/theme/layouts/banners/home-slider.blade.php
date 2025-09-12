@@ -17,7 +17,7 @@
 
 							@else
 								<div class="hero-slide dark">
-									<img src="http://{{ $banner->image_path }}" alt="{{ $banner->title }}">
+									<img src="{{ $banner->image_path }}" alt="{{ $banner->title }}">
 									<div class="banner-caption">
 										{{ $banner->url }}
 										<div class="container">

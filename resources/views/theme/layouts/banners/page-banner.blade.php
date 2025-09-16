@@ -52,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="banner" class="slick-slider"> 
+                    <div id="banner" class="slick-slider">
                         <div class="hero-slide dark">
                             <img src="{{$photoUrl}}" />
                         </div>

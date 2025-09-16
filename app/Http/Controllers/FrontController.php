@@ -44,7 +44,7 @@ class FrontController extends Controller
     public function request_for_demo($id)
     {
         $template = Template::find($id);
-        
+
         return view('theme.demo',compact('template'));
     }
 
@@ -77,13 +77,13 @@ class FrontController extends Controller
         $breadcrumb = $this->breadcrumb($page);
 
         $customPages = Page::where('name', '<>', 'footer')->where('status', 'PUBLISHED')->where('parent_page_id', 0)->orderBy('id','asc')->get();
-        
+
         $articleCategories = ArticleCategory::with('articles')->get();
 
         return view('theme.pages.sitemap', compact(
-            'page', 
-            'breadcrumb', 
-            'articleCategories', 
+            'page',
+            'breadcrumb',
+            'articleCategories',
             'customPages'
         ));
     }
@@ -97,7 +97,7 @@ class FrontController extends Controller
         $breadcrumb = $this->breadcrumb($page);
         $pageLimit = 10;
 
-        $searchtxt = $request->searchtxt; 
+        $searchtxt = $request->searchtxt;
         session(['searchtxt' => $searchtxt]);
 
         $pages = Page::where('status', 'PUBLISHED')
@@ -161,15 +161,10 @@ class FrontController extends Controller
         }
         $breadcrumb = $this->breadcrumb($page);
 
-        //FOR BANNER ADS
-        $used_page = BannerAdPage::where('page_id', $page->id)->first();
-        $banner_ads = BannerAd::where('id', $used_page->banner_ad_id ?? 0)->where('status', 1)->where('expiration_date', '>', now())->get();
-        //END BANNER ADS
-
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
 
         if (!empty($page->template)) {
-            return view('theme.pages.'.$page->template, compact('footer', 'page', 'breadcrumb', 'banner_ads'));
+            return view('theme.pages.'.$page->template, compact('footer', 'page', 'breadcrumb'));
         }
 
         $parentPage = null;
@@ -191,10 +186,10 @@ class FrontController extends Controller
             }
         }
 
-        return view('theme.page', compact('footer', 'page', 'parentPage', 'breadcrumb', 'currentPageItems', 'parentPageName', 'banner_ads'));
+        return view('theme.page', compact('footer', 'page', 'parentPage', 'breadcrumb', 'currentPageItems', 'parentPageName'));
     }
 
-    
+
     public function contact_us(Request $request)
     {
         // dd($request);
@@ -244,7 +239,7 @@ class FrontController extends Controller
 
         //dd(Session::get('menuName'));
         $filterYear = $request->get('year',false);
-        
+
         $page = Page::where('slug', 'cases')->first();
         $page->name = "Cases";
 
@@ -257,7 +252,7 @@ class FrontController extends Controller
 
         $categories = ResourceCategory::where('status', 'Active')->get();
         $searchCategories = ResourceCategory::where('id', '<>', 3)->where('status', 'Active')->orderBy('name', 'asc')->get();
-        
+
 
         $resources = Resource::where('status', 'Active');
 
@@ -336,5 +331,16 @@ class FrontController extends Controller
         $page->name = 'Portfolio';
 
         return view('theme.pages.portfolio.index', compact('page'));
+    }
+
+        public function aboutus()
+    {
+        \Log::info('Loading about page with partials: theme.pages.about-history, theme.pages.about-company, theme.pages.about-mission-vision');
+        $page = new Page();
+        $page->name = 'About Us';
+        $page->slug = 'about-us';
+        $breadcrumb = $this->breadcrumb($page);
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+        return view('theme.pages.about-us', compact('footer', 'page', 'breadcrumb'));
     }
 }

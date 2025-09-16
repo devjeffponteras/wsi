@@ -84,8 +84,7 @@
                 <div class="fbox-content">
                     <h3>Main Office
                         <span class="subtitle">
-                            Rm. 301, 3rd Floor, Right Wing, Electoral Tribunal Building
-                            Commonwealth Avenue, Quezon City
+                            Mango Green Village, A.S. Fortuna St Banilad, Mandaue City 6014
                         </span>
                     </h3>
                 </div>
@@ -112,7 +111,7 @@
                 </div>
                 <div class="fbox-content">
                     <h3>Email Us
-                        <span class="subtitle">isjrms@hret.gov.ph</span>
+                        <span class="subtitle">info@webfocus.gov.ph</span>
                     </h3>
                 </div>
             </div>

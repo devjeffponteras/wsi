@@ -50,6 +50,9 @@ Route::get('/phpinfo', function () {
 
 // CMS4 Front Pages
     Route::get('/', [FrontController::class, 'home'])->name('home');
+
+    Route::get('/about-us', [FrontController::class, 'aboutus'])->name('about-us'); // New route
+
     Route::get('/privacy-policy/', [FrontController::class, 'privacy_policy'])->name('privacy-policy');
     Route::post('/contact-us', [FrontController::class, 'contact_us'])->name('contact-us');
 
@@ -68,7 +71,7 @@ Route::get('/phpinfo', function () {
     // Sitemap
         Route::get('/sitemap', [FrontController::class, 'sitemap'])->name('sitemap');
         // Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
-    // 
+    //
 
     // Portfolio
     Route::get('/portfolio', [FrontController::class, 'portfolio'])->name('portfolio');
@@ -101,20 +104,20 @@ Route::get('/phpinfo', function () {
 
     Route::post('facebook/data-deletion', [FacebookDataDeletionController::class, 'handle'])->name('facebook.data-deletion');
     Route::post('google/data-deletion', [GoogleDataDeletionController::class, 'handle'])->name('google.data-deletion');
-    
+
     //Chat Plugin
     Route::post('/setup-chat-plugin', [FacebookController::class, 'setupChatPlugin']);
 
     // Ecommerce Pages
-    
+
     Route::get('/brands', [ProductFrontController::class, 'brands'])->name('product.brands');
     Route::get('/brand-product-categories/{id}', [ProductFrontController::class, 'brand_product_categories'])->name('brand.product-category-list');
     Route::get('/product-sub-categories/{id}', [ProductFrontController::class, 'product_sub_categories'])->name('product.sub-categories');
 
     // Route::get('/brand-products/{id}', [ProductFrontController::class, 'brand_products'])->name('brand.product-list');
     Route::get('/category-products/{id}', [ProductFrontController::class, 'category_products'])->name('category.product-list');
-    
-    
+
+
     // Cart Management
     Route::get('/cart',                [CartController::class, 'cart'])->name('cart.front.show');
     Route::post('add-to-cart',         [CartController::class, 'add_to_cart'])->name('product.add-to-cart');
@@ -165,8 +168,8 @@ Route::get('/phpinfo', function () {
             Route::get('/account/change-password', [MyAccountController::class, 'change_password'])->name('my-account.change-password');
             Route::post('/account/change-password', [MyAccountController::class, 'update_password'])->name('my-account.update-password');
             Route::get('/account-logout', [CustomerFrontController::class, 'logout'])->name('account.logout');
-            
-            //DEACTIVATE SOCIAL LOGIN 
+
+            //DEACTIVATE SOCIAL LOGIN
             Route::post('/deactivate-social-login', [MyAccountController::class, 'deactivate_social_login'])->name('customer.deactivate-social-login');
 
             Route::get('/my-orders', [MyAccountController::class, 'orders'])->name('profile.sales');
@@ -181,7 +184,7 @@ Route::get('/phpinfo', function () {
             Route::get('/get-lbc-city-list', [CartController::class, 'lbc_cities'])->name('checkout.get-lbc-city-list');
             Route::get('/get-lbc-brgy-list', [CartController::class, 'lbc_barangays'])->name('checkout.get-lbc-brgy-list');
 
-            
+
             //PRODUCT REVIEW
             Route::resource('/product-review', ProductReviewController::class)->except(['destroy']);
             Route::post('/product-review/single-approve', [ProductReviewController::class, 'single_approve'])->name('product-review.single-approve');
@@ -202,7 +205,7 @@ Route::get('/phpinfo', function () {
             //CUSTOMER FAVORITES
             Route::resource('/customer_favorite', CustomerFavoriteController::class)->except(['destroy']);
             Route::get('/customer_favorite/add-to-favorites/{prd_id}', [CustomerFavoriteController::class, 'add_to_favorites'])->name('add-to-favorites');
-            
+
             //CUSTOMER WISHLIST
             Route::resource('/customer_wishlist', CustomerWishlistController::class)->except(['destroy']);
             Route::get('/customer_wishlist/add-to-wishlist/{prd_id}', [CustomerWishlistController::class, 'add_to_wishlist'])->name('add-to-wishlist');
@@ -211,14 +214,14 @@ Route::get('/phpinfo', function () {
     //
 
     //BANNER ADS
-    
+
         Route::get('/ads/click_count/{id}',[BannerAdController::class, 'click_count'])->name('ads.click.count');
 
 
 
 // ADMIN ROUTES
 Route::get('/admin-panel', [DashboardController::class, 'index'])->name('dashboard');
-        
+
 Route::group(['prefix' => 'admin-panel'], function (){
     Route::get('/', [LoginController::class, 'showLoginForm'])->name('panel.login');
 
@@ -229,7 +232,7 @@ Route::group(['prefix' => 'admin-panel'], function (){
         Route::get('/admin-panel', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-        
+
         Route::get('/admin/ecommerce-dashboard', [DashboardController::class, 'ecommerce'])->name('ecom-dashboard');
 
         // Account
@@ -406,12 +409,12 @@ Route::group(['prefix' => 'admin-panel'], function (){
 
                 Route::post('reorder-category', [ProductCategoryController::class, 'reorder_category'])->name('reorder-product-category');
             //
-            
+
 
             //Product Bundles
                 Route::get('/admin/products/create-bundle', [ProductController::class, 'create_bundle'])->name('product.create.bundle');
                 Route::get('/admin/products/edit-bundle/{id}', [ProductController::class, 'edit_bundle'])->name('product.edit.bundle');
-            // 
+            //
 
             // Products
                 Route::resource('/admin/products', ProductController::class);
@@ -513,11 +516,11 @@ Route::group(['prefix' => 'admin-panel'], function (){
                 Route::get('/sales-advance-search/', [SalesController::class, 'advance_index'])->name('admin.sales.list.advance-search');
 
 
-                
+
 
                 Route::get('/admin/sales-transaction/view-payment/{sales}', [SalesController::class, 'view_payment'])->name('sales-transaction.view_payment');
                 Route::post('/admin/sales-transaction/cancel-product', [SalesController::class, 'cancel_product'])->name('sales-transaction.cancel_product');
-                
+
                 Route::get('/display-added-payments', [SalesController::class, 'display_payments'])->name('display.added-payments');
                 Route::get('/display-delivery-history', [SalesController::class, 'display_delivery'])->name('display.delivery-history');
 

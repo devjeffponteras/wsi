@@ -11,13 +11,13 @@
                         <li class="breadcrumb-item active limiter" aria-current="page">{{$link}}</li>
                     @else
                         <li class="breadcrumb-item"><a href="{{$url}}">{{$link}}</a></li>
-                    @endif 
+                    @endif
                 @endforeach
             </ol>
             @endif
         </div>
     </div>
-    
+
     <div class="slider-parallax-inner">
         <div class="swiper-container swiper-parent">
             <div class="slick-wrapper" id="banner">

@@ -14,10 +14,10 @@
     <section class="hero-section">
         <video class="hero-video" autoplay loop muted playsinline poster="{{ asset('storage/banners/fallback-poster.jpg') }}">
             <source src="{{ asset('storage/banners/videoplayback.webm') }}" type="video/webm">
-            <source src="{{ asset('storage/banners/videoplayback.mp4') }}" type="video/mp4">
+            <source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">
             <picture>
                 <source srcset="{{ asset('storage/banners/fallback-poster.webp') }}" type="image/webp">
-                <img src="{{ asset('storage/banners/fallback-poster.jpg') }}" alt="WebFocus Solutions News Banner" class="hero-video-fallback">
+                <img src="{{ asset('images/banners/fallback-poster.jpg') }}" alt="WebFocus Solutions News Banner" class="hero-video-fallback">
             </picture>
             Your browser does not support the video tag.
         </video>
@@ -47,7 +47,7 @@
             <div class="main-news-grid scroll-animate">
                 <!-- Featured Article -->
                 <div class="main-news-card">
-                    <img src="{{ asset('storage/news/news.jpg') }}" alt="WebFocus Launches New Hosting Plans" class="main-news-image">
+                    <img src="{{ asset('images/news/news.jpg') }}" alt="WebFocus Launches New Hosting Plans" class="main-news-image">
                     <div class="main-news-content">
                         <div class="main-news-meta">September 17, 2025 | Technology</div>
                         <h3 class="main-news-title">WebFocus Launches Enhanced Hosting Plans with FocusCare+</h3>
@@ -59,7 +59,7 @@
                 </div>
                 <!-- Secondary Featured Article -->
                 <div class="main-news-card">
-                    <img src="{{ asset('storage/news/news1.jpg') }}" alt="FileHold 2.0 Release" class="main-news-image">
+                    <img src="{{ asset('images/news/news1.jpg') }}" alt="FileHold 2.0 Release" class="main-news-image">
                     <div class="main-news-content">
                         <div class="main-news-meta">September 15, 2025 | Document Management</div>
                         <h3 class="main-news-title">FileHold 2.0: Revolutionizing Document Management</h3>
@@ -73,7 +73,7 @@
             <!-- Recent News -->
             <div class="recent-news-grid scroll-animate">
                 <div class="recent-news-card">
-                    <img src="{{ asset('storage/news/news2.jpg') }}" alt="Tech Tips for Businesses" class="recent-news-image">
+                    <img src="{{ asset('images/news/news2.jpg') }}" alt="Tech Tips for Businesses" class="recent-news-image">
                     <div class="recent-news-content">
                         <div class="recent-news-meta">September 14, 2025 | Tips & Tricks</div>
                         <h3 class="recent-news-title">5 Tech Tips for Small Businesses in 2025</h3>
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="recent-news-card">
-                    <img src="{{ asset('storage/news/news3.jpg') }}" alt="FocusCare+ Expansion" class="recent-news-image">
+                    <img src="{{ asset('images/news/news3.jpg') }}" alt="FocusCare+ Expansion" class="recent-news-image">
                     <div class="recent-news-content">
                         <div class="recent-news-meta">September 12, 2025 | Hosting</div>
                         <h3 class="recent-news-title">FocusCare+ Expands Support Services</h3>
@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="recent-news-card">
-                    <img src="{{ asset('storage/news/news4.jpg') }}" alt="Cybersecurity Update" class="recent-news-image">
+                    <img src="{{ asset('images/news/news4.jpg') }}" alt="Cybersecurity Update" class="recent-news-image">
                     <div class="recent-news-content">
                         <div class="recent-news-meta">September 10, 2025 | Security</div>
                         <h3 class="recent-news-title">New Cybersecurity Features for WebFocus Hosting</h3>

@@ -10,8 +10,7 @@
     <section class="hero-section">
         <video class="hero-video" autoplay loop muted playsinline poster="{{ asset('storage/banners/fallback-poster.jpg') }}">
             <source src="{{ asset('storage/banners/videoplayback.webm') }}" type="video/webm">
-            <source src="{{ asset('storage/banners/videoplayback.mp4') }}" type="video/mp4">
-            <picture>
+<source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">            <picture>
                 <source srcset="{{ asset('storage/banners/fallback-poster.webp') }}" type="image/webp">
                 <img src="{{ asset('storage/banners/fallback-poster.jpg') }}" alt="WebFocus Solutions Hosting Banner" class="hero-video-fallback">
             </picture>

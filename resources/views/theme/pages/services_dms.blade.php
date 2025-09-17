@@ -4,124 +4,7 @@
 @section('pagecss')
 <link rel="stylesheet" href="{{ asset('theme/css/newstyle.css') }}" type="text/css" />
 <style>
-    /* Document Management Specific Styles */
-    .dms-section {
-        padding: 4rem 0;
-        background: #ffffff;
-    }
 
-    .dms-container {
-        max-width: 100%; /* Full width to remove margins */
-        margin: 0 auto;
-        padding: 0 1rem;
-    }
-
-    .packages-inner-container {
-        max-width: 1200px; /* Constrain packages-grid to match hosting.blade.php */
-        margin: 0 auto;
-    }
-
-    .dms-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        margin-top: 2rem;
-    }
-
-    @media (min-width: 768px) {
-        .dms-grid {
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        }
-    }
-
-    .dms-card {
-        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-        border-radius: 16px;
-        padding: 2rem;
-        text-align: center;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid rgba(43, 86, 211, 0.1);
-    }
-
-    .dms-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-    }
-
-    .dms-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 3.5rem;
-        height: 3.5rem;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #2b56d3, #5b7ce8);
-        color: white;
-        margin-bottom: 1.5rem;
-        transition: transform 0.3s ease;
-    }
-
-    .dms-card:hover .dms-icon {
-        transform: scale(1.1);
-    }
-
-    .dms-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #1f2937;
-        margin-bottom: 1rem;
-    }
-
-    .dms-description {
-        font-size: 1rem;
-        color: #6b7280;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-    }
-
-    .overview-section {
-        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-        padding: 4rem 0;
-    }
-
-    .overview-container {
-        max-width: 100%; /* Full width to remove margins */
-        margin: 0 auto;
-        padding: 0 1rem;
-    }
-
-    .overview-content {
-        max-width: 800px;
-        margin: 0 auto;
-        text-align: center;
-    }
-
-    .overview-text {
-        font-size: 1.125rem;
-        color: #4b5563;
-        line-height: 1.7;
-        margin-bottom: 1.5rem;
-    }
-
-    .packages-section {
-        padding: 4rem 0;
-    }
-
-    .packages-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-top: 2rem;
-    }
-
-    @media (min-width: 1024px) {
-        .packages-grid {
-            display: flex;
-            flex-wrap: nowrap;
-            justify-content: space-between;
-        }
-    }
 </style>
 @endsection
 
@@ -131,8 +14,7 @@
     <section class="hero-section">
         <video class="hero-video" autoplay loop muted playsinline poster="{{ asset('storage/banners/fallback-poster.jpg') }}">
             <source src="{{ asset('storage/banners/videoplayback.webm') }}" type="video/webm">
-            <source src="{{ asset('storage/banners/videoplayback.mp4') }}" type="video/mp4">
-            <picture>
+            <source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">            <picture>
                 <source srcset="{{ asset('storage/banners/fallback-poster.webp') }}" type="image/webp">
                 <img src="{{ asset('storage/banners/fallback-poster.jpg') }}" alt="WebFocus Solutions Document Management Banner" class="hero-video-fallback">
             </picture>

@@ -10,7 +10,7 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <video class="hero-video" autoplay loop muted playsinline>
-            <source src="/storage/banners/videoplayback.mp4" type="video/mp4">
+           <source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="hero-overlay"></div>

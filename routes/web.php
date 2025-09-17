@@ -53,6 +53,17 @@ Route::get('/phpinfo', function () {
 
     Route::get('/about-us', [FrontController::class, 'aboutus'])->name('about-us'); // New route
 
+    //News
+    Route::get('/news-2', [FrontController::class, 'news'])->name('news-2'); // New route
+
+    //Services
+    Route::get('/services', [FrontController::class, 'services'])->name('services'); // New route
+    Route::get('/services/hosting', [FrontController::class, 'services_hosting'])->name('services.hosting'); // New route for services
+    Route::get('/services/domain', [FrontController::class, 'services_domain'])->name('services.domain'); // New route for services
+    Route::get('/services/web-development', [FrontController::class, 'services_webdev'])->name('services.web-development'); // New route for services
+    Route::get('/services/dms', [FrontController::class, 'services_dms'])->name('services.dms'); // New route for services
+
+
     Route::get('/privacy-policy/', [FrontController::class, 'privacy_policy'])->name('privacy-policy');
     Route::post('/contact-us', [FrontController::class, 'contact_us'])->name('contact-us');
 

@@ -18,7 +18,7 @@
         foreach ($featuredArticles as $index => $article) {
             $imageUrl = (empty($article->thumbnail_url)) ? asset('theme/images/misc/no-image.jpg') : $article->thumbnail_url;
 
-            
+
             $featuredArticlesHTML .= '
 
                 <div class="slide" data-thumb="'. $imageUrl .'">
@@ -49,7 +49,7 @@
     } else {
         $featuredArticlesHTML = '';
     }
-    
+
     $keywords   = ['{Featured Articles}'];
     $variables  = [$featuredArticlesHTML];
     $contents = str_replace($keywords,$variables,$contents);
@@ -97,22 +97,28 @@
 
     <div class="section feature-cards">
         <div class="d-flex flex-column flex-md-row feature-cards-top">
-            <a href="#" class="card-animate position-relative col-12 col-md-3">
-                <h5 class="i-tittle">AI agents</h5>
-                <p class="i-description">Automate your complex workflows with AI agents and assistance</p>
+           <a href="#" class="card-animate position-relative col-12 col-md-3">
+                <h5 class="i-tittle">Domain</h5>
+                <p class="i-description">Establish your business online with a custom domain.</p>
                 <i class="icon-world i-animate"></i>
                 <i class="icon-line-arrow-right i-animate"></i>
             </a>
             <a href="#" class="card-animate position-relative col-12 col-md-3">
-                <h5 class="i-tittle">Data for AI</h5>
-                <p class="i-description">Automate your complex workflows with AI agents and assistance</p>
+                <h5 class="i-tittle">Focus Care+</h5>
+                <p class="i-description">FocusCare+ – Premium After-Sales Support Included in Your Hosting Plan</p>
                 <i class="icon-data i-animate"></i>
                 <i class="icon-line-arrow-right i-animate"></i>
             </a>
             <a href="#" class="card-animate position-relative col-12 col-md-3">
-                <h5 class="i-tittle">Automation</h5>
-                <p class="i-description">Automate your complex workflows with AI agents and assistance</p>
+                <h5 class="i-tittle">Hosting</h5>
+                <p class="i-description">Websites are saved (or "hosted") on a publicly accessible computer (a server)</p>
                 <i class="icon-share1 i-animate"></i>
+                <i class="icon-line-arrow-right i-animate"></i>
+            </a>
+            <a href="#" class="card-animate position-relative col-12 col-md-3">
+                <h5 class="i-tittle">Web Development</h5>
+                <p class="i-description">WebFocus Solutions, Inc. offers tailored web design solutions that meet technical needs</p>
+                <i class="icon-cloudversify i-animate"></i>
                 <i class="icon-line-arrow-right i-animate"></i>
             </a>
             <a href="#" class="card-animate position-relative col-12 col-md-3">
@@ -444,7 +450,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         let animate = document.querySelector('#counter-cards-container');
-        
+
         animate.style.transform = 'translate(0px, 0px)';
         animate.style.opacity = '1';
     });

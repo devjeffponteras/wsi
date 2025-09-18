@@ -93,7 +93,7 @@ body {
 }
 
 #top-search-trigger i {
-    color: #fff !important;
+    /*color: #fff !important;*/
 }
 
 .top-search-form input::placeholder {

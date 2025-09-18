@@ -17625,9 +17625,12 @@ body:not(.is-expanded-menu):not(.primary-menu-open) .semi-transparent.transparen
   flex-grow: 1;
   align-items: center;
 }
-.is-expanded-menu .primary-menu {
-  flex: 0 0 auto;
-  flex-grow: 0;
+
+@media only screen and (min-width: 994px) {
+  .is-expanded-menu .primary-menu {
+    flex: 0 0 auto;
+    flex-grow: 0;
+  }
 }
 .primary-menu + .primary-menu {
   border-top: var(--cnvs-primary-menu-submenu-border);
@@ -18093,7 +18096,7 @@ body:not(.is-expanded-menu) .mobile-menu-overlay .menu-container {
   -----------------------------------------------------------------*/
 }
 .is-expanded-menu .menu-container:not(.mobile-primary-menu) {
-  display: flex;
+  /*display: flex;*/
   flex-wrap: wrap;
   align-items: center;
 }

@@ -9,12 +9,11 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <video class="hero-video" autoplay loop muted playsinline>
-            <source src="/storage/banners/videoplayback.mp4" type="video/mp4">
+            <source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <span class="hero-badge animate-fade-in">About Us</span>
             <h1 class="hero-title animate-slide-in-up">
                 Leading IT Solutions <span class="text-white">Since 2001</span>
             </h1>
@@ -350,8 +349,8 @@
                     Partner with WebFocus Solutions Inc. to elevate your digital presence and achieve unparalleled success. Let's build the future together.
                 </p>
                 <div class="cta-button-group">
-                    <a href="#" class="btn btn-secondary">Get Started Now</a>
-                    <a href="#" class="btn bg-white text-blue-600 hover:bg-gray-100">Explore Our Solutions</a>
+                    <a href="#contact" class="btn btn-primary" onclick="console.log('Request a Quote clicked')">Get Started</a>
+                    <a href="#services" class="btn btn-glass">Explore Now</a>
                 </div>
             </div>
         </div>

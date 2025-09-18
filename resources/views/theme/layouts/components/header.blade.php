@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="d-flex flex-row justify-content-between py-2 container-standard">
 
-                <div class="d-flex flex-row">
+                <div class="header-row">
                     <!-- Logo
                     ============================================= -->
                     <div id="logo" style="margin: 0px; border-right: none;">
@@ -30,10 +30,19 @@
                         @include('theme.layouts.components.menu')
 
                     </nav><!-- #primary-menu end -->
-                </div>
 
+                    <div class="header-misc">
+                        
+                    </div>
+
+                    <form class="top-search-form" action="#" method="get">
+                        <input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter.." autocomplete="off">
+                    </form>
+                    
+                </div>
+                
                 <div class="header-custom-menu-wrapper d-flex flex-row align-items-center">
-                    <a href="#" class="custom-menu-link d-flex flex-row align-items-center" style="font-weight: 500;" title="Search">
+                    <a href="#" id="top-search-trigger" class="custom-menu-link d-flex flex-row align-items-center" style="font-weight: 500;" title="Search">
                         <i class="icon-search"></i>
                     </a>
                     <a href="#" class="custom-menu-link d-flex flex-row align-items-center" style="font-weight: 500;" title="Signin">

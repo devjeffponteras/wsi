@@ -49,7 +49,7 @@
     <!-- main color #144596 -->
     <style type="text/css">
         .is-expanded-menu .menu-container:not(.mobile-primary-menu) {
-            display: flex !important;
+            /*display: flex !important;*/
             flex-wrap: wrap !important;
             align-items: center !important;
         }
@@ -384,6 +384,29 @@
 
         div#banner.home-slider:not(.no-slider-banner) .slick-list.draggable .slick-track .slick-slide .hero-slide .banner-caption .container .col-lg-12 h2.text-center.slide-content {
             text-transform: none;
+        }
+
+        @media only screen and (max-width: 993px) {
+            .header-custom-menu-wrapper.d-flex {
+                /*display: none !important;*/
+                position: absolute;
+                left: 220px;
+            }
+
+            .is-expanded-menu .primary-menu {
+              max-width: 100%;
+            }
+
+            #wrapper header#header div#header-wrap .d-flex.container-standard .header-row {
+                justify-content: space-between !important;
+                width: 100%;
+            }
+        }
+
+        @media only screen and (max-width: 625px) {
+            .header-custom-menu-wrapper.d-flex {
+                display: none !important;
+            }
         }
 
     </style>

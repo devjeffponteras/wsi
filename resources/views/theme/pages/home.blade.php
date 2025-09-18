@@ -250,6 +250,7 @@
                 </div>
             </div>
         </article>
+        
         <article class="portfolio-item pf-uielements pf-media">
             <div class="grid-inner">
                 <div class="portfolio-image">

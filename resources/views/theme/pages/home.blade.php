@@ -95,7 +95,7 @@
         </div>
     </div>
 
-    <div class="section feature-cards">
+    <div class="section feature-cards container-standard bg-white">
         <div class="d-flex flex-column flex-md-row feature-cards-top">
            <a href="#" class="card-animate position-relative col-12 col-md-3">
                 <h5 class="i-tittle">Domain</h5>
@@ -115,15 +115,9 @@
                 <i class="icon-share1 i-animate"></i>
                 <i class="icon-line-arrow-right i-animate"></i>
             </a>
-            <a href="#" class="card-animate position-relative col-12 col-md-3">
+            <a href="#" class="card-animate position-relative col-12 col-md-3" style="border: 1px solid #c5c5c5;">
                 <h5 class="i-tittle">Web Development</h5>
                 <p class="i-description">WebFocus Solutions, Inc. offers tailored web design solutions that meet technical needs</p>
-                <i class="icon-cloudversify i-animate"></i>
-                <i class="icon-line-arrow-right i-animate"></i>
-            </a>
-            <a href="#" class="card-animate position-relative col-12 col-md-3">
-                <h5 class="i-tittle">Hybrid cloud</h5>
-                <p class="i-description">Automate your complex workflows with AI agents and assistance</p>
                 <i class="icon-cloudversify i-animate"></i>
                 <i class="icon-line-arrow-right i-animate"></i>
             </a>
@@ -147,7 +141,7 @@
                 <i class="bi-shield-check i-animate"></i>
                 <i class="icon-line-arrow-right i-animate"></i>
             </a>
-            <a href="#" class="card-animate position-relative col-12 col-md-3">
+            <a href="#" class="card-animate position-relative col-12 col-md-3" style="border: 1px solid #c5c5c5;">
                 <h5 class="i-tittle">Consulting</h5>
                 <p class="i-description">Automate your complex workflows with AI agents and assistance</p>
                 <i class="icon-users2 i-animate"></i>
@@ -184,43 +178,43 @@
                         <a href="#"><img src="{{ asset('images/clients/logo6.png') }}" style="width: 100px !important;" alt="Image 1"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo34.jpg') }}" style="width: 100px !important;" alt="Image 2"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo34.png') }}" style="width: 100px !important;" alt="Image 2"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo35.jpg') }}" style="width: 100px !important;" alt="Image 3"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo35.png') }}" style="width: 100px !important;" alt="Image 3"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo32.jpg') }}" style="width: 100px !important;" alt="Image 4"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo32.png') }}" style="width: 100px !important;" alt="Image 4"></a>
                     </div>
                     <div class="oc-item">
                         <a href="#"><img src="{{ asset('images/clients/logo4.png') }}" style="width: 100px !important;" alt="Image 5"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo53.jpg') }}" style="width: 100px !important;" alt="Image 6"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo53.png') }}" style="width: 100px !important;" alt="Image 6"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo13.jpg') }}" style="width: 100px !important;" alt="Image 7"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo13.png') }}" style="width: 100px !important;" alt="Image 7"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo37.jpg') }}" style="width: 100px !important;" alt="Image 7"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo37.png') }}" style="width: 100px !important;" alt="Image 7"></a>
                     </div>
                     <div class="oc-item">
                         <a href="#"><img src="{{ asset('images/clients/logo8.png') }}" style="width: 100px !important;" alt="Image 7"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo6.jpg') }}" style="width: 100px !important;" alt="Image 7"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo6.png') }}" style="width: 100px !important;" alt="Image 7"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo4.jpg') }}" style="width: 100px !important;" alt="Image 7"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo4.png') }}" style="width: 100px !important;" alt="Image 7"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo21.jpg') }}" style="width: 100px !important;" alt="Image 7"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo21.png') }}" style="width: 100px !important;" alt="Image 7"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo63.jpg') }}" style="width: 100px !important;" alt="Image 7"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo63.png') }}" style="width: 100px !important;" alt="Image 7"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo3.jpg') }}" style="width: 100px !important;" alt="Image 7"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo3.png') }}" style="width: 100px !important;" alt="Image 7"></a>
                     </div>
                 </div>
             </div>

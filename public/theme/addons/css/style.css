@@ -33571,11 +33571,11 @@ nav.primary-menu ul.menu-container .menu-item.menu-item.sub-menu i.icon-angle-do
 nav.primary-menu ul.menu-container .menu-item.menu-item.sub-menu ul.sub-menu-container .menu-item {
   padding: 0.5 rem;
 }
-nav.primary-menu ul.menu-container .menu-item.menu-item.sub-menu ul.sub-menu-container .menu-item:hover {
+/*nav.primary-menu ul.menu-container .menu-item.menu-item.sub-menu ul.sub-menu-container .menu-item:hover {
   background-color: #014f7c;
   scale: 1.05;
   transition: all ease 0.2s;
-}
+}*/
 .header-custom-menu-wrapper a.custom-menu-link,
 ul.menu-container li.menu-item a.menu-link {
   border-bottom: 2px solid transparent;

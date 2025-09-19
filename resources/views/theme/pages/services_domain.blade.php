@@ -1,4 +1,3 @@
-
 @extends('theme.main')
 
 @section('pagecss')
@@ -10,7 +9,8 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <video class="hero-video" autoplay loop muted playsinline>
-<source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">            Your browser does not support the video tag.
+            <source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -69,48 +69,105 @@
                     Don’t wait—someone else might claim your ideal domain name! Explore our diverse range of domain extensions.
                 </p>
             </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 scroll-animate">
-                <div class="domain-card stagger-1">
-                    <i class="fas fa-globe-americas domain-icon"></i>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Top Level Domains</h3>
-                    <p class="text-gray-600 text-sm">Globally recognized extensions like <strong>.com</strong>, <strong>.net</strong>, and <strong>.org</strong> are perfect for businesses, organizations, and individuals seeking a universal presence.</p>
-                </div>
-                <div class="domain-card stagger-2">
-                    <i class="fas fa-briefcase domain-icon"></i>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Hybrid Top Level Domains</h3>
-                    <p class="text-gray-600 text-sm">Niche extensions like <strong>.biz</strong>, <strong>.info</strong>, <strong>.mobi</strong>, <strong>.pro</strong>, <strong>.asia</strong>, and <strong>.online</strong> cater to specific industries or mobile-friendly sites.</p>
-                </div>
-                <div class="domain-card stagger-3">
-                    <i class="fas fa-map-marker-alt domain-icon"></i>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Country Level Domains</h3>
-                    <p class="text-gray-600 text-sm">Localize your presence with extensions like <strong>.ph</strong>, <strong>.com.ph</strong>, <strong>.net.ph</strong>, and <strong>.org.ph</strong> for Philippines-based businesses.</p>
-                </div>
-                <div class="domain-card stagger-4">
-                    <i class="fas fa-graduation-cap domain-icon"></i>
-                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Education Domains</h3>
-                    <p class="text-gray-600 text-sm">Exclusive for educational institutions, <strong>.edu.ph</strong> establishes credibility for schools and universities in the Philippines.</p>
-                </div>
-            </div>
+            <table class="domain-types-table scroll-animate">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Extensions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="type-cell"><div class="domain-icon"><i class="fas fa-globe-americas"></i></div> Top Level Domains</td>
+                        <td class="description-cell">Globally recognized extensions perfect for businesses and organizations</td>
+                        <td class="extensions-cell">.com, .net, .org</td>
+                    </tr>
+                    <tr>
+                        <td class="type-cell"><div class="domain-icon"><i class="fas fa-briefcase"></i></div> Hybrid Top Level Domains</td>
+                        <td class="description-cell">Niche extensions for industries, ideal for mobile-friendly sites</td>
+                        <td class="extensions-cell">.biz, .info, .mobi, .pro, .asia, .online</td>
+                    </tr>
+                    <tr>
+                        <td class="type-cell"><div class="domain-icon"><i class="fas fa-map-marker-alt"></i></div> Country Level Domains</td>
+                        <td class="description-cell">Local presence for Philippines, ideal for region-specific businesses</td>
+                        <td class="extensions-cell">.ph, .com.ph, .net.ph, .org.ph</td>
+                    </tr>
+                    <tr>
+                        <td class="type-cell"><div class="domain-icon"><i class="fas fa-graduation-cap"></i></div> Education Domains</td>
+                        <td class="description-cell">Exclusive for educational institutions, establishes credibility</td>
+                        <td class="extensions-cell">.edu.ph</td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="see-all-button" id="toggleDomainChecker">See All Domain Price</button>
         </div>
     </section>
 
     <!-- Domain Checker -->
-    <section class="section">
+    <section class="section domain-checker">
         <div class="container mx-auto px-6">
             <div class="text-center mb-12 scroll-animate">
                 <h2 class="section-title">Find Your Domain Now</h2>
                 <p class="section-subtitle">
                     Enter your desired domain name to check its availability and secure it before someone else does.
                 </p>
-            </div>
-            <div class="domain-checker scroll-animate">
-                <form class="flex flex-col sm:flex-row gap-4 items-center">
-                    <input type="text" class="domain-input" placeholder="Enter your domain (e.g., mybusiness.com)" aria-label="Domain name input">
-                    <h1></h1>
+
+                <form class="flex flex-row gap-2 items-center">
+                    <input type="text" class="domain-input" placeholder="Enter your domain (e.g., mybusiness)" aria-label="Domain name input">
+                    <select class="domain-extension" aria-label="Domain extension">
+                        <option value=".com">.com</option>
+                        <option value=".net">.net</option>
+                        <option value=".org">.org</option>
+                        <option value=".ph">.ph</option>
+                        <option value=".info">.info</option>
+                    </select>
                     <button type="submit" class="btn btn-primary" onclick="console.log('Check Domain Availability clicked')">Check Availability</button>
                 </form>
+                <table class="domain-table">
+                    <thead>
+                        <tr>
+                            <th>TLD</th>
+                            <th>Register</th>
+                            <th>Renew</th>
+                            <th>Transfer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>.com</td>
+                            <td>$10.99/yr</td>
+                            <td>$12.99/yr</td>
+                            <td>$9.99</td>
+                        </tr>
+                        <tr>
+                            <td>.net</td>
+                            <td>$12.99/yr</td>
+                            <td>$14.99/yr</td>
+                            <td>$10.99</td>
+                        </tr>
+                        <tr>
+                            <td>.org</td>
+                            <td>$11.99/yr</td>
+                            <td>$13.99/yr</td>
+                            <td>$10.49</td>
+                        </tr>
+                        <tr>
+                            <td>.ph</td>
+                            <td>$15.99/yr</td>
+                            <td>$16.99/yr</td>
+                            <td>$12.99</td>
+                        </tr>
+                        <tr>
+                            <td>.info</td>
+                            <td>$9.99/yr</td>
+                            <td>$11.99/yr</td>
+                            <td>$8.99</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
+             </div>
     </section>
 
     <!-- FAQ Section -->
@@ -159,6 +216,7 @@
         </div>
     </section>
 </div>
+@endsection
 
 @section('pagejs')
 <script>
@@ -189,7 +247,17 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.style.transform = 'translateY(0)';
         });
     });
+
+    // Toggle Domain Checker visibility
+    const toggleButton = document.getElementById('toggleDomainChecker');
+    const domainChecker = document.querySelector('.domain-checker');
+    toggleButton.addEventListener('click', function() {
+        if (domainChecker.style.display === 'none' || domainChecker.style.display === '') {
+            domainChecker.style.display = 'block';
+        } else {
+            domainChecker.style.display = 'none';
+        }
+    });
 });
 </script>
-@endsection
 @endsection

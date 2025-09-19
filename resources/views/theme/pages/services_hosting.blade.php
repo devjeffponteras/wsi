@@ -1,7 +1,218 @@
+
 @extends('theme.main')
 
 @section('pagecss')
 <link rel="stylesheet" href="{{ asset('theme/css/newstyle.css') }}" type="text/css" />
+<style>
+    /* Hosting-Specific Styles */
+    .hosting-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 2rem 1.5rem;
+        padding: 0 1rem;
+    }
+    .hosting-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border-radius: 16px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(43, 86, 211, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+    .hosting-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+    .hosting-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #2b56d3, #5b7ce8);
+        color: white;
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+    .hosting-card:hover .hosting-icon {
+        transform: scale(1.1);
+    }
+    .hosting-icon-secondary {
+        background: linear-gradient(135deg, #ec4899, #ef4444);
+    }
+    .hosting-icon-accent {
+        background: linear-gradient(135deg, #16a34a, #059669);
+    }
+    .hosting-icon-baremetal {
+        background: linear-gradient(135deg, #6b7280, #4b5563);
+    }
+    .hosting-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 1rem;
+    }
+    .hosting-description {
+        font-size: 1rem;
+        color: #6b7280;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .packages-section {
+        padding: 2rem 0;
+    }
+    .plans-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    .plans-header .rating {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: #1f2937;
+        margin-bottom: 0.5rem;
+        gap: 0.5rem;
+    }
+    .plans-header .stars {
+        display: flex;
+        gap: 0.25rem;
+    }
+    .plans-header .stars svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        fill: #facc15; /* Gold color for stars */
+    }
+    .plans-header .plan-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+    .plans-header .plan-tabs a {
+        padding: 0.5rem 1.5rem;
+        background: #e5e7eb;
+        border-radius: 9999px; /* Full oval shape */
+        text-decoration: none;
+        color: #1f2937;
+        font-weight: 600;
+        display: inline-block;
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+    .plans-header .plan-tabs a.active,
+    .plans-header .plan-tabs a:hover {
+        background: #2b56d3;
+        color: white;
+    }
+    .plans-intro {
+        margin-top: 1.5rem;
+        padding: 1rem 1.5rem;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .packages-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 0 auto;
+        max-width: 1300px;
+        justify-content: center;
+        padding: 0 1rem;
+    }
+    .package-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(43, 86, 211, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+    .package-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+    .package-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+    .package-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #2b56d3, #5b7ce8);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+    }
+    .package-icon-secondary {
+        background: linear-gradient(135deg, #ec4899, #ef4444);
+    }
+    .package-icon-accent {
+        background: linear-gradient(135deg, #16a34a, #059669);
+    }
+    .package-icon-baremetal {
+        background: linear-gradient(135deg, #6b7280, #4b5563);
+    }
+    .package-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1f2937;
+    }
+    .package-price {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #2b56d3;
+        margin-bottom: 1rem;
+    }
+    .package-features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+    }
+    .package-features li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #f3f4f6;
+        color: #6b7280;
+    }
+    .package-features li:last-child {
+        border-bottom: none;
+    }
+    .package-cta {
+        width: 100%;
+        text-align: center;
+    }
+    @media (max-width: 1279px) {
+        .packages-grid {
+            grid-template-columns: repeat(2, minmax(300px, 1fr));
+        }
+    }
+    @media (max-width: 767px) {
+        .packages-grid {
+            grid-template-columns: 1fr;
+        }
+        .plans-header .plan-tabs a {
+            padding: 0.5rem 1rem;
+        }
+    }
+</style>
 @endsection
 
 @section('content')
@@ -227,8 +438,8 @@
         </div>
     </section>
     <!-- Overview of FocusCare+ -->
-    <section class="focuscare-section">
-        <div class="focuscare-container">
+    <section class="section">
+        <div class="core-values-container">
             <div class="text-center mb-12 scroll-animate">
                 <h2 class="section-title">Overview of FocusCare+</h2>
                 <p class="section-subtitle">
@@ -236,44 +447,55 @@
                 </p>
             </div>
             <!-- Middle Row: 2 Cards -->
-            <div class="focuscare-row middle scroll-animate">
-                <!-- Introduction -->
-                <div class="focuscare-card">
-                    <h3 class="focuscare-title">Introduction to FocusCare+</h3>
-                    <p class="focuscare-text">
-                        When you invest in a hosting service, you’re not just looking for a place to store your website—you want reliability, security, and ongoing support. At WebFocus Solutions, Inc., we understand that maintaining a smooth online presence goes beyond the initial setup. That’s why we offer FocusCare+, a dedicated after-sales support service that ensures your hosting environment stays optimized, secure, and trouble-free.
-                    </p>
+                      <div class="core-values-grid">
+                <div class="core-value-card scroll-animate stagger-1">
+                    <div class="core-value">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Introduction to FocusCare+</h3>
+                    <p class="text-gray-600">When you invest in a hosting service, you’re not just looking for a place to store your website—you want reliability, security, and ongoing support. At WebFocus Solutions, Inc., we understand that maintaining a smooth online presence goes beyond the initial setup. That’s why we offer FocusCare+, a dedicated after-sales support service that ensures your hosting environment stays optimized, secure, and trouble-free.</p>
                 </div>
-                <!-- What is FocusCare+? -->
-                <div class="focuscare-card">
-                    <h3 class="focuscare-title">What is FocusCare+?</h3>
-                    <p class="focuscare-text">
-                        FocusCare+ isn’t just another IT service—it’s a built-in support system that comes with your WebFocus hosting package. Think of it as your website’s personal doctor, always ready to diagnose and fix any software or application-related issues that might arise. Whether it’s routine maintenance, troubleshooting, or preventive care, FocusCare+ ensures that your website runs at peak performance without extra costs.
-                    </p>
+
+                <div class="core-value-card scroll-animate stagger-2">
+                    <div class="core-value">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">What is FocusCare+?</h3>
+                    <p class="text-gray-600">FocusCare+ isn’t just another IT service—it’s a built-in support system that comes with your WebFocus hosting package. Think of it as your website’s personal doctor, always ready to diagnose and fix any software or application-related issues that might arise. Whether it’s routine maintenance, troubleshooting, or preventive care, FocusCare+ ensures that your website runs at peak performance without extra costs.</p>
                 </div>
-            </div>
-            <!-- Bottom Row: 3 Cards -->
-            <div class="focuscare-row bottom scroll-animate">
-                <!-- Keeping IT Solutions in Top Condition -->
-                <div class="focuscare-card">
-                    <h3 class="focuscare-title">FocusCare Plus | Keeping IT Solutions in Top Condition</h3>
-                    <p class="focuscare-text">
-                        WebFocus Solutions, Inc. does more than just host websites. We also provide personalized after-sales support with our FocusCare+ service. From website maintenance to troubleshooting, our skilled system administrators work to keep your hosting environment and availed IT Services secure and optimal at no additional cost.
-                    </p>
+
+                <div class="core-value-card scroll-animate stagger-3">
+                    <div class="core-value">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">FocusCare Plus | Keeping IT Solutions in Top Condition</h3>
+                    <p class="text-gray-600">WebFocus Solutions, Inc. does more than just host websites. We also provide personalized after-sales support with our FocusCare+ service. From website maintenance to troubleshooting, our skilled system administrators work to keep your hosting environment and availed IT Services secure and optimal at no additional cost.</p>
                 </div>
-                <!-- Reliable and Cost-Effective IT Support -->
-                <div class="focuscare-card">
-                    <h3 class="focuscare-title">Reliable and Cost-effective IT Support</h3>
-                    <p class="focuscare-text">
-                        FocusCare+ is a key component of our service, designed to help you administer your software and applications more easily. Instead of worrying about unanticipated technological issues, you can trust our experts to provide proactive solutions that save you time and money. We provide high-quality, continual support, guaranteeing that your online presence is stable and hassle-free.
-                    </p>
+
+                <div class="core-value-card scroll-animate stagger-4">
+                    <div class="core-value">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Reliable and Cost-effective IT Support</h3>
+                    <p class="text-gray-600">FocusCare+ is a key component of our service, designed to help you administer your software and applications more easily. Instead of worrying about unanticipated technological issues, you can trust our experts to provide proactive solutions that save you time and money. We provide high-quality, continual support, guaranteeing that your online presence is stable and hassle-free.</p>
                 </div>
-                <!-- Why After-Sales Support Matters -->
-                <div class="focuscare-card">
-                    <h3 class="focuscare-title">Why After-Sales Support Matters</h3>
-                    <p class="focuscare-text">
-                        Many businesses focus on choosing the right hosting provider but overlook the importance of ongoing support. Without a reliable after-sales service, minor technical issues can escalate into major disruptions, leading to downtime, security risks, and lost revenue. With FocusCare+, you don’t have to worry about these challenges. Our expert system administrators proactively monitor and address potential issues before they affect your business.
-                    </p>
+
+                <div class="core-value-card scroll-animate stagger-5">
+                    <div class="core-value">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Why After-Sales Support Matters</h3>
+                    <p class="text-gray-600">Many businesses focus on choosing the right hosting provider but overlook the importance of ongoing support. Without a reliable after-sales service, minor technical issues can escalate into major disruptions, leading to downtime, security risks, and lost revenue. With FocusCare+, you don’t have to worry about these challenges. Our expert system administrators proactively monitor and address potential issues before they affect your business.</p>
                 </div>
             </div>
         </div>

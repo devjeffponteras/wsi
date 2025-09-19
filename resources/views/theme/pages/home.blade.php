@@ -248,6 +248,10 @@
                         <div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
                     </div>
                 </div>
+                <div class="content-body p-3 mb-2 mt-2">
+                    <h5 class="card-title fw-semibold theme-font-color mb-2">Clinica Manila</h5>
+                    <p class="card-text">Awesome Webapp for Clinica Manila. Some quick example text to build on the card title.</p>
+                </div>
             </div>
         </article>
         
@@ -272,6 +276,10 @@
                         <div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
                     </div>
                 </div>
+                <div class="content-body p-3 mb-2 mt-2">
+                    <h5 class="card-title fw-semibold theme-font-color mb-2">EXP Controls</h5>
+                    <p class="card-text">Great WepApp design for EXP Controls. Some quick example text to build on the card title.</p>
+                </div>
             </div>
         </article>
         <article class="portfolio-item pf-uielements pf-media">
@@ -294,6 +302,10 @@
                         </div>
                         <div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
                     </div>
+                </div>
+                <div class="content-body p-3 mb-2 mt-2">
+                    <h5 class="card-title fw-semibold theme-font-color mb-2">Lydia's Lechon</h5>
+                    <p class="card-text">Modern and Slick WebApp for Lydia's Lechon. Some quick example text to build on the card title.</p>
                 </div>
             </div>
         </article>
@@ -318,6 +330,10 @@
                         <div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
                     </div>
                 </div>
+                <div class="content-body p-3 mb-2 mt-2">
+                    <h5 class="card-title fw-semibold theme-font-color mb-2">Precious Hearts Pages</h5>
+                    <p class="card-text">A desirable WebApp for Precious Hearts Pages. Some quick example text to build on the card title.</p>
+                </div>
             </div>
         </article>
         <article class="portfolio-item pf-uielements pf-media">
@@ -329,7 +345,7 @@
                     <div class="bg-overlay">
                         <div class="bg-overlay-content dark flex-column" data-hover-animate="fadeIn">
                             <div class="portfolio-desc pt-0 center" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350">
-                                <h3><a href="portfolio-single.html">Console Activity</a></h3>
+                                <h3><a href="portfolio-single.html">Taikisha</a></h3>
                                 <span><a href="#">UI Elements</a>, <a href="#">Media</a></span>
                             </div>
 
@@ -340,6 +356,10 @@
                         </div>
                         <div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
                     </div>
+                </div>
+                <div class="content-body p-3 mb-2 mt-2">
+                    <h5 class="card-title fw-semibold theme-font-color mb-2">Taikisha</h5>
+                    <p class="card-text">UI Elements for Console Activity. Some quick example text to build on the card title.</p>
                 </div>
             </div>
         </article>
@@ -352,8 +372,8 @@
                     <div class="bg-overlay">
                         <div class="bg-overlay-content dark flex-column" data-hover-animate="fadeIn">
                             <div class="portfolio-desc pt-0 center" data-hover-animate="fadeInDownSmall" data-hover-animate-out="fadeOutUpSmall" data-hover-speed="350">
-                                <h3><a href="portfolio-single.html">Console Activity</a></h3>
-                                <span><a href="#">UI Elements</a>, <a href="#">Media</a></span>
+                                <h3><a href="portfolio-single.html">Taisho</a></h3>
+                                <span><a href="#">UI Elements</a>, <a href="#">Taisho</a></span>
                             </div>
 
                             <div class="d-flex">
@@ -363,6 +383,10 @@
                         </div>
                         <div class="bg-overlay-bg dark" data-hover-animate="fadeIn"></div>
                     </div>
+                </div>
+                <div class="content-body p-3 mb-2 mt-2">
+                    <h5 class="card-title fw-semibold theme-font-color mb-2">Taisho</h5>
+                    <p class="card-text">Taisho UI Elements for Console Activity. Some quick example text to build on the card title.</p>
                 </div>
             </div>
         </article>

@@ -205,7 +205,7 @@
 
     <!-- Overview of FocusCare+ -->
     <section class="focuscare-section">
-        <div class="focuscare-container">
+        <div class="container-standard">
             <div class="text-center mb-12 scroll-animate">
                 <h2 class="section-title">Overview of FocusCare+</h2>
                 <p class="section-subtitle">
@@ -214,70 +214,42 @@
             </div>
 
             <!-- Middle Row: 2 Cards -->
-            <div class="focuscare-row middle scroll-animate">
+            <div class="scroll-animate d-flex flex-row justify-content-between gap-2">
                 <!-- Introduction -->
-                <div class="focuscare-card">
-                    <div class="focuscare-icon">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="focuscare-title">Introduction to FocusCare+</h3>
+                <div class="focuscare-card col">
+                    <h3 class="focuscare-title mb-4">Introduction to FocusCare+</h3>
                     <p class="focuscare-text">
                         When you invest in a hosting service, you’re not just looking for a place to store your website—you want reliability, security, and ongoing support. At WebFocus Solutions, Inc., we understand that maintaining a smooth online presence goes beyond the initial setup. That’s why we offer FocusCare+, a dedicated after-sales support service that ensures your hosting environment stays optimized, secure, and trouble-free.
                     </p>
                 </div>
 
                 <!-- What is FocusCare+? -->
-                <div class="focuscare-card">
-                    <div class="focuscare-icon">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="focuscare-title">What is FocusCare+?</h3>
+                <div class="focuscare-card col">
+                    <h3 class="focuscare-title mb-4">What is FocusCare+?</h3>
                     <p class="focuscare-text">
                         FocusCare+ isn’t just another IT service—it’s a built-in support system that comes with your WebFocus hosting package. Think of it as your website’s personal doctor, always ready to diagnose and fix any software or application-related issues that might arise. Whether it’s routine maintenance, troubleshooting, or preventive care, FocusCare+ ensures that your website runs at peak performance without extra costs.
                     </p>
                 </div>
-            </div>
 
-            <!-- Bottom Row: 3 Cards -->
-            <div class="focuscare-row bottom scroll-animate">
                 <!-- Keeping IT Solutions in Top Condition -->
-                <div class="focuscare-card">
-                    <div class="focuscare-icon">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                    </div>
-                    <h3 class="focuscare-title">FocusCare Plus | Keeping IT Solutions in Top Condition</h3>
+                <div class="focuscare-card col">
+                    <h3 class="focuscare-title mb-4">FocusCare Plus | Keeping IT Solutions in Top Condition</h3>
                     <p class="focuscare-text">
                         WebFocus Solutions, Inc. does more than just host websites. We also provide personalized after-sales support with our FocusCare+ service. From website maintenance to troubleshooting, our skilled system administrators work to keep your hosting environment and availed IT Services secure and optimal at no additional cost.
                     </p>
                 </div>
 
                 <!-- Reliable and Cost-Effective IT Support -->
-                <div class="focuscare-card">
-                    <div class="focuscare-icon">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="focuscare-title">Reliable and Cost-effective IT Support</h3>
+                <div class="focuscare-card col">
+                    <h3 class="focuscare-title mb-4">Reliable and Cost-effective IT Support</h3>
                     <p class="focuscare-text">
                         FocusCare+ is a key component of our service, designed to help you administer your software and applications more easily. Instead of worrying about unanticipated technological issues, you can trust our experts to provide proactive solutions that save you time and money. We provide high-quality, continual support, guaranteeing that your online presence is stable and hassle-free.
                     </p>
                 </div>
 
                 <!-- Why After-Sales Support Matters -->
-                <div class="focuscare-card">
-                    <div class="focuscare-icon">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="focuscare-title">Why After-Sales Support Matters</h3>
+                <div class="focuscare-card col">
+                    <h3 class="focuscare-title mb-4">Why After-Sales Support Matters</h3>
                     <p class="focuscare-text">
                         Many businesses focus on choosing the right hosting provider but overlook the importance of ongoing support. Without a reliable after-sales service, minor technical issues can escalate into major disruptions, leading to downtime, security risks, and lost revenue. With FocusCare+, you don’t have to worry about these challenges. Our expert system administrators proactively monitor and address potential issues before they affect your business.
                     </p>

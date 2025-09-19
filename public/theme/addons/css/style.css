@@ -33699,3 +33699,7 @@ div#related-portfolio article.portfolio-item .portfolio-image a img {
   font-size: 32px;
   color: #2b56d3;
 }
+
+.top-search-form input.search-q::placeholder {
+  color: #2b56d3 !important;
+}

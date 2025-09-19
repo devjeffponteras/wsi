@@ -36,7 +36,7 @@
                     </div>
 
                     <form class="top-search-form" action="#" method="get">
-                        <input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter.." autocomplete="off">
+                        <input type="text" name="q" class="form-control search-q" value="" style="color: #2b56d3 !important;" placeholder="Type &amp; Hit Enter.." autocomplete="off">
                     </form>
                     
                 </div>

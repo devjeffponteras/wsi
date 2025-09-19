@@ -33672,10 +33672,15 @@ div#related-portfolio .owl-stage-outer .owl-stage .owl-item {
   padding-bottom: 14px;
 }
 
-div#related-portfolio article.portfolio-item {
+div#related-portfolio .portfolio-item {
   border: 1px solid #cbcbcb;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3) !important;
+  min-height: 332px;
+}
 
+div#related-portfolio .portfolio-item .card-text {
+  color: #454545;
+  font-size: 14px;
 }
 
 div#related-portfolio article.portfolio-item .portfolio-image a img {

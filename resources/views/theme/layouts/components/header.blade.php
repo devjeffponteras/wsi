@@ -35,13 +35,14 @@
                         
                     </div>
 
-                    <form class="top-search-form" action="#" method="get">
-                        <input type="text" name="q" class="form-control search-q" value="" style="color: #2b56d3 !important;" placeholder="Type &amp; Hit Enter.." autocomplete="off">
-                    </form>
+                   
                     
                 </div>
                 
                 <div class="header-custom-menu-wrapper d-flex flex-row align-items-center">
+                    <form class="top-search-form" action="#" method="get" style="width: 380px !important; transform: translate(325px, 0px);">
+                        <input type="text" name="q" class="form-control search-q" value="" style="color: #2b56d3 !important;" placeholder="Type &amp; Hit Enter.." autocomplete="off">
+                    </form>
                     <a href="#" id="top-search-trigger" class="custom-menu-link d-flex flex-row align-items-center" style="font-weight: 500;" title="Search">
                         <i class="icon-search"></i>
                     </a>

@@ -437,8 +437,63 @@
             </div>
         </div>
     </section>
+    
     <!-- Overview of FocusCare+ -->
-    <section class="section">
+    <section class="focuscare-section">
+            <div class="container-standard">
+                <div class="text-center mb-12 scroll-animate animate">
+                    <h2 class="section-title">Overview of FocusCare+</h2>
+                    <p class="section-subtitle">
+                        Ensuring a Seamless Hosting Experience with FocusCare+
+                    </p>
+                </div>
+
+                <!-- Middle Row: 2 Cards -->
+                <div class="scroll-animate d-flex flex-row justify-content-between gap-2 animate">
+                    <!-- Introduction -->
+                    <div class="focuscare-card col">
+                        <h3 class="focuscare-title mb-4">Introduction to FocusCare+</h3>
+                        <p class="focuscare-text">
+                            When you invest in a hosting service, you’re not just looking for a place to store your website—you want reliability, security, and ongoing support. At WebFocus Solutions, Inc., we understand that maintaining a smooth online presence goes beyond the initial setup. That’s why we offer FocusCare+, a dedicated after-sales support service that ensures your hosting environment stays optimized, secure, and trouble-free.
+                        </p>
+                    </div>
+
+                    <!-- What is FocusCare+? -->
+                    <div class="focuscare-card col">
+                        <h3 class="focuscare-title mb-4">What is FocusCare+?</h3>
+                        <p class="focuscare-text">
+                            FocusCare+ isn’t just another IT service—it’s a built-in support system that comes with your WebFocus hosting package. Think of it as your website’s personal doctor, always ready to diagnose and fix any software or application-related issues that might arise. Whether it’s routine maintenance, troubleshooting, or preventive care, FocusCare+ ensures that your website runs at peak performance without extra costs.
+                        </p>
+                    </div>
+
+                    <!-- Keeping IT Solutions in Top Condition -->
+                    <div class="focuscare-card col">
+                        <h3 class="focuscare-title mb-4">FocusCare Plus | Keeping IT Solutions in Top Condition</h3>
+                        <p class="focuscare-text">
+                            WebFocus Solutions, Inc. does more than just host websites. We also provide personalized after-sales support with our FocusCare+ service. From website maintenance to troubleshooting, our skilled system administrators work to keep your hosting environment and availed IT Services secure and optimal at no additional cost.
+                        </p>
+                    </div>
+
+                    <!-- Reliable and Cost-Effective IT Support -->
+                    <div class="focuscare-card col">
+                        <h3 class="focuscare-title mb-4">Reliable and Cost-effective IT Support</h3>
+                        <p class="focuscare-text">
+                            FocusCare+ is a key component of our service, designed to help you administer your software and applications more easily. Instead of worrying about unanticipated technological issues, you can trust our experts to provide proactive solutions that save you time and money. We provide high-quality, continual support, guaranteeing that your online presence is stable and hassle-free.
+                        </p>
+                    </div>
+
+                    <!-- Why After-Sales Support Matters -->
+                    <div class="focuscare-card col">
+                        <h3 class="focuscare-title mb-4">Why After-Sales Support Matters</h3>
+                        <p class="focuscare-text">
+                            Many businesses focus on choosing the right hosting provider but overlook the importance of ongoing support. Without a reliable after-sales service, minor technical issues can escalate into major disruptions, leading to downtime, security risks, and lost revenue. With FocusCare+, you don’t have to worry about these challenges. Our expert system administrators proactively monitor and address potential issues before they affect your business.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    {{-- <section class="section">
         <div class="core-values-container">
             <div class="text-center mb-12 scroll-animate">
                 <h2 class="section-title">Overview of FocusCare+</h2>
@@ -447,7 +502,7 @@
                 </p>
             </div>
             <!-- Middle Row: 2 Cards -->
-                      <div class="core-values-grid">
+            <div class="core-values-grid">
                 <div class="core-value-card scroll-animate stagger-1">
                     <div class="core-value">
 
@@ -455,7 +510,7 @@
 
                     </div>
                     <h3 class="text-lg font-bold text-gray-800 mb-2">Introduction to FocusCare+</h3>
-                    <p class="text-gray-600">When you invest in a hosting service, you’re not just looking for a place to store your website—you want reliability, security, and ongoing support. At WebFocus Solutions, Inc., we understand that maintaining a smooth online presence goes beyond the initial setup. That’s why we offer FocusCare+, a dedicated after-sales support service that ensures your hosting environment stays optimized, secure, and trouble-free.</p>
+                    <p class="text-gray-600 text-justify">When you invest in a hosting service, you’re not just looking for a place to store your website—you want reliability, security, and ongoing support. At WebFocus Solutions, Inc., we understand that maintaining a smooth online presence goes beyond the initial setup. That’s why we offer FocusCare+, a dedicated after-sales support service that ensures your hosting environment stays optimized, secure, and trouble-free.</p>
                 </div>
 
                 <div class="core-value-card scroll-animate stagger-2">
@@ -499,7 +554,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- FocusCare+ Services -->
     <section class="focuscare-section">
         <div class="focuscare-container">

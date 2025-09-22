@@ -36,10 +36,7 @@
             <div class="company-overview-container scroll-animate">
                 <!-- Who We Are -->
                 <div class="company-overview-card">
-                    <div class="company-overview-icon">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                        </svg>
+                    <div class="company-overview">
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Who We Are</h3>
                     <div class="who-we-are-text">
@@ -51,10 +48,7 @@
 
                 <!-- Our Achievements -->
                 <div class="company-overview-card">
-                    <div class="company-overview-icon company-overview-icon-secondary">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
+                    <div class="company-overview-">
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Our Achievements</h3>
                     <div class="stats-grid">
@@ -80,10 +74,7 @@
 
             <!-- What We Do -->
             <div class="modern-card scroll-animate stagger-2 mt-6">
-                <div class="feature-icon feature-icon-secondary">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                    </svg>
+                <div class="feature feature">
                 </div>
                 <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">What We Do</h3>
                 <div class="services-row">
@@ -176,10 +167,7 @@
 
             <div class="mission-vision-container scroll-animate">
                 <div class="mission-vision-card">
-                    <div class="mission-vision-icon">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                        </svg>
+                    <div class="mission-vision">
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Our Mission</h3>
                     <div class="space-y-3 text-gray-600">
@@ -190,10 +178,7 @@
                 </div>
 
                 <div class="mission-vision-card">
-                    <div class="mission-vision-icon mission-vision-icon-secondary">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                        </svg>
+                    <div class="mission-vision- mission-vision">
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Our Vision</h3>
                     <div class="space-y-3 text-gray-600">

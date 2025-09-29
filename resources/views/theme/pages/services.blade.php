@@ -1,4 +1,3 @@
-
 @extends('theme.main')
 
 @section('pagecss')
@@ -211,7 +210,7 @@
     <!-- Company Overview -->
     <div class="section feature-cards">
         <div class="d-flex flex-column flex-md-row feature-cards-top">
-            <a href="#" class="card-animate position-relative col-12 col-md-3">
+            <a href="#" class="card-animate position-relative col-12 col-md-4">
                  <img src="{{ asset('images/services/domain1.jpg') }}" alt="Domain Image" class="card-image">
                 <h5 class="i-tittle">Domain</h5>
                 <p class="i-title">Claim your unique online identity with a custom domain name tailored to your brand.</p>
@@ -220,16 +219,7 @@
                     <i class="icon-line-arrow-right i-animate"></i>
                 </div>
             </a>
-            <a href="#" class="card-animate position-relative col-12 col-md-3">
-                 <img src="{{ asset('images/services/fc.jpg') }}" alt="Focus Care+ Image" class="card-image">
-                <h5 class="i-tittle">Focus Care+</h5>
-                <p class="i-title">Premium after-sales support ensuring your hosting experience is seamless and reliable.</p>
-                <div class="icon-row">
-                    <i class="icon-data i-animate"></i>
-                    <i class="icon-line-arrow-right i-animate"></i>
-                </div>
-            </a>
-            <a href="#" class="card-animate position-relative col-12 col-md-3">
+            <a href="#" class="card-animate position-relative col-12 col-md-4">
                  <img src="{{ asset('images/services/hosting.jpg') }}" alt="Hosting Image" class="card-image">
                 <h5 class="i-tittle">Hosting</h5>
                 <p class="i-title">Reliable, high-performance hosting solutions for websites of all sizes.</p>
@@ -238,7 +228,7 @@
                     <i class="icon-line-arrow-right i-animate"></i>
                 </div>
             </a>
-            <a href="#" class="card-animate position-relative col-12 col-md-3">
+            <a href="#" class="card-animate position-relative col-12 col-md-4">
                 <img src="{{ asset('images/services/web.jpg') }}" alt="Web Development Image" class="card-image">
                 <h5 class="i-tittle">Web Development</h5>
                 <p class="i-title">Custom web solutions that combine stunning design with robust functionality.</p>
@@ -378,3 +368,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endsection
+

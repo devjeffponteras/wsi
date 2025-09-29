@@ -66,28 +66,16 @@
             <div class="mx-auto" id="counter-cards-container" style="max-width: 960px; transform: translate(0px, 145px); transition: ease 1s all; opacity: 0;">
                 <div class="row clearfix">
                     <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="567" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
-                        <p class="opac-8">employees from 157+ countries</p>
+                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="20" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
+                        <p class="opac-8">Years in Business</p>
                     </div>
                     <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="751" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
-                        <p class="opac-8">SAP partner companies globally</p>
+                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="1600" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
+                        <p class="opac-8">Projects Delivered</p>
                     </div>
                     <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color">P<span data-from="1" data-to="30" data-refresh-interval="100" data-speed="2000" data-comma="true"></span> billion+</div>
-                        <p class="opac-8">total revenue in FY2025</p>
-                    </div>
-                    <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="1" data-to="100" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>k+</div>
-                        <p class="opac-8">subscribers in our cloud user base</p>
-                    </div>
-                    <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="1" data-to="100" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
-                        <p class="opac-8">development locations worldwide</p>
-                    </div>
-                    <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color">AAA</div>
-                        <p class="opac-8">MSCI ESG rating</p>
+                        <div class="counter center counter-medium font-primary theme-font-color">P<span data-from="1" data-to="1000" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
+                        <p class="opac-8">Clients Served</p>
                     </div>
                 </div>
             </div>
@@ -254,7 +242,7 @@
                 </div>
             </div>
         </article>
-        
+
         <article class="portfolio-item pf-uielements pf-media">
             <div class="grid-inner">
                 <div class="portfolio-image">

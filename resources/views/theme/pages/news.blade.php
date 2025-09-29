@@ -81,8 +81,8 @@
         transform: translateY(-5px);
     }
     .recent-news-image {
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 210px;
         object-fit: cover;
         flex-shrink: 0;
     }
@@ -415,7 +415,7 @@
     <section class="hero-section">
         <video class="hero-video" autoplay loop muted playsinline poster="{{ asset('storage/banners/fallback-poster.jpg') }}">
             <source src="{{ asset('storage/banners/videoplayback.webm') }}" type="video/webm">
-            <source src="{{ asset('storage/banners/videoplayback.mp4') }}" type="video/mp4"> <!-- Fixed path consistency -->
+            <source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4"> <!-- Fixed path consistency -->
             <picture>
                 <source srcset="{{ asset('storage/banners/fallback-poster.webp') }}" type="image/webp">
                 <img src="{{ asset('storage/banners/fallback-poster.jpg') }}" alt="WebFocus Solutions News Banner" class="hero-video-fallback">

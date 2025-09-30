@@ -60,21 +60,21 @@
 
     {!! $contents !!}
 
-    <div class="section mt-0 clearfix counter-cards" style="padding: 80px 0; background-color: white;">
+    <div class="section mt-0 clearfix counter-cards hidden-up" style="padding: 80px 0; background-color: white;">
         <div class="container clearfix">
 
             <div class="mx-auto" id="counter-cards-container" style="max-width: 960px; transform: translate(0px, 145px); transition: ease 1s all; opacity: 0;">
                 <div class="row clearfix">
                     <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="20" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
+                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="20" data-refresh-interval="100" data-speed="2000" data-comma="true" style="font-weight: 700 !important;"></span>+</div>
                         <p class="opac-8">Years in Business</p>
                     </div>
                     <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="1600" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
+                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="1600" data-refresh-interval="100" data-speed="2000" data-comma="true" style="font-weight: 700 !important;"></span>+</div>
                         <p class="opac-8">Projects Delivered</p>
                     </div>
                     <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color">P<span data-from="1" data-to="1000" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
+                        <div class="counter center counter-medium font-primary theme-font-color">P<span data-from="1" data-to="1000" data-refresh-interval="100" data-speed="2000" data-comma="true" style="font-weight: 700 !important;"></span>+</div>
                         <p class="opac-8">Clients Served</p>
                     </div>
                 </div>
@@ -87,13 +87,13 @@
         <div class="d-flex flex-column flex-md-row feature-cards-top">
            <a href="#" class="card-animate position-relative col-12 col-md-3">
                 <h5 class="i-tittle">Domain</h5>
-                <p class="i-description">Establish your business online with a custom domain.</p>
+                <p class="i-description pb-4">Establish your business online with a custom domain.</p>
                 <i class="icon-world i-animate"></i>
                 <i class="icon-line-arrow-right i-animate"></i>
             </a>
             <a href="#" class="card-animate position-relative col-12 col-md-3">
                 <h5 class="i-tittle">Focus Care+</h5>
-                <p class="i-description">FocusCare+ – Premium After-Sales Support Included in Your Hosting Plan</p>
+                <p class="i-description pb-4">FocusCare+ – Premium After-Sales Support Included in Your Hosting Plan</p>
                 <i class="icon-data i-animate"></i>
                 <i class="icon-line-arrow-right i-animate"></i>
             </a>
@@ -141,27 +141,27 @@
     <div class="section logo-cards" style="background-color: transparent; background: url({{asset('images/map.png')}}); background-repeat: no-repeat; background-size: cover; padding-bottom: 200px; margin-bottom: 0px;">
         <div class="container-standard">
             <div class="row">
-                <h3 class="text-center">Trusted by companies small and large around the globe</h3>
+                <h3 class="text-center hidden-up">Trusted by companies small and large around the globe</h3>
 
                 <br />
                 <br />
                 <br />
-                <br />
-                <br />
+                <br class="hide-450" />
+                <br class="hide-450" />
                 <br />
 
-                <div class="text-center mb-4">
-                    <button class="btn btn-primary rounded font-bold" style="max-width: fit-content;">See our customer stories</button>
+                <div class="text-center mb-4 hidden-up see-customer-btn">
+                    <button class="btn btn-primary rounded font-bold btn-hover-theme" style="max-width: fit-content;">See our customer stories</button>
                 </div>
 
                 <br />
-                <br />
-                <br />
+                <br class="hide-450" />
+                <br class="hide-450" />
                 <br />
                 <br />
                 <br />
 
-                <div id="oc-images" class="owl-carousel image-carousel carousel-widget" data-items-xs="2" data-items-sm="3" data-items-lg="6" data-items-xl="8">
+                <div id="oc-images" class="owl-carousel image-carousel carousel-widget hidden-up" data-items-xs="2" data-items-sm="3" data-items-lg="6" data-items-xl="8" data-autoplay="3000" data-loop="true">
                     <div class="oc-item">
                         <a href="#"><img src="{{ asset('images/clients/logo6.png') }}" style="width: 100px !important;" alt="Image 1"></a>
                     </div>
@@ -178,7 +178,7 @@
                         <a href="#"><img src="{{ asset('images/clients/logo4.png') }}" style="width: 100px !important;" alt="Image 5"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo53.png') }}" style="width: 100px !important;" alt="Image 6"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo3.png') }}" style="width: 100px !important;" alt="Image 7"></a>
                     </div>
                     <div class="oc-item">
                         <a href="#"><img src="{{ asset('images/clients/logo13.png') }}" style="width: 100px !important;" alt="Image 7"></a>
@@ -202,7 +202,7 @@
                         <a href="#"><img src="{{ asset('images/clients/logo63.png') }}" style="width: 100px !important;" alt="Image 7"></a>
                     </div>
                     <div class="oc-item">
-                        <a href="#"><img src="{{ asset('images/clients/logo3.png') }}" style="width: 100px !important;" alt="Image 7"></a>
+                        <a href="#"><img src="{{ asset('images/clients/logo53.png') }}" style="width: 100px !important;" alt="Image 6"></a>
                     </div>
                 </div>
             </div>
@@ -211,9 +211,9 @@
 
     <!-- portfolio-carousel full width -->
 
-    <h3 class="fw-bolder h1 mb-4 text-center py-5">Portfolio Highlights</h3>
+    <h3 class="fw-bolder h1 mb-4 text-center py-5 hidden-up">Portfolio Highlights</h3>
 
-    <div id="related-portfolio" class="owl-carousel owl-carousel-full portfolio-carousel carousel-widget" data-margin="10" data-pagi="false" data-items-xs="1" data-items-sm="2" data-items-md="5" data-items-lg="5">
+    <div id="related-portfolio" class="owl-carousel owl-carousel-full portfolio-carousel carousel-widget hidden-up" data-margin="10" data-pagi="false" data-items-xs="1" data-items-sm="2" data-items-md="5" data-items-lg="5">
 
         <article class="portfolio-item pf-uielements pf-media">
             <div class="grid-inner">
@@ -383,11 +383,11 @@
 
     <br />
     <br />
-    <br />
-    <br />
+    <br class="hide-450" />
+    <br class="hide-450" />
     <br />
 
-    <div class="section bg-transparent testi-cards" style="margin-top: 0px; padding-top: 0px">
+    <div class="section bg-transparent testi-cards hidden-up" style="margin-top: 0px; padding-top: 0px">
         <div class="container">
             <div class="row align-items-center justify-content-around">
                 <div class="col-lg-4">
@@ -461,6 +461,16 @@
         animate.style.transform = 'translate(0px, 0px)';
         animate.style.opacity = '1';
     });
+
+    const observerUp = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show-up');
+        }
+      });
+    });
+
+    document.querySelectorAll('.hidden-up').forEach((el) => observerUp.observe(el));
 </script>
 @endsection
 

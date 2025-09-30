@@ -13,9 +13,9 @@
                     <!-- Logo
                     ============================================= -->
                     <div id="logo" style="margin: 0px; border-right: none;">
-                        <a href="{{ url('/') }}" class="standard-logo">
+                        <a href="{{ url('/') }}" class="standard-logo" style="display: block !important;">
                             <img src="{{ asset('images/logos/logo-webfocus.png') }}"
-                                 alt="{{ Setting::info()->company_name ?? 'Company Name' }}" style="height: 35px">
+                                 alt="{{ Setting::info()->company_name ?? 'Company Name' }}" style="height: 35px;">
                         </a>
                     </div><!-- #logo end -->
 
@@ -40,7 +40,7 @@
                 </div>
                 
                 <div class="header-custom-menu-wrapper d-flex flex-row align-items-center">
-                    <form class="top-search-form" action="#" method="get" style="width: 380px !important; transform: translate(325px, 0px);">
+                    <form class="top-search-form" action="#" method="get" style="width: 380px; transform: translate(325px, 0px);">
                         <input type="text" name="q" class="form-control search-q" value="" style="color: #2b56d3 !important;" placeholder="Type &amp; Hit Enter.." autocomplete="off">
                     </form>
                     <a href="#" id="top-search-trigger" class="custom-menu-link d-flex flex-row align-items-center" style="font-weight: 500;" title="Search">
@@ -49,8 +49,9 @@
                     <a href="#" class="custom-menu-link d-flex flex-row align-items-center" style="font-weight: 500;" title="Signin">
                         <i class="icon-user"></i>
                     </a>
-                    <a href="#" class="custom-menu-link d-flex flex-row align-items-center" style="font-weight: 500;">
-                        Subscribe
+                    &nbsp;
+                    <a href="#" class="btn btn-sm btn-primary d-flex flex-row align-items-center ms-2 btn-hover-theme" style="font-weight: 500;">
+                        GET IN TOUCH WITH US 
                         &nbsp;
                         <i class="icon-line-arrow-right"></i>
                     </a>

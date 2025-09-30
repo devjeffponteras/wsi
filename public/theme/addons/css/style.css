@@ -33633,7 +33633,10 @@ i.icon-line-arrow-right.i-animate {
   background: linear-gradient(to bottom, #2b56d3, #001427);
 }
 .feature-cards .card-animate:hover * {
-  color: white !important;
+  color: white;
+}
+.feature-cards .card-animate:hover i:not(.icon-line-arrow-right) {
+  color: #ff5600 !important;
 }
 .feature-cards .card-animate .i-description {
   opacity: 0;
@@ -33707,4 +33710,98 @@ div#related-portfolio article.portfolio-item .portfolio-image a img {
 
 .top-search-form input.search-q::placeholder {
   color: #2b56d3 !important;
+}
+
+/* add-ons custom */
+@media only screen and (max-width: 450px) {
+  #slider {
+    min-height: auto !important;
+    padding-top: 65px;
+  }
+
+  .section.counter-cards {
+    padding-top: 10px !important;
+    padding-bottom: 0px !important;
+  }
+
+  #header-wrap #logo img {
+    height: 20px;
+  }
+
+  .counter.center.counter-medium.font-primary.theme-font-color {
+    font-size: 30px;
+  }
+
+  .feature-cards-top a.card-animate,
+  .feature-cards-bottom a.card-animate {
+    border-right: 1px solid #c5c5c5;
+  }
+
+  div#related-portfolio .owl-stage-outer .owl-stage .owl-item {
+    padding-right: 0px !important;
+  }
+
+  .hide-450 {
+    display: none;
+  }
+
+  div#related-portfolio.portfolio-carousel {
+    padding: 10px;
+  }
+
+  .section.logo-cards {
+    padding-bottom: 30px !important;
+    padding-top: 0px !important;
+  }
+}
+
+.section.logo-cards #oc-images .owl-item .oc-item:hover a img {
+  transform: scale(1.1) translateY(-5px);
+  transition: all .3s ease;
+}
+
+.section.logo-cards #oc-images .owl-stage {
+  min-height: 120px;
+}
+
+.feature-cards .i-tittle {
+  font-size: 22px;
+  font-weight: 600;
+  color: #3b3b3b;
+}
+
+.btn-hover-theme:hover {
+  background-color: #ff5600;
+  border-color: #ff5600;
+  transform: scale(1.02);
+  transition: all .2s ease;
+}
+
+.btn-hover-theme:hover i.icon-line-arrow-right {
+  transform: rotate(-45deg);
+  transition: all .2s ease;
+}
+
+@media only screen and (max-width: 1520px){
+  form.top-search-form {
+    width: 600px !important;
+    transform: translate(365px, 0px) !important;
+  }
+}
+@media only screen and (min-width: 1520px){
+  form.top-search-form {
+    width: 325px !important;
+  }
+}
+
+/* animation  */
+.hidden-up {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.5s ease-out;
+}
+
+.show-up {
+    opacity: 1;
+    transform: translateY(0);
 }

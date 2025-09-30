@@ -78,8 +78,10 @@ body {
     background-color: #003757 !important;
 }
 
-#slider {
-    min-height: 70vh !important;
+@media only screen and (min-width: 451px) {
+    #slider {
+        min-height: 70vh !important;
+    }
 }
 
 .owl-carousel .owl-nav [class*=owl-]:hover   {

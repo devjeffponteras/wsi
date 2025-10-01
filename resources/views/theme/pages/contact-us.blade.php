@@ -21,6 +21,10 @@
 <div class="container topmargin-md bottommargin-lg pt-4 contact-us-page">
     <div class="row"> 
 
+        <div class="col-lg-7 mb-5" id="contact-us-right-card">
+            {!! $page->contents !!}
+        </div>
+        
         <div class="col-lg-5" id="contact-us-left-card">
             <div class="card p-4 shadow pb-0">
                 <h3>Leave Us a Message</h3>
@@ -85,10 +89,6 @@
                     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
                 </div>
             </div>
-        </div>
-
-        <div class="col-lg-7 mb-5" id="contact-us-right-card">
-            {!! $page->contents !!}
         </div>
 
     </div>

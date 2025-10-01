@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://cms4.webfocusprod.wsiph2.com/wsi/public/</loc>
+  <lastmod>2025-09-26T03:23:50+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://cms4.webfocusprod.wsiph2.com/wsi/public/home</loc>
+  <lastmod>2025-09-26T03:23:50+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://cms4.webfocusprod.wsiph2.com/wsi/public/about-us</loc>
+  <lastmod>2025-09-26T03:23:50+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://cms4.webfocusprod.wsiph2.com/wsi/public/services</loc>
+  <lastmod>2025-09-26T03:23:50+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://cms4.webfocusprod.wsiph2.com/wsi/public/services/hosting</loc>
+  <lastmod>2025-09-26T03:23:50+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://cms4.webfocusprod.wsiph2.com/wsi/public/services/domain</loc>
+  <lastmod>2025-09-26T03:23:50+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://cms4.webfocusprod.wsiph2.com/wsi/public/services/web-development</loc>
+  <lastmod>2025-09-26T03:23:50+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://cms4.webfocusprod.wsiph2.com/wsi/public/services/dms</loc>
+  <lastmod>2025-09-26T03:23:50+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://cms4.webfocusprod.wsiph2.com/wsi/public/news-2</loc>
+  <lastmod>2025-09-26T03:23:50+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://cms4.webfocusprod.wsiph2.com/wsi/public/contact-us</loc>
+  <lastmod>2025-09-26T03:23:50+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
+</urlset>

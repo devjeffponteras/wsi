@@ -2,95 +2,6 @@
 
 @section('pagecss')
 <link rel="stylesheet" href="{{ asset('theme/css/newstyle.css') }}" type="text/css" />
-<style>
-    /* CTA Section Styling */
-    .section-cta {
-        background: linear-gradient(135deg, #1e3c72, #2a5298);
-        padding: 4rem 2rem;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .cta-container {
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 2rem;
-    }
-
-    .cta-content {
-        flex: 1;
-        text-align: left;
-        color: white;
-        padding-right: 2rem;
-    }
-
-    .cta-form {
-        flex: 1;
-        max-width: 400px;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 1rem;
-        padding: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .cta-form input,
-    .cta-form textarea {
-        width: 100%;
-        padding: 0.75rem;
-        margin-bottom: 1rem;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 0.5rem;
-        background: rgb(255, 255, 255);
-        color: rgb(0, 0, 0);
-        font-size: 1rem;
-    }
-
-    .cta-form input:focus,
-    .cta-form textarea:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-    }
-
-    .cta-form button {
-        width: 100%;
-        padding: 0.75rem;
-        background-color: #3b82f6;
-        color: white;
-        border: none;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.3s;
-    }
-
-    .cta-form button:hover {
-        background-color: #2563eb;
-        transform: scale(1.05);
-    }
-
-    #formSuccess, #formError {
-        margin-top: 1rem;
-        text-align: center;
-    }
-
-    @media (max-width: 768px) {
-        .cta-container {
-            flex-direction: column;
-            text-align: center;
-        }
-        .cta-form {
-            max-width: 100%;
-            margin-top: 2rem;
-        }
-    }
-</style>
 @endsection
 
 @section('content')
@@ -126,7 +37,7 @@
                 <!-- Who We Are -->
                 <div class="company-overview-card">
                     <div class="company-overview"></div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Who We Are</h3>
+                    <h2 class="text-xl font-bold text-gray-800 mb-3 text-center">Who We Are</h2>
                     <div class="who-we-are-text">
                         <p class="scroll-animate stagger-1">WebFocus Solutions, Inc., is a Philippine-based digital company, established in 2001, offering innovative, cost-effective IT software solutions to over a thousand clients.</p>
                         <p class="scroll-animate stagger-2">Our approach is to provide personalized digital solutions tailored to a company's needs and budget. We aim to maintain our premium brand in the IT industry and help customers integrate technological advancements for a competitive advantage.</p>
@@ -137,7 +48,7 @@
                 <!-- Our Achievements -->
                 <div class="company-overview-card">
                     <div class="company-overview-"></div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Our Achievements</h3>
+                    <h2 class="text-xl font-bold text-gray-800 mb-3 text-center">Our Achievements</h2>
                     <div class="stats-grid">
                         <div class="stat-item">
                             <div class="stat-number" data-count="1000">0</div>
@@ -162,7 +73,7 @@
             <!-- What We Do -->
             <div class="modern-card scroll-animate stagger-2 mt-6">
                 <div class="feature feature"></div>
-                <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">What We Do</h3>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 text-center">What We Do</h2>
                 <div class="services-row">
                     <div class="service-card scroll-animate stagger-1">
                         <div class="service-icon">
@@ -253,7 +164,7 @@
                 <div class="mission-vision-container scroll-animate">
                     <div class="mission-vision-card">
                         <div class="mission-vision"></div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Our Mission</h3>
+                        <h2 class="text-xl font-bold text-gray-800 mb-3 text-center">Our Mission</h2>
                         <div class="space-y-3 text-gray-600">
                             <p>To develop and provide customized, scalable, modular, and cost-effective Web and Mobile Application Development, Digital Marketing, Domain and Hosting, Infrastructure Installation, and Business Solutions including Managed I.T. and Professional Services.</p>
                             <p>To establish ourselves as a reliable partner of startups to SMEs, providing innovative solutions to specific needs.</p>
@@ -263,7 +174,7 @@
 
                     <div class="mission-vision-card">
                         <div class="mission-vision- mission-vision"></div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Our Vision</h3>
+                        <h2 class="text-xl font-bold text-gray-800 mb-3 text-center">Our Vision</h2>
                         <div class="space-y-3 text-gray-600">
                             <p>To establish WebFocus Solutions Inc. as an IT and Business Solutions company that provides innovative solutions and transforms businesses to integrate technological advancements.</p>
                             <p>To be a premium and established household brand in the IT industry, offering products and services that will provide value to our customers and ensure quality and security.</p>
@@ -403,72 +314,97 @@
                 </div>
                 <div class="text-center mt-10">
                     <h1></h1>
-                    <a href="#" class="btn btn-primary">View Open Positions</a>
+                    <a href="#" class="btn btn-primary1">View Open Positions</a>
                 </div>
             </div>
         </section>
 
-        <!-- CTA Section with Contact Form on the Right -->
-        <section class="section-cta">
-            <div class="cta-container scroll-animate">
-                <div class="cta-content">
-                    <h2 class="text-2xl text-white font-bold mb-4">Transform Your Business</h2>
-                    <p class="text-lg text-white mb-6">
-                        Discover how WebFocus Solutions can elevate your digital presence with innovative IT solutions tailored to your needs. Contact us today!
-                    </p>
-                </div>
-                <div class="cta-form">
-                    <form id="contactForm">
-
-                        <h3 class="text-2xl text-white font-bold mb-4">Leave Us Message</h3>
-                        <div>
-                            <!-- Input field for user's name, required -->
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                placeholder="Your Name"
-                                required
-                            >
+          <!-- CTA Section -->
+    <section class="section-cta position-relative">
+        <div class="cta-container scroll-animate">
+            <div class="cta-content">
+                <div class="row col-12 contact-us-page">
+                    <div class="col-12 col-md-7">
+                        <div class="content-wordings">
+                            <div class="content-title">
+                                <h1 style="font-size: 58px;" class="text-white mb-3"><b>Power up your <br/> growth today.</b></h1>
+                            </div>
+                            <div class="content-description">
+                                <p style="font-size: 22px;">Drop us a line and guide you to the right solution</p>
+                            </div>
                         </div>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <div class="card p-4 shadow pb-0">
+                            <h3 class="font-primary"><b>Leave Us a Message</b></h3>
+                            @if(session()->has('success'))
+                                <div class="style-msg successmsg">
+                                    <div class="sb-msg"><i class="icon-thumbs-up"></i><strong>Success!</strong> {{ session()->get('success') }}</div>
+                                    {{-- <button type="button" class="btn-close btn-sm" data-dismiss="alert" aria-hidden="true">&times;</button> --}}
+                                </div>
+                            @endif
 
-                        <div>
-                            <!-- Input field for user's email, required -->
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="Your Email"
-                                required
-                            >
+                            @if(session()->has('error'))
+                                <div class="style-msg successmsg">
+                                    <div class="sb-msg"><i class="icon-thumbs-up"></i><strong>Success!</strong> {{ session()->get('error') }}</div>
+                                    {{-- <button type="button" class="btn-close btn-sm" data-dismiss="alert" aria-hidden="true">&times;</button> --}}
+                                </div>
+                            @endif
+                            <p><strong>Note:</strong> Please do not leave required fields (<span class="text-danger">*</span>) empty.</p>
+                            <div class="form-style fs-sm">
+                                <form id="contactUsForm" action="{{ route('contact-us') }}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="fullName" class="fs-6 fw-semibold text-initial nols">Full Name <span class="text-danger">*</span></label>
+                                        <input type="text" id="fullName" class="form-control form-input" name="name" placeholder="First and Last Name" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="emailAddress" class="fs-6 fw-semibold text-initial nols">E-mail Address <span class="text-danger">*</span></label>
+                                        <input type="email" id="emailAddress" class="form-control form-input" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="hello@email.com" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contactNumber" class="fs-6 fw-semibold text-initial nols">Contact Number <span class="text-danger">*</span></label>
+                                        <input type="number" id="contactNumber" class="form-control form-input" name="contact" placeholder="Landline or Mobile" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message" class="fs-6 fw-semibold text-initial nols">Message <span class="text-danger">*</span></label>
+                                        <textarea name="message" id="message" class="form-control form-input textarea" rows="5"></textarea>
+                                    </div>
+
+                                    <div class="row g-2">
+                                        <div class="col-md-6">
+                                            <!-- <a class="button button-circle border-bottom ms-0 text-initial nols fw-normal button-large d-block text-center" href="javascript:void(0)" onclick="document.getElementById('contactUsForm').submit()">Submit</a> -->
+                                            <button name="submit" type="submit" id="submit-button" tabindex="5" value="Submit" class="button button-3d m-0" href="javascript:void(0)" onclick="document.getElementById('contactUsForm').submit()" style="background-color: #2b56d3;">
+                                                <i class="bi-send" style="margin-right: 5px;"></i> Submit
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6 d-flex justify-content-end">
+                                            <!-- <a href="javascript:void(0)" class="button button-circle button-dark border-bottom ms-0 text-initial nols fw-normal button-large d-block text-center" onclick="resetForm();">Reset</a> -->
+                                            <button name="reset" type="reset" id="reset-button" tabindex="5" class="button button-3d m-0 reset-button" href="javascript:void(0)" onclick="resetForm();">
+                                                <i class="bi-arrow-counterclockwise" style="margin-right: 5px;"></i>Reset
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {{-- hidden inputs --}}
+                                    <div class="form-group" style="display:none;">
+                                        <input type="text" id="services" class="form-control form-input" name="services" placeholder="Enter Subject" value="Design" required/>
+                                        <input type="text" id="subject" class="form-control form-input" name="subject" placeholder="Enter Subject" value="Design" required/>
+                                    </div>
+
+                                </form>
+                                {{-- captcha script --}}
+                                <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+                            </div>
                         </div>
+                    </div>
 
-                        <div>
-                            <!-- Optional input field for user's phone number -->
-                            <input
-                                type="tel"
-                                id="phone"
-                                name="phone"
-                                placeholder="Your Phone (Optional)"
-                            >
-                        </div>
-
-                        <div>
-                            <!-- Textarea for user's message, required -->
-                            <textarea
-                                id="message"
-                                name="message"
-                                rows="4"
-                                placeholder="Your Message"
-                                required
-                            ></textarea>
-                        </div>
-
-                        <button type="submit">Send Message</button>
-                    </form>
                 </div>
             </div>
-        </section>
+        </div>
+        <img class="position-absolute" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); bottom: 0; left: 10%;width: 770px;">
+    </section>
     </div>
 @endsection
 

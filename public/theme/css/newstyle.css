@@ -258,7 +258,7 @@
     font-weight: 600;
     font-size: 0.9rem;
     text-decoration: none;
-    background: linear-gradient(135deg, #2b56d3, #5b7ce8);
+    background: linear-gradient(135deg, #2b56d3);
     color: white;
     transition: opacity 0.3s ease, transform 0.3s ease;
     position: absolute;
@@ -276,7 +276,8 @@
 }
 
 .arrow-btn:hover {
-    background: linear-gradient(135deg, #1e3a8a, #4b6cb7);
+    background: linear-gradient(135deg, #ff5600);
+    color:white;
     transform: translateX(-50%) translateY(-2px);
 }
 
@@ -288,7 +289,7 @@
 
 
     /* Buttons */
-    .btn {
+    .btns {
         display: inline-flex;
         align-items: center;
         padding: 1rem 2rem;
@@ -297,35 +298,21 @@
         font-size: 1rem;
         text-decoration: none;
         transition: all 0.3s ease;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgb(255, 255, 255);
         cursor: pointer;
     }
 
-    .btn-primary {
+    .btn-primary1 {
         background: linear-gradient(135deg, #1e40af, #3b82f6);
         color: white;
         backdrop-filter: blur(10px);
     }
 
-    .btn-primary:hover {
-        background: linear-gradient(135deg, #1e3a8a, #2563eb);
-        transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-glass {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(10px);
+    .btn-primary1:hover {
+        background: linear-gradient(135deg, #ff5600);
         color: white;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-glass:hover {
-        background: rgba(255, 255, 255, 0.25);
         transform: translateY(-3px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
-
 /* Company Overview Specific Styles */
 .company-overview-container {
     display: flex;

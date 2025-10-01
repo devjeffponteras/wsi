@@ -867,8 +867,8 @@
                     Subscribe to our newsletter for the latest news, updates, and insights from WebFocus Solutions, Inc.
                 </p>
                 <div class="cta-button-group">
-                    <a href="#subscribe" class="btn btn-primary">Subscribe Now</a> <!-- Removed console.log -->
-                    <a href="#contact" class="btn btn-glass">Contact Us</a>
+                    <a href="#subscribe" class="btn btn-primary1">Subscribe Now</a> <!-- Removed console.log -->
+                    <a href="#contact" class="btn btn-primary1">Contact Us</a>
                 </div>
             </div>
         </div>

@@ -59,29 +59,33 @@
 @section('content')
 
     {!! $contents !!}
-
-    <div class="section mt-0 clearfix counter-cards hidden-up" style="padding: 80px 0; background-color: white;">
-        <div class="container clearfix">
-
-            <div class="mx-auto" id="counter-cards-container" style="max-width: 960px; transform: translate(0px, 145px); transition: ease 1s all; opacity: 0;">
-                <div class="row clearfix">
-                    <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="20" data-refresh-interval="100" data-speed="2000" data-comma="true" style="font-weight: 700 !important;"></span>+</div>
-                        <p class="opac-8">Years in Business</p>
+ <div class="section mt-0 clearfix counter-cards" style="padding: 100px 0; background-color: #f9f9f9;">
+        <div class="container-fluid">
+            <div class="mx-auto" id="counter-cards-container" style="max-width: 1400px; transform: translate(0px, 145px); transition: ease 1s all; opacity: 0;">
+                <div class="row g-4">
+                    <div class="col-12 col-md-4">
+                        <div class="counter-card text-center">
+                            <div class="counter counter-medium font-primary theme-font-color"><span data-from="100" data-to="20" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
+                            <p class="opac-8">Years in Business</p>
+                        </div>
                     </div>
-                    <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color"><span data-from="100" data-to="1600" data-refresh-interval="100" data-speed="2000" data-comma="true" style="font-weight: 700 !important;"></span>+</div>
-                        <p class="opac-8">Projects Delivered</p>
+                    <div class="col-12 col-md-4">
+                        <div class="counter-card text-center">
+                            <div class="counter counter-medium font-primary theme-font-color"><span data-from="100" data-to="1600" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
+                            <p class="opac-8">Projects Delivered</p>
+                        </div>
                     </div>
-                    <div class="col-12 col-md-4 center customers-count">
-                        <div class="counter center counter-medium font-primary theme-font-color">P<span data-from="1" data-to="1000" data-refresh-interval="100" data-speed="2000" data-comma="true" style="font-weight: 700 !important;"></span>+</div>
-                        <p class="opac-8">Clients Served</p>
+                    <div class="col-12 col-md-4">
+                        <div class="counter-card text-center">
+                            <div class="counter counter-medium font-primary theme-font-color"><span data-from="1" data-to="1000" data-refresh-interval="100" data-speed="2000" data-comma="true"></span>+</div>
+                            <p class="opac-8">Clients Served</p>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
 
     <div class="section feature-cards container-standard bg-white">
         <div class="d-flex flex-column flex-md-row feature-cards-top">

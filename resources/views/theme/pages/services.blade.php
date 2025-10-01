@@ -395,7 +395,7 @@
                 </div>
             </div>
         </div>
-        <img class="position-absolute" src="/images/hero.svg" style="transform: rotateY(180deg); bottom: 0; left: 10%;width: 770px;">
+        <img class="position-absolute" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); bottom: 0; left: 10%;width: 770px;">
     </section>
 </div>
 @endsection

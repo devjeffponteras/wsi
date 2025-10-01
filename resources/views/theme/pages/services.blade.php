@@ -263,7 +263,7 @@
                             <li>Reduce operational costs by up to 40%</li>
                         </ul>
                         <div class="package-cta">
-                            <a href="{{-- route('hosting.cloud-packages') --}}" class="btn btn-primary">Learn More</a>
+                            <a href="{{-- route('hosting.cloud-packages') --}}" class="btns btn-primary1">Learn More</a>
                         </div>
                     </div>
                 </div>
@@ -283,7 +283,7 @@
                             <li>Cost-optimized resource allocation</li>
                         </ul>
                         <div class="package-cta">
-                            <a href="{{-- route('hosting.cloud-packages') --}}" class="btn btn-primary">Learn More</a>
+                            <a href="{{-- route('hosting.cloud-packages') --}}" class="btns btn-primary1">Learn More</a>
                         </div>
                     </div>
                 </div>
@@ -303,7 +303,7 @@
                             <li>Regular vulnerability assessments</li>
                         </ul>
                         <div class="package-cta">
-                            <a href="{{-- route('hosting.cloud-packages') --}}" class="btn btn-primary">Learn More</a>
+                            <a href="{{-- route('hosting.cloud-packages') --}}" class="btns btn-primary1">Learn More</a>
                         </div>
                     </div>
                 </div>
@@ -335,7 +335,7 @@
                                     {{-- <button type="button" class="btn-close btn-sm" data-dismiss="alert" aria-hidden="true">&times;</button> --}}
                                 </div>
                             @endif
-                            
+
                             @if(session()->has('error'))
                                 <div class="style-msg successmsg">
                                     <div class="sb-msg"><i class="icon-thumbs-up"></i><strong>Success!</strong> {{ session()->get('error') }}</div>
@@ -378,7 +378,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    
+
                                     {{-- hidden inputs --}}
                                     <div class="form-group" style="display:none;">
                                         <input type="text" id="services" class="form-control form-input" name="services" placeholder="Enter Subject" value="Design" required/>
@@ -391,7 +391,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

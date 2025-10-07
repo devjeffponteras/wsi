@@ -46,7 +46,7 @@
                     <a href="#" id="top-search-trigger" class="custom-menu-link d-flex flex-row align-items-center" style="font-weight: 500;" title="Search">
                         <i class="icon-search"></i>
                     </a>
-                    <a href="#" class="custom-menu-link d-flex flex-row align-items-center" style="font-weight: 500;" title="Signin">
+                    <a href="{{ route('customer-front.login') }}" class="custom-menu-link d-flex flex-row align-items-center" style="font-weight: 500;" title="Signin">
                         <i class="icon-user"></i>
                     </a>
                     &nbsp;

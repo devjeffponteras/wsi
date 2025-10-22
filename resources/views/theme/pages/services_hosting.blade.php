@@ -5,6 +5,74 @@
 <link rel="stylesheet" href="{{ asset('theme/css/newstyle.css') }}" type="text/css" />
 <style>
     /* Hosting-Specific Styles */
+    .focuscare-overlay {
+    position: absolute;
+    top: 160px;   
+    left: 50px; 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    text-align: left;
+    }
+
+    .focuscare-text_bg {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #222;
+    margin: 2px 0;
+    }
+    .focuscare-text_hover {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #222;
+    margin: 2px 0;
+    }
+    .focuscare-text_best {
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #222;
+    margin: 4px 0;
+    }
+
+  .highlight {
+    background: linear-gradient(90deg, #00bcd4, #4caf50);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+  }
+
+    .focuscare-section {
+    padding: 60px 0;
+    }
+
+    .focuscare-img {
+        width: 100%;            
+        height: auto;
+        opacity: 0.3;           
+        object-fit: cover;      
+        border-radius: 12px;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+   .focuscare {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.1rem; 
+    line-height: 1.1;
+    color: #5b7ce8ff;
+    }
+        .focuscare-subs {
+        font-size: 1.1rem;
+        color: #555;
+        margin-top: 0; 
+        line-height: 1.2;
+    }
     .hosting-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -12,6 +80,7 @@
         margin: 2rem 1.5rem;
         padding: 0 1rem;
     }
+    
     .hosting-card {
         background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
         border-radius: 16px;
@@ -176,7 +245,7 @@
         color: #1f2937;
     }
     .package-price {
-        font-size: 1.5rem;
+        font-size: 2.3rem;
         font-weight: 800;
         color: #2b56d3;
         margin-bottom: 1rem;
@@ -199,6 +268,18 @@
         width: 100%;
         text-align: center;
     }
+        .package-save {
+        display: inline-block;
+        background: linear-gradient(90deg, #facc15, #f97316);
+        color: #ffffffff;
+        font-weight: bold;
+        font-size: 0.9rem;
+        padding: 6px 14px;
+        border-radius: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        margin-bottom: 8px;
+    }
+
     @media (max-width: 1279px) {
         .packages-grid {
             grid-template-columns: repeat(2, minmax(300px, 1fr));
@@ -212,6 +293,8 @@
             padding: 0.5rem 1rem;
         }
     }
+
+    
 </style>
 @endsection
 
@@ -346,23 +429,56 @@
                 </div>
             </div>
             <div class="packages-grid scroll-animate">
-                <!-- Cloud Hosting Package -->
                 <div class="package-card">
                     <div class="package-header">
-                        <div class="package-icon">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999M8.5 10.5h8.5M12 15.5v5.5"></path>
-                            </svg>
-                        </div>
-                        <h3 class="package-title">Cloud Starter</h3>
                     </div>
-                    <div class="package-price">$9.99/mo</div>
+                    
+                    <div style="margin-bottom: 14.8rem;" class="package-price"></div>
                     <ul class="package-features">
-                        <li>2 CPU Cores</li>
-                        <li>4GB RAM</li>
-                        <li>100GB SSD Storage</li>
-                        <li>1TB Bandwidth</li>
-                        <li>FocusCare+ Support</li>
+                        <li>Allocated Storage</li>
+                        <li>Monthly Allocated Data Cap</li>
+                        <li></li>
+                        <li>E-mail Accounts</li>
+                        <li></li>
+                        <li>Mailing Lists</li>
+                        <li>Control Panel</li>
+                        <li></li>
+                        <li></li>
+                        <li>Domains</li>
+                        <li></li>
+                        <li></li>
+                        <li>Live Statistics</li>
+                        <li>MySQL Database</li>
+                        <li>Back-up Fee</li>
+                        <li>Set-up Fee</li>
+                        <li>Technical Support</li>
+                        <li>FocusCare+</li>
+                    </ul>
+                    <div class="package-cta">
+                       
+                    </div>
+                </div>
+                <!-- Cloud Hosting Package -->
+                <div class="package-card">                       
+                    <p class="package-title">STANDARD PACKAGE</p>
+                    <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">
+                    SAVE 30%
+                    </p>
+                <div class="package-price text-2xl font-bold text-gray-800">P497/month</div>
+                    <p>Lock in 2 years of reliable hosting for just ₱11,928. </p>
+                    <ul class="package-features">
+                        <li>6 GB</li>
+                        <li>50 GB</li>
+                        <li>Multiple accounts Subject to the storage capacity</li>
+                        <li>Multiple accounts Subject to the storage capacity</li>
+                        <li>Free</li>
+                        <li>1 hosted Domain with Multiple Sub-domains and Domain Aliases subject to storage capacity</li>
+                        <li>Free</li>
+                        <li>Free</li>
+                        <li>Free</li>
+                        <li>Free</li>
+                        <li>24/7 Technical Support </li>
+                        <li>Free</li>
                     </ul>
                     <div class="package-cta">
                         <a href="{{-- route('hosting.cloud-starter') --}}" class="btns btn-primary1">Get Started</a>
@@ -370,21 +486,23 @@
                 </div>
                 <!-- Shared Hosting Package -->
                 <div class="package-card">
-                    <div class="package-header">
-                        <div class="package-icon package-icon-secondary">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.79 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.79 4 8 4s8-1.79 8-4M4 7c0-2.21 3.79-4 8-4s8 1.79 8 4m0 5c0 2.21-3.79 4-8 4s-8-1.79-8-4"></path>
-                            </svg>
-                        </div>
-                        <h3 class="package-title">Shared Basic</h3>
-                    </div>
-                    <div class="package-price">$4.99/mo</div>
+                        <p class="package-title">DELUXE PACKAGE</p>
+                        <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">SAVE 30%</p>
+                    <div class="package-price">P875/month</div>
+                    <p> Lock in 2 years of reliable hosting for just ₱21,000.</p> 
                     <ul class="package-features">
-                        <li>1 Website</li>
-                        <li>10GB SSD Storage</li>
-                        <li>100GB Bandwidth</li>
-                        <li>Free SSL Certificate</li>
-                        <li>FocusCare+ Support</li>
+                        <li>9 GB</li>
+                        <li>100 GB</li>
+                        <li>Multiple accounts Subject to the storage capacity</li>
+                         <li>Multiple accounts Subject to the storage capacity</li>
+                        <li>Free</li>
+                        <li>1 hosted Domain with Multiple Sub-domains and Domain Aliases subject to storage capacity</li>
+                        <li>Free</li>
+                        <li>Free</li>
+                        <li>Free</li>
+                        <li>Free</li>
+                        <li>24/7 Technical Support</li>
+                        <li>Free</li>
                     </ul>
                     <div class="package-cta">
                         <a href="{{-- route('hosting.shared-basic') --}}" class="btns btn-primary1">Get Started</a>
@@ -392,106 +510,95 @@
                 </div>
                 <!-- Dedicated Hosting Package -->
                 <div class="package-card">
-                    <div class="package-header">
-                        <div class="package-icon package-icon-accent">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"></path>
-                            </svg>
-                        </div>
-                        <h3 class="package-title">Dedicated Pro</h3>
-                    </div>
-                    <div class="package-price">$49.99/mo</div>
+                    <p class="package-title">BUSINESS PACKAGE</p>
+                    <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">SAVE 30%</p>
+                    <div class="package-price">P1407/month</div>
+                    <p>Lock in 2 years of reliable hosting for just ₱ 33,768. </p>
                     <ul class="package-features">
-                        <li>4 CPU Cores</li>
-                        <li>16GB RAM</li>
-                        <li>500GB SSD Storage</li>
-                        <li>5TB Bandwidth</li>
-                        <li>FocusCare+ Support</li>
+                        <li>12 GB</li>
+                        <li>150 GB</li>
+                        <li>Multiple accounts Subject to the storage capacity</li>
+                        <li>Multiple accounts Subject to the storage capacity</li>
+                        <li>Free</li>
+                         <li>1 hosted Domain with Multiple Sub-domains and Domain Aliases subject to storage capacity</li>
+                        <li>Free</li>
+                        <li>Free</li>
+                        <li>Free</li>
+                        <li>Free</li>
+                        <li>24/7 Technical Support</li>
+                        <li>Free</li>
                     </ul>
                     <div class="package-cta">
                         <a href="{{-- route('hosting.dedicated-pro') --}}" class="btns btn-primary1">Get Started</a>
                     </div>
                 </div>
                 <!-- Bare-Metal Hosting Package -->
-                <div class="package-card">
-                    <div class="package-header">
-                        <div class="package-icon package-icon-baremetal">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19a2 2 0 01-2-2V7a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1M5 19h14a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 01-2 2z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="package-title">Bare-Metal Elite</h3>
-                    </div>
-                    <div class="package-price">$99.99/mo</div>
-                    <ul class="package-features">
-                        <li>8 CPU Cores</li>
-                        <li>32GB RAM</li>
-                        <li>1TB SSD Storage</li>
-                        <li>10TB Bandwidth</li>
-                        <li>FocusCare+ Support</li>
-                    </ul>
-                    <div class="package-cta">
-                        <a href="{{-- route('hosting.baremetal-elite') --}}" class="btns btn-primary1">Get Started</a>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </section>
 
     <!-- Overview of FocusCare+ -->
     <section class="focuscare-section">
-            <div class="container-standard">
-                <div class="text-center mb-12 scroll-animate animate">
-                    <h2 class="section-title">Overview of FocusCare+</h2>
-                    <p class="section-subtitle">
-                        Ensuring a Seamless Hosting Experience with FocusCare+
-                    </p>
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-8 p-0">
+                    <img src="{{ asset('images/focuscare.jpg') }}" class="focuscare-img w-100" alt="">
+        <div class="focuscare-overlay d-flex flex-column">
+        <p class="focuscare-text_hover">When you choose a hosting service, you need more than just storage.</p>
+        <p style="margin-bottom: 120px;" class="focuscare-text_hover">You Need reliability, security, and support.</p>
+        
+        <p class="focuscare-text_bg">
+        That's why we offer <span class="highlight">FocusCare+</span>, our after-sales service
+        </p>
+        <p class="focuscare-text_bg">
+        that keeps your hosting environment optimized, secured,
+        </p>
+        <p class="focuscare-text_bg">
+        and constantly reliable.
+        </p>
+        </div>
                 </div>
-
-                <!-- Middle Row: 2 Cards -->
-                <div class="scroll-animate d-flex flex-row justify-content-between gap-2 animate">
-                    <!-- Introduction -->
-                    <div class="focuscare-card col">
-                        <h3 class="focuscare-title mb-4">Introduction to FocusCare+</h3>
-                        <p class="focuscare-text">
-                            When you invest in a hosting service, you’re not just looking for a place to store your website—you want reliability, security, and ongoing support. At WebFocus Solutions, Inc., we understand that maintaining a smooth online presence goes beyond the initial setup. That’s why we offer FocusCare+, a dedicated after-sales support service that ensures your hosting environment stays optimized, secure, and trouble-free.
-                        </p>
-                    </div>
-
-                    <!-- What is FocusCare+? -->
-                    <div class="focuscare-card col">
-                        <h3 class="focuscare-title mb-4">What is FocusCare+?</h3>
-                        <p class="focuscare-text">
-                            FocusCare+ isn’t just another IT service—it’s a built-in support system that comes with your WebFocus hosting package. Think of it as your website’s personal doctor, always ready to diagnose and fix any software or application-related issues that might arise. Whether it’s routine maintenance, troubleshooting, or preventive care, FocusCare+ ensures that your website runs at peak performance without extra costs.
-                        </p>
-                    </div>
-
-                    <!-- Keeping IT Solutions in Top Condition -->
-                    <div class="focuscare-card col">
-                        <h3 class="focuscare-title mb-4">FocusCare Plus | Keeping IT Solutions in Top Condition</h3>
-                        <p class="focuscare-text">
-                            WebFocus Solutions, Inc. does more than just host websites. We also provide personalized after-sales support with our FocusCare+ service. From website maintenance to troubleshooting, our skilled system administrators work to keep your hosting environment and availed IT Services secure and optimal at no additional cost.
-                        </p>
-                    </div>
-
-                    <!-- Reliable and Cost-Effective IT Support -->
-                    <div class="focuscare-card col">
-                        <h3 class="focuscare-title mb-4">Reliable and Cost-effective IT Support</h3>
-                        <p class="focuscare-text">
-                            FocusCare+ is a key component of our service, designed to help you administer your software and applications more easily. Instead of worrying about unanticipated technological issues, you can trust our experts to provide proactive solutions that save you time and money. We provide high-quality, continual support, guaranteeing that your online presence is stable and hassle-free.
-                        </p>
-                    </div>
-
-                    <!-- Why After-Sales Support Matters -->
-                    <div class="focuscare-card col">
-                        <h3 class="focuscare-title mb-4">Why After-Sales Support Matters</h3>
-                        <p class="focuscare-text">
-                            Many businesses focus on choosing the right hosting provider but overlook the importance of ongoing support. Without a reliable after-sales service, minor technical issues can escalate into major disruptions, leading to downtime, security risks, and lost revenue. With FocusCare+, you don’t have to worry about these challenges. Our expert system administrators proactively monitor and address potential issues before they affect your business.
-                        </p>
-                    </div>
+                <div class="col-lg-4  p-5">
+                    <h2 class="focuscare">FOCUSCARE+</h2>
+                    <p class="focuscare-subs">Seamless Support for Your Hosting Needs</p>  
                 </div>
             </div>
+        </div>
         </section>
+
+        <section class="section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 scroll-animate">
+                <h4 class="section-title">Built-In Expertise That Keeps Your Website Running Smoothly.</h4>
+               
+            </div>
+            <div class="hosting-grid scroll-animate">
+            <!-- Cloud Hosting -->
+            <div class="hosting-card">
+                <p class="focuscare-text_best">
+                    Included with your WebFocus hosting plan, FocusCare+ acts as your website’s personal support team. We keep it secure, optimized, and performing at its best, all at no extra cost.
+                </p>
+            </div>
+
+            <!-- Shared Hosting -->
+            <div class="hosting-card">
+                <p class="focuscare-text_best">
+                   Our expert team delivers proactive solutions that keep your systems secure, your software running smoothly, and your business uninterrupted. Save time, and stay confident knowing your online presence is always in good hands.
+                </p>
+               
+            </div>
+
+            <!-- Dedicated Hosting -->
+            <div class="hosting-card">
+                <p class="focuscare-text_best">
+                   FocusCare+ simplifies the way you manage your software and applications. Our experts handle maintenance, troubleshooting, and optimization to keep your systems secure and performing at their best — at no extra cost
+                </p>
+            </div>
+        </div>
+
+        </div>
+    </section>
 
     {{-- <section class="section">
         <div class="core-values-container">
@@ -589,22 +696,13 @@
         </div>
     </section>
     <!-- FocusCare+ Premium Support -->
-    <section class="focuscare-section">
-        <div class="focuscare-container">
+
+    <section class="section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 scroll-animate">
-                <h2 class="section-title">FocusCare+ – Premium Support</h2>
-                <p class="section-subtitle">
-                    Comprehensive After-Sales Support Included in Your Plan
-                </p>
-            </div>
-            <div class="focuscare-grid scroll-animate">
-                <div class="focuscare-card">
-                    <h3 class="focuscare-title">FocusCare+ – Premium After-Sales Support</h3>
-                    <p class="focuscare-text">
-                        With FocusCare+, WebFocus Solutions, Inc. offers more than just hosting—we provide peace of mind. This built-in after-sales support ensures your website stays secure, optimized, and running smoothly. From routine maintenance to troubleshooting and preventive care, FocusCare+ gives you expert IT assistance without the extra cost. Reliable hosting with continuous support? That’s the WebFocus promise.
-                    </p>
-                </div>
-            </div>
+<h4> Reliable hosting meets personalized support. That’s <span class="highlight">FocusCare+</span> by WebFocus Solutions, Inc.</h4>
+<h4> Get started with worry-free hosting!</h4>
+
         </div>
     </section>
     <!-- CTA Section -->

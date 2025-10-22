@@ -33,7 +33,7 @@
                 </a>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="bi bi-geo-alt-fill me-2" style="font-size: 1.2rem; color: #1697f9;"></i>
-                        <span>
+                        <span style="color: white;">
                             Unit 907-909, Antel Global Corporate Center,<br>
                             Julia Vargas Avenue, Ortigas Center,<br>
                             Pasig City, Philippines
@@ -41,7 +41,7 @@
                     </li>
                     <li class="mb-3 d-flex align-items-center">
                         <i class="bi bi-telephone-fill me-2" style="font-size: 1.2rem; color: #1697f9;"></i>
-                        <span>
+                        <span style="color: white;">
                             +63 (2) 8706-5796
                         </span>
                     </li>
@@ -70,16 +70,21 @@
             <div class="col-lg-4 col-md-4 text-center">
                 <div class="d-flex justify-content-center gap-3">
                     <img src="{{ asset('images/testi/award.png') }}" alt="Award 1" class="award-img" style="max-height: 180px;">
-                </div><br>
-                    <div class="d-flex justify-content-center gap-3">
+                </div>
+                <br>
+                <div class="col-lg-4 col-md-4 text-center">
+                <div class="d-flex justify-content-center gap-3">
                     <img src="{{ asset('images/testi/award2.jpg') }}" alt="Award 2" class="award-img" style="max-height: 120px;">
                 </div>
+             </div>
             </div>
+
+            
         </div>
 
         <!-- Bottom -->
         <div class="text-center mt-5 pt-4 border-top border-white border-opacity-10">
-            <p class="text-white-50 mb-0">Copyright © {{ date('Y') }} All Rights Reserved by Webfocus Solutions Inc.</p><br>
+            <p class="text-white-50 mb-0">Copyright © {{ date('Y') }} Webfocus Solutions Inc. All Rights Reserved.</p><br>
         </div>
     </div>
 </footer>

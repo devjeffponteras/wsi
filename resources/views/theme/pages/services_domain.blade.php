@@ -323,70 +323,7 @@
     </section>
 
     <!-- Domain Checker -->
-    <section class="section domain-checker">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12 scroll-animate">
-                <h2 class="section-title">Find Your Domain Now</h2>
-                <p class="section-subtitle">
-                    Enter your desired domain name to check its availability and secure it before someone else does.
-                </p>
-
-                <form class="flex flex-row gap-2 items-center">
-                    <input type="text" class="domain-input" placeholder="Enter your domain (e.g., mybusiness)" aria-label="Domain name input">
-                    <select class="domain-extension" aria-label="Domain extension">
-                        <option value=".com">.com</option>
-                        <option value=".net">.net</option>
-                        <option value=".org">.org</option>
-                        <option value=".ph">.ph</option>
-                        <option value=".info">.info</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary1" onclick="console.log('Check Domain Availability clicked')">Check Availability</button>
-                </form>
-                <table class="domain-table">
-                    <thead>
-                        <tr>
-                            <th>TLD</th>
-                            <th>Register</th>
-                            <th>Renew</th>
-                            <th>Transfer</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>.com</td>
-                            <td>$10.99/yr</td>
-                            <td>$12.99/yr</td>
-                            <td>$9.99</td>
-                        </tr>
-                        <tr>
-                            <td>.net</td>
-                            <td>$12.99/yr</td>
-                            <td>$14.99/yr</td>
-                            <td>$10.99</td>
-                        </tr>
-                        <tr>
-                            <td>.org</td>
-                            <td>$11.99/yr</td>
-                            <td>$13.99/yr</td>
-                            <td>$10.49</td>
-                        </tr>
-                        <tr>
-                            <td>.ph</td>
-                            <td>$15.99/yr</td>
-                            <td>$16.99/yr</td>
-                            <td>$12.99</td>
-                        </tr>
-                        <tr>
-                            <td>.info</td>
-                            <td>$9.99/yr</td>
-                            <td>$11.99/yr</td>
-                            <td>$8.99</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-             </div>
-    </section>
+    
 
     <!-- FAQ Section -->
     <section class="section" style="background: linear-gradient(135deg, #f0f9ff, #ffffff);">

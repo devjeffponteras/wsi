@@ -69,12 +69,12 @@
             <!-- Awards -->
             <div class="col-lg-4 col-md-4 text-center">
                 <div class="d-flex justify-content-center gap-3">
-                    <img src="{{ asset('images/testi/award.png') }}" alt="Award 1" class="award-img" style="max-height: 180px;">
+                    <img src="{{ asset('images/testi/award.png') }}" alt="Award 1" class="award-img" style="max-height: 200px;">
                 </div>
                 <br>
                 <div class="col-lg-4 col-md-4 text-center">
                 <div class="d-flex justify-content-center gap-3">
-                    <img src="{{ asset('images/testi/award2.jpg') }}" alt="Award 2" class="award-img" style="max-height: 120px;">
+                    <img src="{{ asset('images/testi/award2.jpg') }}" alt="Award 2" class="award-img" style="max-height: 180px;">
                 </div>
              </div>
             </div>

@@ -4,11 +4,24 @@
 @section('pagecss')
 <link rel="stylesheet" href="{{ asset('theme/css/newstyle.css') }}" type="text/css" />
 <style>
-    /* Hosting-Specific Styles */
+
+    .text-center.mb-12 h2 {
+    margin: 0;           
+    line-height: 1.3;    
+    }
+
+    .text-center.mb-12 h2 + h2 {
+    margin-top: 0.5rem;  
+    }
+
+    .text-center.mb-12 {
+    margin-bottom: 2rem; 
+    }
+
     .focuscare-overlay {
     position: absolute;
-    top: 160px;
-    left: 50px;
+    top: 260px;   
+    left: 50px; 
     width: 100%;
     height: 100%;
     display: flex;
@@ -19,15 +32,15 @@
     }
 
     .focuscare-text_bg {
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 1.7rem;
+    font-weight: 550;
     line-height: 1.2;
     color: #222;
     margin: 2px 0;
     }
     .focuscare-text_hover {
-    font-size: 1rem;
-    font-weight: 400;
+    font-size: 1.3rem;
+    font-weight: 450;
     line-height: 1.2;
     color: #222;
     margin: 2px 0;
@@ -41,10 +54,14 @@
     }
 
   .highlight {
-    background: linear-gradient(90deg, #00bcd4, #4caf50);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
+        display: inline-block;
+        background: linear-gradient(90deg, #facc15);
+        color: #000000ff;
+        font-size: 1.8rem;
+        padding: 6px 14px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        margin-bottom: 8px;
+        font-weight: 600;
   }
 
     .focuscare-section {
@@ -61,14 +78,14 @@
     }
 
    .focuscare {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.1rem;
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 0.1rem; 
     line-height: 1.1;
-    color: #5b7ce8ff;
+    color: #086fddff;
     }
         .focuscare-subs {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         color: #555;
         margin-top: 0;
         line-height: 1.2;
@@ -81,6 +98,16 @@
         padding: 0 1rem;
     }
 
+    .hosting-grid_fc {
+        display: flex;
+        justify-content: center;  
+        align-items: stretch;    
+        flex-wrap: wrap;          
+        gap: 7rem;                
+        text-align: center;
+        margin-top: 2rem;
+        }
+    
     .hosting-card {
         background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
         border-radius: 16px;
@@ -94,6 +121,28 @@
         justify-content: space-between;
         height: 100%;
     }
+
+    .hosting-card_fc {
+    background: #f9fafb;
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+    width:300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hosting-card_fc:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-color: #3b82f6;
+    }
+
     .hosting-card:hover {
         transform: translateY(-8px);
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
@@ -285,6 +334,7 @@
         padding: 0;
         margin-bottom: 1.5rem;
         flex-grow: 1;
+        text-align: center;
     }
     .package-features li {
         padding: 0.5rem 0;
@@ -511,7 +561,7 @@
                         <li>Free</li>
                     </ul>
                     <div class="package-cta">
-                        <a href="{{-- route('hosting.cloud-starter') --}}" class="btns btn-primary1">Get Started</a>
+                        <a href="{{ route('contact-us') }}" class="btns btn-primary1">Inquire Now</a>
                     </div>
                 </div>
                 <!-- Shared Hosting Package -->
@@ -535,7 +585,7 @@
                         <li>Free</li>
                     </ul>
                     <div class="package-cta">
-                        <a href="{{-- route('hosting.shared-basic') --}}" class="btns btn-primary1">Get Started</a>
+                        <a href="{{ route('contact-us') }}" class="btns btn-primary1">Inquire Now</a>
                     </div>
                 </div>
                 <!-- Dedicated Hosting Package -->
@@ -545,7 +595,7 @@
                     <div class="package-price">P1407/month</div>
                     <p>Lock in 2 years of reliable hosting for just ₱ 33,768. </p>
                     <ul class="package-features">
-                        <li>12 GB</li>
+                        <li>2 GB</li>
                         <li>150 GB</li>
                         <li>Multiple accounts Subject to the storage capacity</li>
                         <li>Multiple accounts Subject to the storage capacity</li>
@@ -559,7 +609,7 @@
                         <li>Free</li>
                     </ul>
                     <div class="package-cta">
-                        <a href="{{-- route('hosting.dedicated-pro') --}}" class="btns btn-primary1">Get Started</a>
+                        <a href="{{ route('contact-us') }}" class="btns btn-primary1">Inquire Now</a>
                     </div>
                 </div>
                 <!-- Bare-Metal Hosting Package -->
@@ -573,7 +623,7 @@
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-lg-8 p-0">
-                    <img src="{{ asset('images/focuscare.jpg') }}" class="focuscare-img w-100" alt="">
+        <img src="{{ asset('images/focuscare.jpg') }}" class="focuscare-img w-full h-auto rounded-lg">
         <div class="focuscare-overlay d-flex flex-column">
         <p class="focuscare-text_hover">When you choose a hosting service, you need more than just storage.</p>
         <p style="margin-bottom: 120px;" class="focuscare-text_hover">You Need reliability, security, and support.</p>
@@ -590,29 +640,29 @@
         </div>
                 </div>
                 <div class="col-lg-4  p-5">
-                    <h2 class="focuscare">FOCUSCARE+</h2>
-                    <p class="focuscare-subs">Seamless Support for Your Hosting Needs</p>
+                    <h1 class="focuscare">FocusCare+</h1>
+                    <p class="focuscare-subs">Seamless Support for Your Hosting Needs</p>  
                 </div>
             </div>
         </div>
         </section>
 
-        <section class="section">
+        <section style="padding: 0.5rem 0;" class="section">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 scroll-animate">
                 <h4 class="section-title">Built-In Expertise That Keeps Your Website Running Smoothly.</h4>
 
             </div>
-            <div class="hosting-grid scroll-animate">
+            <div class="hosting-grid_fc scroll-animate">
             <!-- Cloud Hosting -->
-            <div class="hosting-card">
+            <div class="hosting-card_fc">
                 <p class="focuscare-text_best">
                     Included with your WebFocus hosting plan, FocusCare+ acts as your website’s personal support team. We keep it secure, optimized, and performing at its best, all at no extra cost.
                 </p>
             </div>
 
             <!-- Shared Hosting -->
-            <div class="hosting-card">
+            <div class="hosting-card_fc">
                 <p class="focuscare-text_best">
                    Our expert team delivers proactive solutions that keep your systems secure, your software running smoothly, and your business uninterrupted. Save time, and stay confident knowing your online presence is always in good hands.
                 </p>
@@ -620,7 +670,7 @@
             </div>
 
             <!-- Dedicated Hosting -->
-            <div class="hosting-card">
+            <div class="hosting-card_fc">
                 <p class="focuscare-text_best">
                    FocusCare+ simplifies the way you manage your software and applications. Our experts handle maintenance, troubleshooting, and optimization to keep your systems secure and performing at their best — at no extra cost
                 </p>
@@ -727,12 +777,11 @@
     </section>
     <!-- FocusCare+ Premium Support -->
 
-    <section class="section">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 scroll-animate">
-<h4> Reliable hosting meets personalized support. That’s <span class="highlight">FocusCare+</span> by WebFocus Solutions, Inc.</h4>
-<h4> Get started with worry-free hosting!</h4>
-
+    <section style="padding: 1rem 0;" class="section">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8 scroll-animate">
+        <h2 class="mb-2 leading-tight"> Reliable hosting meets personalized support. That’s <span class="highlight">FocusCare+</span> by WebFocus Solutions, Inc.</h2>
+        <h2 class="leading-tight"> Get started with worry-free hosting!</h2>
         </div>
     </section>
     <!-- CTA Section -->

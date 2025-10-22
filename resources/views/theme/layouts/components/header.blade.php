@@ -50,7 +50,7 @@
                         <i class="icon-user"></i>
                     </a>
                     &nbsp;
-                    <a href="#" class="btn btn-sm btn-primary d-flex flex-row align-items-center ms-2 btn-hover-theme" style="font-weight: 500;">
+                    <a href="{{ route('contact-us') }}" class="btn btn-sm btn-primary d-flex flex-row align-items-center ms-2 btn-hover-theme" style="font-weight: 500;">
                         GET IN TOUCH WITH US 
                         &nbsp;
                         <i class="icon-line-arrow-right"></i>

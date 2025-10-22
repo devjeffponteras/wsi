@@ -318,13 +318,10 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="see-all-button" id="toggleDomainChecker">See All Domain Price</button>
         </div>
     </section>
-
     <!-- Domain Checker -->
     
-
     <!-- FAQ Section -->
     <section class="section" style="background: linear-gradient(135deg, #f0f9ff, #ffffff);">
         <div class="container mx-auto px-6">

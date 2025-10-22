@@ -43,25 +43,11 @@
 
 	<!-- Privacy and Cookie Policy Banner Wrapper
 	============================================= -->
-<style>
-@keyframes slideIn {
-    from {
-        bottom: -100px;
-        opacity: 0;
-    }
-    to {
-        bottom: 0;
-        opacity: 1;
-    }
-}
-.privacy-banner {
-    animation: slideIn 0.5s ease-in-out forwards;
-}
-</style>
-<div id="privacyBanner" class="privacy-banner" style="background-color: #f8e1e9; color: #333333; padding: 15px; text-align: center; width: 100%; position: fixed; bottom: 0; left: 0; z-index: 1000; display: none; box-shadow: 0 -2px 5px rgba(0,0,0,0.1);">
-    <span>By using the site, you agree to the <span style="color: #ff0000;">Privacy</span> and <span style="color: #ff0000;">Terms of Use</span>.</span>
-    <button id="agreeButton" style="background-color: #4CCD99; color: white; border: none; padding: 8px 20px; margin-left: 20px; cursor: pointer; border-radius: 20px;">I Agree</button>
-</div>
+	@include('theme.layouts.components.privacy-styles')
+
+	@include('theme.layouts.components.privacy-banner')
+
+	@include('theme.layouts.components.privacy-terms-combined-modal')
 	<!-- Chatbot
 	============================================= -->
     @include('theme.layouts.components.chatbot')

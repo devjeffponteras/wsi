@@ -7,8 +7,8 @@
     /* Hosting-Specific Styles */
     .focuscare-overlay {
     position: absolute;
-    top: 160px;   
-    left: 50px; 
+    top: 160px;
+    left: 50px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -52,10 +52,10 @@
     }
 
     .focuscare-img {
-        width: 100%;            
+        width: 100%;
         height: auto;
-        opacity: 0.3;           
-        object-fit: cover;      
+        opacity: 0.3;
+        object-fit: cover;
         border-radius: 12px;
         transition: opacity 0.3s ease, transform 0.3s ease;
     }
@@ -63,14 +63,14 @@
    .focuscare {
     font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 0.1rem; 
+    margin-bottom: 0.1rem;
     line-height: 1.1;
     color: #5b7ce8ff;
     }
         .focuscare-subs {
         font-size: 1.1rem;
         color: #555;
-        margin-top: 0; 
+        margin-top: 0;
         line-height: 1.2;
     }
     .hosting-grid {
@@ -80,7 +80,7 @@
         margin: 2rem 1.5rem;
         padding: 0 1rem;
     }
-    
+
     .hosting-card {
         background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
         border-radius: 16px;
@@ -164,22 +164,52 @@
     .plans-header .plan-tabs {
         display: flex;
         justify-content: center;
-        gap: 1rem;
+        gap: 0;
         margin-top: 1rem;
+        position: relative;
+        background: #e5e7eb;
+        border-radius: 50px;
+        padding: 4px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .plans-header .plan-tabs::before {
+        content: '';
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: calc(50% - 4px);
+        height: calc(100% - 8px);
+        background: #2b56d3;
+        border-radius: 46px;
+        transition: transform 0.3s ease;
+        z-index: 1;
+    }
+    .plans-header .plan-tabs.yearly::before {
+        transform: translateX(100%);
     }
     .plans-header .plan-tabs a {
-        padding: 0.5rem 1.5rem;
-        background: #e5e7eb;
-        border-radius: 9999px; /* Full oval shape */
+        padding: 0.75rem 2rem;
+        background: transparent;
+        border-radius: 46px;
         text-decoration: none;
-        color: #1f2937;
+        color: #6b7280;
         font-weight: 600;
         display: inline-block;
-        transition: background 0.3s ease, color 0.3s ease;
+        transition: color 0.3s ease;
+        position: relative;
+        z-index: 2;
+        min-width: 120px;
+        text-align: center;
     }
-    .plans-header .plan-tabs a.active,
+    .plans-header .plan-tabs a.active {
+        color: white;
+    }
     .plans-header .plan-tabs a:hover {
-        background: #2b56d3;
+        color: #2b56d3;
+    }
+    .plans-header .plan-tabs a.active:hover {
         color: white;
     }
     .plans-intro {
@@ -294,7 +324,7 @@
         }
     }
 
-    
+
 </style>
 @endsection
 
@@ -422,9 +452,9 @@
                         </div>
                         <span class="rating-reviews">(1,237 Reviews)</span>
                     </div>
-                    <div class="plan-tabs">
-                        <a href="#" class="active">Monthly Plans</a>
-                        <a href="#">Yearly Plans</a>
+                    <div class="plan-tabs" id="planToggle">
+                        <a href="#" class="active" data-plan="monthly">Monthly Plans</a>
+                        <a href="#" data-plan="yearly">Yearly Plans</a>
                     </div>
                 </div>
             </div>
@@ -432,7 +462,7 @@
                 <div class="package-card">
                     <div class="package-header">
                     </div>
-                    
+
                     <div style="margin-bottom: 14.8rem;" class="package-price"></div>
                     <ul class="package-features">
                         <li>Allocated Storage</li>
@@ -455,11 +485,11 @@
                         <li>FocusCare+</li>
                     </ul>
                     <div class="package-cta">
-                       
+
                     </div>
                 </div>
                 <!-- Cloud Hosting Package -->
-                <div class="package-card">                       
+                <div class="package-card">
                     <p class="package-title">STANDARD PACKAGE</p>
                     <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">
                     SAVE 30%
@@ -489,7 +519,7 @@
                         <p class="package-title">DELUXE PACKAGE</p>
                         <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">SAVE 30%</p>
                     <div class="package-price">P875/month</div>
-                    <p> Lock in 2 years of reliable hosting for just ₱21,000.</p> 
+                    <p> Lock in 2 years of reliable hosting for just ₱21,000.</p>
                     <ul class="package-features">
                         <li>9 GB</li>
                         <li>100 GB</li>
@@ -533,7 +563,7 @@
                     </div>
                 </div>
                 <!-- Bare-Metal Hosting Package -->
-                
+
             </div>
         </div>
     </section>
@@ -547,7 +577,7 @@
         <div class="focuscare-overlay d-flex flex-column">
         <p class="focuscare-text_hover">When you choose a hosting service, you need more than just storage.</p>
         <p style="margin-bottom: 120px;" class="focuscare-text_hover">You Need reliability, security, and support.</p>
-        
+
         <p class="focuscare-text_bg">
         That's why we offer <span class="highlight">FocusCare+</span>, our after-sales service
         </p>
@@ -561,7 +591,7 @@
                 </div>
                 <div class="col-lg-4  p-5">
                     <h2 class="focuscare">FOCUSCARE+</h2>
-                    <p class="focuscare-subs">Seamless Support for Your Hosting Needs</p>  
+                    <p class="focuscare-subs">Seamless Support for Your Hosting Needs</p>
                 </div>
             </div>
         </div>
@@ -571,7 +601,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 scroll-animate">
                 <h4 class="section-title">Built-In Expertise That Keeps Your Website Running Smoothly.</h4>
-               
+
             </div>
             <div class="hosting-grid scroll-animate">
             <!-- Cloud Hosting -->
@@ -586,7 +616,7 @@
                 <p class="focuscare-text_best">
                    Our expert team delivers proactive solutions that keep your systems secure, your software running smoothly, and your business uninterrupted. Save time, and stay confident knowing your online presence is always in good hands.
                 </p>
-               
+
             </div>
 
             <!-- Dedicated Hosting -->
@@ -812,6 +842,41 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
     // Observe scroll animation elements
     document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+
+    // Plan toggle functionality
+    const planToggle = document.getElementById('planToggle');
+    const monthlyTab = planToggle.querySelector('[data-plan="monthly"]');
+    const yearlyTab = planToggle.querySelector('[data-plan="yearly"]');
+
+    function switchToMonthly() {
+        planToggle.classList.remove('yearly');
+        monthlyTab.classList.add('active');
+        yearlyTab.classList.remove('active');
+        // Add your monthly plan display logic here
+        console.log('Switched to Monthly Plans');
+    }
+
+    function switchToYearly() {
+        planToggle.classList.add('yearly');
+        yearlyTab.classList.add('active');
+        monthlyTab.classList.remove('active');
+        // Add your yearly plan display logic here
+        console.log('Switched to Yearly Plans');
+    }
+
+    monthlyTab.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (!this.classList.contains('active')) {
+            switchToMonthly();
+        }
+    });
+
+    yearlyTab.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (!this.classList.contains('active')) {
+            switchToYearly();
+        }
+    });
 });
 </script>
 @endsection

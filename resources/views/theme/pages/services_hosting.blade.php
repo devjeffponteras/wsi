@@ -6,22 +6,22 @@
 <style>
 
     .text-center.mb-12 h2 {
-    margin: 0;           
-    line-height: 1.3;    
+    margin: 0;
+    line-height: 1.3;
     }
 
     .text-center.mb-12 h2 + h2 {
-    margin-top: 0.5rem;  
+    margin-top: 0.5rem;
     }
 
     .text-center.mb-12 {
-    margin-bottom: 2rem; 
+    margin-bottom: 2rem;
     }
 
     .focuscare-overlay {
     position: absolute;
-    top: 260px;   
-    left: 50px; 
+    top: 260px;
+    left: 50px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -80,7 +80,7 @@
    .focuscare {
     font-size: 4rem;
     font-weight: 800;
-    margin-bottom: 0.1rem; 
+    margin-bottom: 0.1rem;
     line-height: 1.1;
     color: #086fddff;
     }
@@ -100,14 +100,14 @@
 
     .hosting-grid_fc {
         display: flex;
-        justify-content: center;  
-        align-items: stretch;    
-        flex-wrap: wrap;          
-        gap: 7rem;                
+        justify-content: center;
+        align-items: stretch;
+        flex-wrap: wrap;
+        gap: 7rem;
         text-align: center;
         margin-top: 2rem;
         }
-    
+
     .hosting-card {
         background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
         border-radius: 16px;
@@ -360,6 +360,55 @@
         margin-bottom: 8px;
     }
 
+    /* SRP Highlighting Styles */
+    .srp-highlight {
+        background: linear-gradient(135deg, #fee2e2, #fecaca) !important;
+        border: 2px solid #f87171 !important;
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 12px;
+        position: relative;
+        box-shadow: 0 4px 12px rgba(248, 113, 113, 0.2);
+        animation: srpPulse 2s infinite;
+    }
+
+    .srp-highlight::before {
+        content: "💰";
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        font-size: 1.2rem;
+        background: #ef4444;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes srpPulse {
+        0%, 100% {
+            box-shadow: 0 4px 12px rgba(248, 113, 113, 0.2);
+        }
+        50% {
+            box-shadow: 0 6px 16px rgba(248, 113, 113, 0.4);
+        }
+    }
+
+    .srp-highlight .text-red-700 {
+        color: #b91c1c !important;
+        font-weight: 800;
+        font-size: 1.1rem;
+    }
+
+    .srp-highlight .text-red-600 {
+        color: #dc2626 !important;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+    }
+
     @media (max-width: 1279px) {
         .packages-grid {
             grid-template-columns: repeat(2, minmax(300px, 1fr));
@@ -423,7 +472,7 @@
                         Scalable cloud hosting solutions for dynamic websites and applications. Benefit from high availability, automatic scaling, and robust performance with our cloud infrastructure.
                     </p>
                     <div class="package-cta">
-                    <a href="{{-- route('hosting.cloud-packages') --}}" class="btns btn-primary1">View Packages</a>
+                    <a href="{{ route('contact-us') }}" class="btns btn-primary1">Inquire Now</a>
                     </div>
                 </div>
                 <!-- Shared Hosting -->
@@ -438,7 +487,7 @@
                         Affordable shared hosting for small to medium websites. Share resources with other users while enjoying reliable uptime, easy management tools, and FocusCare+ support.
                     </p>
                     <div class="package-cta">
-                    <a href="{{-- route('hosting.shared-packages') --}}" class="btns btn-primary1">View Packages</a>
+                    <a href="{{ route('contact-us') }}" class="btns btn-primary1">Inquire Now</a>
                     </div>
                 </div>
                 <!-- Dedicated Hosting -->
@@ -455,7 +504,7 @@
                         </div>
                     </p>
                     <div class="package-cta">
-                    <a href="{{-- route('hosting.dedicated-packages') --}}" class="btns btn-primary1">View Packages</a>
+                    <a href="{{ route('contact-us') }}" class="btns btn-primary1">Inquire Now</a>
                     </div>
                 </div>
                 <!-- Bare-Metal Hosting -->
@@ -470,7 +519,7 @@
                         Fully customizable bare-metal servers for maximum performance and flexibility. Ideal for businesses requiring dedicated hardware and tailored configurations.
                     </p>
                     <div class="package-cta">
-                    <a href="{{-- route('hosting.baremetal-packages') --}}" class="btns btn-primary1">View Packages</a>
+                    <a href="{{ route('contact-us') }}" class="btns btn-primary1">Inquire Now</a>
                     </div>
                 </div>
             </div>
@@ -503,8 +552,8 @@
                         <span class="rating-reviews">(1,237 Reviews)</span>
                     </div>
                     <div class="plan-tabs" id="planToggle">
-                        <a href="#" class="active" data-plan="monthly">Monthly Plans</a>
-                        <a href="#" data-plan="yearly">Yearly Plans</a>
+                        <a href="#" class="active" data-plan="monthly">1 Year Plan</a>
+                        <a href="#" data-plan="yearly">2 Years Plan</a>
                     </div>
                 </div>
             </div>
@@ -513,20 +562,19 @@
                     <div class="package-header">
                     </div>
 
-                    <div style="margin-bottom: 14.8rem;" class="package-price"></div>
+                    <div style="margin-bottom: 22rem;" class="package-price"></div>
                     <ul class="package-features">
                         <li>Allocated Storage</li>
                         <li>Monthly Allocated Data Cap</li>
                         <li></li>
                         <li>E-mail Accounts</li>
                         <li></li>
+                        <li>E-mail Accounts</li>
+                        <li></li>
                         <li>Mailing Lists</li>
+                        <li></li>
+                        <li>Domains</li><br><br>
                         <li>Control Panel</li>
-                        <li></li>
-                        <li></li>
-                        <li>Domains</li>
-                        <li></li>
-                        <li></li>
                         <li>Live Statistics</li>
                         <li>MySQL Database</li>
                         <li>Back-up Fee</li>
@@ -538,14 +586,34 @@
 
                     </div>
                 </div>
-                <!-- Cloud Hosting Package -->
-                <div class="package-card">
+                <!-- Standard Package -->
+                <div class="package-card" data-package="standard">
                     <p class="package-title">STANDARD PACKAGE</p>
-                    <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">
-                    SAVE 30%
-                    </p>
-                <div class="package-price text-2xl font-bold text-gray-800">P497/month</div>
-                    <p>Lock in 2 years of reliable hosting for just ₱11,928. </p>
+                    <div class="pricing-details">
+                        <div class="original-price mb-2">
+                            <span class="text-xs text-red-600 font-semibold uppercase tracking-wide">Original Price</span>
+                            <div class="text-2xl font-semibold text-gray-600" style="text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: #dc2626;">
+                                SRP: <span class="srp-amount">₱17,040</span>
+                            </div>
+                            <div class="mt-1 pt-1">
+                                <div class="text-center relative mb-1">
+                                    <div class="relative bg-gradient-to-r from-yellow-100 to-yellow-200 border-4 border-yellow-400 rounded-lg p-2 shadow-xl">
+                                        <div class="absolute -top-2 -right-2 bg-red-500 text-black text-xs font-bold px-2 py-1 rounded-full animate-bounce">BEST PRICE!</div>
+                                        <span class="discounted-amount package-price" style="margin-bottom: 0;">₱11,928</span>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-green-700 font-bold mt-3 text-center">
+                                    🎉 You Save ₱5,112!
+                                </div>
+                            </div>
+                        </div>
+                        <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">
+                            <span class="discount-text">SAVE 30%</span>
+                        </p>
+                    </div>
+                    <div class="package-price text-2xl font-bold text-gray-800 text-center">
+                        <span class="price-amount">₱497</span><span class="text-sm font-light text-gray-500">/month</span>
+                    </div>
                     <ul class="package-features">
                         <li>6 GB</li>
                         <li>50 GB</li>
@@ -557,26 +625,50 @@
                         <li>Free</li>
                         <li>Free</li>
                         <li>Free</li>
-                        <li>24/7 Technical Support </li>
+                        <li>Free</li>
+                        <li>24/7 Technical Support</li>
                         <li>Free</li>
                     </ul>
                     <div class="package-cta">
                         <a href="{{ route('contact-us') }}" class="btns btn-primary1">Inquire Now</a>
                     </div>
                 </div>
-                <!-- Shared Hosting Package -->
-                <div class="package-card">
-                        <p class="package-title">DELUXE PACKAGE</p>
-                        <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">SAVE 30%</p>
-                    <div class="package-price">P875/month</div>
-                    <p> Lock in 2 years of reliable hosting for just ₱21,000.</p>
+                <!-- Deluxe Package -->
+                <div class="package-card" data-package="deluxe">
+                    <p class="package-title">DELUXE PACKAGE</p>
+                    <div class="pricing-details">
+                        <div class="original-price mb-2">
+                            <span class="text-xs text-red-600 font-semibold uppercase tracking-wide">Original Price</span>
+                            <div class="text-2xl font-semibold text-gray-600" style="text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: #dc2626;">
+                                SRP: <span class="srp-amount">₱30,000</span>
+                            </div>
+                            <div class="mt-1 pt-1">
+                                <div class="text-center relative mb-1">
+                                    <div class="relative bg-gradient-to-r from-yellow-100 to-yellow-200 border-4 border-yellow-400 rounded-lg p-2 shadow-xl">
+                                        <div class="absolute -top-2 -right-2 bg-red-500 text-black text-xs font-bold px-2 py-1 rounded-full animate-bounce">BEST PRICE!</div>
+                                        <span class="discounted-amount package-price" style="margin-bottom: 0;">₱21,000</span>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-green-700 font-bold mt-3 text-center">
+                                    🎉 You Save ₱9,000!
+                                </div>
+                            </div>
+                        </div>
+                        <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">
+                            <span class="discount-text">SAVE 30%</span>
+                        </p>
+                    </div>
+                    <div class="package-price text-center">
+                        <span class="price-amount">₱875</span><span class="text-sm font-light text-gray-500">/month</span>
+                    </div>
                     <ul class="package-features">
                         <li>9 GB</li>
                         <li>100 GB</li>
                         <li>Multiple accounts Subject to the storage capacity</li>
-                         <li>Multiple accounts Subject to the storage capacity</li>
+                        <li>Multiple accounts Subject to the storage capacity</li>
                         <li>Free</li>
                         <li>1 hosted Domain with Multiple Sub-domains and Domain Aliases subject to storage capacity</li>
+                        <li>Free</li>
                         <li>Free</li>
                         <li>Free</li>
                         <li>Free</li>
@@ -588,14 +680,36 @@
                         <a href="{{ route('contact-us') }}" class="btns btn-primary1">Inquire Now</a>
                     </div>
                 </div>
-                <!-- Dedicated Hosting Package -->
-                <div class="package-card">
+                <!-- Business Package -->
+                <div class="package-card" data-package="business">
                     <p class="package-title">BUSINESS PACKAGE</p>
-                    <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">SAVE 30%</p>
-                    <div class="package-price">P1407/month</div>
-                    <p>Lock in 2 years of reliable hosting for just ₱ 33,768. </p>
+                    <div class="pricing-details">
+                        <div class="original-price mb-2">
+                            <span class="text-xs text-red-600 font-semibold uppercase tracking-wide">Original Price</span>
+                            <div class="text-2xl font-semibold text-gray-600" style="text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: #dc2626;">
+                                SRP: <span class="srp-amount">₱48,240</span>
+                            </div>
+                            <div class="mt-1 pt-1">
+                                <div class="text-center relative mb-1">
+                                    <div class="relative bg-gradient-to-r from-yellow-100 to-yellow-200 border-4 border-yellow-400 rounded-lg p-2 shadow-xl">
+                                        <div class="absolute -top-2 -right-2 bg-red-500 text-black text-xs font-bold px-2 py-1 rounded-full animate-bounce">BEST PRICE!</div>
+                                        <span class="discounted-amount package-price" style="margin-bottom: 0;">₱33,768</span>
+                                    </div>
+                                </div>
+                                <div class="text-sm text-green-700 font-bold mt-3 text-center">
+                                    🎉 You Save ₱14,472!
+                                </div>
+                            </div>
+                        </div>
+                        <p class="package-save text-sm font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full inline-block shadow-md">
+                            <span class="discount-text">SAVE 30%</span>
+                        </p>
+                    </div>
+                    <div class="package-price text-center">
+                        <span class="price-amount">₱1,407</span><span class="text-sm font-light text-gray-500">/month</span>
+                    </div>
                     <ul class="package-features">
-                        <li>2 GB</li>
+                        <li>12 GB</li>
                         <li>150 GB</li>
                         <li>Multiple accounts Subject to the storage capacity</li>
                         <li>Multiple accounts Subject to the storage capacity</li>
@@ -641,7 +755,7 @@
                 </div>
                 <div class="col-lg-4  p-5">
                     <h1 class="focuscare">FocusCare+</h1>
-                    <p class="focuscare-subs">Seamless Support for Your Hosting Needs</p>  
+                    <p class="focuscare-subs">Seamless Support for Your Hosting Needs</p>
                 </div>
             </div>
         </div>
@@ -892,25 +1006,146 @@ document.addEventListener('DOMContentLoaded', function() {
     // Observe scroll animation elements
     document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
 
-    // Plan toggle functionality
+    // Comprehensive pricing data based on your table
+    const pricingData = {
+        monthly: {
+            standard: {
+                price: '₱639',
+                srp: '₱8,520',
+                total: '₱7,668',
+                discounted: '₱7,668',
+                discount: '10%',
+                duration: '1 year',
+                period: '1 year subscription',
+                savings: '₱852',
+                description: 'You save ₱852 compared to SRP!'
+            },
+            deluxe: {
+                price: '₱1,125',
+                srp: '₱15,000',
+                total: '₱13,500',
+                discounted: '₱13,500',
+                discount: '10%',
+                duration: '1 year',
+                period: '1 year subscription',
+                savings: '₱1,500',
+                description: 'You save ₱1,500 compared to SRP!'
+            },
+            business: {
+                price: '₱1,809',
+                srp: '₱24,120',
+                total: '₱21,708',
+                discounted: '₱21,708',
+                discount: '10%',
+                duration: '1 year',
+                period: '1 year subscription',
+                savings: '₱2,412',
+                description: 'You save ₱2,412 compared to SRP!'
+            }
+        },
+        yearly: {
+            standard: {
+                price: '₱497',
+                srp: '₱17,040',
+                total: '₱11,928',
+                discounted: '₱11,928',
+                discount: '30%',
+                duration: '2 years',
+                period: '2 year subscription',
+                savings: '₱5,112',
+                description: 'You save ₱5,112 compared to SRP!'
+            },
+            deluxe: {
+                price: '₱875',
+                srp: '₱30,000',
+                total: '₱21,000',
+                discounted: '₱21,000',
+                discount: '30%',
+                duration: '2 years',
+                period: '2 year subscription',
+                savings: '₱9,000',
+                description: 'You save ₱9,000 compared to SRP!'
+            },
+            business: {
+                price: '₱1,407',
+                srp: '₱48,240',
+                total: '₱33,768',
+                discounted: '₱33,768',
+                discount: '30%',
+                duration: '2 years',
+                period: '2 year subscription',
+                savings: '₱14,472',
+                description: 'You save ₱14,472 compared to SRP!'
+            }
+        }
+    };    // Plan toggle functionality
     const planToggle = document.getElementById('planToggle');
     const monthlyTab = planToggle.querySelector('[data-plan="monthly"]');
     const yearlyTab = planToggle.querySelector('[data-plan="yearly"]');
 
-    function switchToMonthly() {
+    function updatePricing(planType) {
+        const packages = document.querySelectorAll('.package-card[data-package]');
+
+        packages.forEach(packageCard => {
+            const packageName = packageCard.getAttribute('data-package');
+            const data = pricingData[planType][packageName];
+
+            if (data) {
+                // Update monthly price
+                const priceElement = packageCard.querySelector('.price-amount');
+                if (priceElement) {
+                    priceElement.textContent = data.price;
+                }
+
+                // Update SRP (original price)
+                const srpElement = packageCard.querySelector('.srp-amount');
+                if (srpElement) {
+                    srpElement.textContent = data.srp;
+                }
+
+                // Update discounted amount
+                const discountedElement = packageCard.querySelector('.discounted-amount');
+                if (discountedElement) {
+                    discountedElement.textContent = data.discounted;
+                }
+
+                // Update discount percentage
+                const discountElement = packageCard.querySelector('.discount-text');
+                if (discountElement) {
+                    discountElement.textContent = `SAVE ${data.discount}`;
+                }
+
+                // Update subscription period
+                const periodElement = packageCard.querySelector('.period-text');
+                if (periodElement) {
+                    periodElement.textContent = data.period;
+                }
+
+                // Update total cost
+                const totalElement = packageCard.querySelector('.total-amount');
+                if (totalElement) {
+                    totalElement.textContent = data.total;
+                }
+
+                // Update savings description
+                const descriptionElement = packageCard.querySelector('.subscription-text');
+                if (descriptionElement) {
+                    descriptionElement.textContent = data.description;
+                }
+            }
+        });
+    }    function switchToMonthly() {
         planToggle.classList.remove('yearly');
         monthlyTab.classList.add('active');
         yearlyTab.classList.remove('active');
-        // Add your monthly plan display logic here
-        console.log('Switched to Monthly Plans');
+        updatePricing('monthly');
     }
 
     function switchToYearly() {
         planToggle.classList.add('yearly');
         yearlyTab.classList.add('active');
         monthlyTab.classList.remove('active');
-        // Add your yearly plan display logic here
-        console.log('Switched to Yearly Plans');
+        updatePricing('yearly');
     }
 
     monthlyTab.addEventListener('click', function(e) {
@@ -926,6 +1161,9 @@ document.addEventListener('DOMContentLoaded', function() {
             switchToYearly();
         }
     });
+
+    // Initialize with yearly pricing (default)
+    updatePricing('yearly');
 });
 </script>
 @endsection

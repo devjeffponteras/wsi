@@ -31,68 +31,7 @@
     </section>
 
     <!-- Document Management Systems -->
-    <section class="dms-section">
-        <div class="dms-container">
-            <div class="text-center mb-12 scroll-animate">
-                <h2 class="section-title">Document Management Systems</h2>
-                <p class="section-subtitle">
-                    Discover how FileHold transforms your document workflow with powerful tools for organization, security, and accessibility.
-                </p>
-            </div>
-            <div class="dms-grid scroll-animate">
-                <div class="dms-card">
-                    <div class="dms-icon">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="dms-title">Document Management Solutions</h3>
-                    <p class="dms-description">
-                        FileHold provides a robust document management system that streamlines document storage, retrieval, and collaboration. Designed for businesses of all sizes, FileHold ensures your documents are secure, organized, and accessible anytime, anywhere, boosting productivity and compliance.
-                    </p>
-                    <a href="{{-- route('dms.learn-more') --}}" class="btns btn-primary1">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FileHold Overview -->
-    <section class="overview-section">
-        <div class="overview-container">
-            <div class="text-center mb-12 scroll-animate">
-                <h2 class="section-title">FileHold Overview</h2>
-                <p class="section-subtitle">
-                    Learn about FileHold’s comprehensive features that empower your business to manage documents with ease and efficiency.
-                </p>
-            </div>
-            <div class="overview-content scroll-animate">
-                <p class="overview-text">
-                    FileHold is a leading document management system designed to simplify the way businesses handle their documents. With a user-friendly interface and powerful functionality, FileHold enables organizations to digitize, organize, and secure their documents while streamlining workflows. Whether you’re managing contracts, invoices, or compliance documents, FileHold offers scalable solutions tailored to your needs.
-                </p>
-                <p class="overview-text">
-                    Integrated with robust search capabilities, version control, and automated workflows, FileHold reduces manual processes and enhances collaboration. Hosted on secure servers with WebFocus Solutions, Inc., FileHold ensures data integrity and compliance with industry standards, making it the ideal choice for businesses seeking efficiency and reliability.
-                </p>
-                <a href="{{-- route('dms.filehold-details') --}}" class="btns btn-primary1">Explore FileHold</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features & Benefits -->
-    <section class="packages-section">
-        <div class="dms-container">
-            <div class="packages-inner-container">
-                <div class="text-center mb-12 scroll-animate">
-                    <h2 class="section-title">Features & Benefits</h2>
-                    <p class="section-subtitle">
-                        Choose from our tailored FileHold plans, each designed to meet your document management needs with powerful features and seamless integration.
-                    </p>
-                </div>
-                <div class="packages-grid scroll-animate">
-                    <!-- Content removed as per request -->
-                </div>
-            </div>
-        </div>
-    </section>
+    {!! $content->contents !!}
     <!-- CTA Section -->
     <section class="section-cta position-relative">
         <div class="cta-container scroll-animate">

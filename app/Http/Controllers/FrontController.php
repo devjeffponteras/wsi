@@ -350,11 +350,11 @@ class FrontController extends Controller
         $page = new Page();
         $page->name = 'Services';
         $page->slug = 'services';
-        $breadcrumb = $this->breadcrumb($page);
+        $breadcrumb = $this->breadcrumb(page: $page);
+         $content = Page::where('name', 'Services')->first();
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
-        return view('theme.pages.services', compact('footer', 'page', 'breadcrumb'));
+        return view('theme.pages.services', compact('content','footer', 'page', 'breadcrumb'));
     }
-
         public function services_domain()
     {
         \Log::info('Loading services page with partials: theme.pages.service_domain');
@@ -362,10 +362,11 @@ class FrontController extends Controller
         $page->name = 'Domain';
         $page->slug = 'services/services_domain';
         $breadcrumb = $this->breadcrumb($page);
+        $content = Page::where('name', 'Domain')->first();
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
-        return view('theme.pages.services_domain', compact('footer', 'page', 'breadcrumb'));
-
-}
+        //return $content;
+        return view('theme.pages.services_domain', compact('content','footer', 'page', 'breadcrumb'));
+    }
 
         public function services_webdev()
     {
@@ -374,11 +375,11 @@ class FrontController extends Controller
         $page->name = 'Web Development';
         $page->slug = 'services/services_webdev';
         $breadcrumb = $this->breadcrumb($page);
+        $content = Page::where('name', 'Web Development')->first();
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
-        return view('theme.pages.services_webdev', compact('footer', 'page', 'breadcrumb'));
+        return view('theme.pages.services_webdev', compact('content','footer', 'page', 'breadcrumb'));
 
 }
-
         public function services_hosting()
     {
         \Log::info('Loading services page with partials: theme.pages.services_hosting');
@@ -386,8 +387,9 @@ class FrontController extends Controller
         $page->name = 'Hosting';
         $page->slug = 'services/services_hosting';
         $breadcrumb = $this->breadcrumb($page);
+        $content = Page::where('name', 'Hosting')->first();
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
-        return view('theme.pages.services_hosting', compact('footer', 'page', 'breadcrumb'));
+        return view('theme.pages.services_hosting', compact('content','footer', 'page', 'breadcrumb'));
 
 }
 
@@ -395,12 +397,13 @@ class FrontController extends Controller
     {
         \Log::info('Loading services page with partials: theme.pages.services_dms');
         $page = new Page();
-        $page->name = 'Document Management Systems';
+        $page->name = 'DMS';
         $page->slug = 'services/services_dms';
         $breadcrumb = $this->breadcrumb($page);
+        $content = Page::where('name', 'DMS')->first();
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
-        return view('theme.pages.services_dms', compact('footer', 'page', 'breadcrumb'));
-
+        return view('theme.pages.services_dms', compact('content','footer', 'page', 'breadcrumb'));
+        //return $content;
 }
 
         public function news()

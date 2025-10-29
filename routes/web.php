@@ -62,8 +62,8 @@ Route::get('/phpinfo', function () {
     Route::get('/services/domain', [FrontController::class, 'services_domain'])->name('services.domain'); // New route for services
     Route::get('/services/web-development', [FrontController::class, 'services_webdev'])->name('services.web-development'); // New route for services
     Route::get('/services/dms', [FrontController::class, 'services_dms'])->name('services.dms'); // New route for services
-  Route::get('/services/pages', [ServicesController::class, 'services_index'])->name('services.index');
-            Route::get('/services_edit/{page}', [ServicesController::class, 'edit'])->name('services.edit');
+    Route::get('/services/pages', [ServicesController::class, 'services_index'])->name('services.index');
+    Route::get('/services_edit/{page}', [ServicesController::class, 'edit'])->name('services.edit');
 
     Route::get('/privacy-policy/', [FrontController::class, 'privacy_policy'])->name('privacy-policy');
     Route::post('/contact-us', [FrontController::class, 'contact_us'])->name('contact-us');
@@ -350,7 +350,6 @@ Route::group(['prefix' => 'admin-panel'], function (){
                 Route::post('/news-categories/delete', [ArticleCategoryController::class, 'delete'])->name('news-categories.delete');
                 Route::get('/news-categories/restore/{id}', [ArticleCategoryController::class, 'restore'])->name('news-categories.restore');
             //
-
             // File Manager
                 Route::get('laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show')->name('file-manager.show');
                 Route::post('laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload')->name('unisharp.lfm.upload');

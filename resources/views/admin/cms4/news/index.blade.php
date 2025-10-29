@@ -1,560 +1,669 @@
 @extends('admin.layouts.app')
 
 @section('pagetitle')
-Manage News
+    News Management
 @endsection
 
 @section('pagecss')
-<link href="{{ asset('lib/ion-rangeslider/css/ion.rangeSlider.min.css') }}" rel="stylesheet">
-<style>
-    .row-selected {
-        background-color: #92b7da !important;
-    }
-</style>
+    <link href="{{ asset('lib/ion-rangeslider/css/ion.rangeSlider.min.css') }}" rel="stylesheet">
+    <style>
+        .news-stats {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .news-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .news-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .news-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .news-image-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 180px;
+            background: #f8f9fa;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        .delete-btn:hover {
+            background: #c82333;
+            transform: scale(1.1);
+        }
+        .news-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .news-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+            color: #495057;
+        }
+        .news-meta {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .news-content {
+            padding: 20px;
+        }
+        .news-excerpt {
+            color: #6c757d;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .news-tags {
+            margin-bottom: 15px;
+        }
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #e9ecef;
+            color: #495057;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-right: 8px;
+            margin-bottom: 5px;
+        }
+        .tag.published {
+            background: #d4edda;
+            color: #155724;
+        }
+        .tag.draft {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .tag.featured {
+            background: #cce5ff;
+            color: #004085;
+        }
+        .news-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-action {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+        .btn-edit {
+            background: #17a2b8;
+            color: white;
+        }
+        .btn-edit:hover {
+            background: #138496;
+            color: white;
+        }
+        .btn-view {
+            background: #28a745;
+            color: white;
+        }
+        .btn-view:hover {
+            background: #218838;
+            color: white;
+        }
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-delete:hover {
+            background: #c82333;
+            color: white;
+        }
+        .filter-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .filter-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #495057;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Table Styles */
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .table thead th {
+            background: #f8f9fa;
+            border: none;
+            color: #495057;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 15px 12px;
+            vertical-align: middle;
+        }
+
+        .table tbody td {
+            padding: 15px 12px;
+            vertical-align: middle;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Article Info */
+        .article-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #495057;
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+
+        .article-excerpt {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-bottom: 0;
+        }
+
+        /* Badges */
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .badge-category {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .badge-secondary {
+            background: #e2e3e5;
+            color: #6c757d;
+            border: 1px solid #d6d8db;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        /* Date Info */
+        .date-info {
+            text-align: center;
+        }
+
+        .published-date {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 2px;
+        }
+
+        /* Stats Info */
+        .stats-info {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+
+        .views-count {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Action Buttons */
+        .btn-group .btn {
+            border-radius: 4px;
+            margin-right: 2px;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-outline-info:hover {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+    </style>
 @endsection
+
 @section('content')
-
-
-
-    <div class="container pd-x-0">
-        <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
-            <div>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb breadcrumb-style1 mg-b-5">
-                        <li class="breadcrumb-item" aria-current="page"><a href="{{route('dashboard')}}">CMS</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">News</li>
-                    </ol>
-                </nav>
-                <h4 class="mg-b-0 tx-spacing--1">Manage News</h4>
-            </div>
+<div class="container pd-x-0">
+    <!-- Header Section -->
+    <div class="d-sm-flex align-items-center justify-content-between mg-b-30">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-style1 mg-b-5">
+                    <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">News Management</li>
+                </ol>
+            </nav>
+            <h4 class="mg-b-0 tx-spacing--1">News Articles</h4>
+            <p class="text-muted mg-b-0">Manage and organize your news articles</p>
         </div>
+        <div class="d-flex gap-2">
+            @if(auth()->user()->has_access_to_route('news.create'))
+                <a class="btn btn-primary" href="{{ route('news.create') }}">
+                    <i data-feather="plus" class="wd-16 mg-r-5"></i> Create New Article
+                </a>
+            @endif
+        </div>
+    </div>
 
-        <div class="row row-sm">
+    <!-- Quick Filters -->
+    <div class="filter-section">
+        <div class="filter-title">Quick Filters</div>
+        <form id="filterForm" class="row">
+            <div class="col-md-3">
+                <label class="form-label">Sort by</label>
+                <select name="orderBy" class="form-control">
+                    <option value="updated_at" @if (isset($filter) && $filter->orderBy == 'updated_at') selected @endif>Last Modified</option>
+                    <option value="name" @if (isset($filter) && $filter->orderBy == 'name') selected @endif>Title</option>
+                    <option value="date" @if (isset($filter) && $filter->orderBy == 'date') selected @endif>Publication Date</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Order</label>
+                <select name="orderType" class="form-control">
+                    <option value="desc" @if (isset($filter) && $filter->sortBy == 'desc') selected @endif>Newest First</option>
+                    <option value="asc" @if (isset($filter) && $filter->sortBy == 'asc') selected @endif>Oldest First</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Status</label>
+                <select name="status" class="form-control">
+                    <option value="">All Status</option>
+                    <option value="Published" @if (isset($advanceSearchData) && $advanceSearchData->status == 'Published') selected @endif>Published</option>
+                    <option value="Private" @if (isset($advanceSearchData) && $advanceSearchData->status == 'Private') selected @endif>Draft</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Category</label>
+                <select name="category_id" class="form-control">
+                    <option value="">All Categories</option>
+                    @if(isset($uniqueNewsByCategory))
+                        @php $categories = collect($uniqueNewsByCategory)->pluck('category')->unique('id')->filter() @endphp
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" @if (isset($advanceSearchData) && $advanceSearchData->category_id == $category->id) selected @endif>{{ $category->name }}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">&nbsp;</label>
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary btn-sm">Apply</button>
+                    <button type="button" id="reset" class="btn btn-secondary btn-sm">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
-            <!-- Start Filters -->
-            <div class="col-md-12">
-                <div class="filter-buttons">
-                    <div class="d-md-flex bd-highlight">
-                        <div class="bd-highlight mg-r-10 mg-t-10">
-                            <div class="dropdown d-inline mg-r-5">
-                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{__('common.filters')}}
-                                </button>
-                                <div class="dropdown-menu">
-                                    <form id="filterForm" class="pd-20">
-                                        <div class="form-group">
-                                            <label for="exampleDropdownFormEmail1">{{__('common.sort_by')}}</label>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="orderBy1" name="orderBy" class="custom-control-input" value="updated_at" @if ($filter->orderBy == 'updated_at') checked @endif>
-                                                <label class="custom-control-label" for="orderBy1">{{__('common.date_modified')}}</label>
-                                            </div>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="orderBy2" name="orderBy" class="custom-control-input" value="name" @if ($filter->orderBy == 'name') checked @endif>
-                                                <label class="custom-control-label" for="orderBy2">{{__('common.title')}}</label>
-                                            </div>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="orderBy3" name="orderBy" class="custom-control-input" value="is_featured" @if ($filter->orderBy == 'is_featured') checked @endif>
-                                                <label class="custom-control-label" for="orderBy3">Featured</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleDropdownFormEmail1">{{__('common.sort_order')}}</label>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="sortByAsc" name="sortBy" class="custom-control-input" value="asc" @if ($filter->sortBy == 'asc') checked @endif>
-                                                <label class="custom-control-label" for="sortByAsc">{{__('common.ascending')}}</label>
-                                            </div>
-
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="sortByDesc" name="sortBy" class="custom-control-input" value="desc"  @if ($filter->sortBy == 'desc') checked @endif>
-                                                <label class="custom-control-label" for="sortByDesc">{{__('common.descending')}}</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" id="showDeleted" name="showDeleted" class="custom-control-input" @if ($filter->showDeleted) checked @endif>
-                                                <label class="custom-control-label" for="showDeleted">{{__('common.show_deleted')}}</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group mg-b-40">
-                                            <label class="d-block">{{__('common.item_displayed')}}</label>
-                                            <input id="displaySize" type="text" class="js-range-slider" name="perPage" value="{{ $filter->perPage }}"/>
-                                        </div>
-                                        <button id="filter" type="button" class="btn btn-sm btn-primary">{{__('common.apply_filters')}}</button>
-                                    </form>
-                                </div>
-                            </div>
-                            @if(auth()->user()->has_access_to_route('news.change.status') || auth()->user()->has_access_to_route('news.delete'))
-                                <div class="list-search d-inline">
-                                    <div class="dropdown d-inline mg-r-10">
-                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Actions
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            @if(auth()->user()->has_access_to_route('news.change.status'))
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="change_status('PUBLISHED')">{{__('common.publish')}}</a>
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="change_status('PRIVATE')">{{__('common.private')}}</a>
+    <!-- News Articles Table -->
+    <div class="card">
+        <div class="card-body pd-0">
+            <div class="table-responsive">
+                <table class="table table-hover mg-b-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Title</th>
+                            <th width="120">Category</th>
+                            <th width="100">Status</th>
+                            <th width="120">Date</th>
+                            <th width="80">Views</th>
+                            <th width="140">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($news as $article)
+                            <tr>
+                                <!-- Title Column -->
+                                <td>
+                                    <div class="article-info">
+                                        <h6 class="article-title mb-1">
+                                            {{ $article->name }}
+                                            @if($article->is_featured)
+                                                <span class="badge badge-warning badge-sm ml-1">
+                                                    <i data-feather="star" class="feather-12"></i> Featured
+                                                </span>
                                             @endif
-                                            @if(auth()->user()->has_access_to_route('news.delete'))
-                                                <a class="dropdown-item tx-danger" href="javascript:void(0)" onclick="delete_page()">{{__('common.delete')}}</a>
-                                            @endif
+                                        </h6>
+                                        @if($article->teaser)
+                                            <p class="article-excerpt text-muted mb-0">
+                                                {{ Str::limit($article->teaser, 80) }}
+                                            </p>
+                                        @endif
+                                    </div>
+                                </td>                                <!-- Category Column -->
+                                <td>
+                                    @if($article->category)
+                                        <span class="badge badge-light badge-category">
+                                            <i data-feather="folder" class="feather-12 mr-1"></i>
+                                            {{ $article->category->name }}
+                                        </span>
+                                    @else
+                                        <span class="text-muted">No Category</span>
+                                    @endif
+                                </td>
+
+                                <!-- Status Column -->
+                                <td>
+                                    @if($article->status == 'Published')
+                                        <span class="badge badge-success">
+                                            <i data-feather="check-circle" class="feather-12 mr-1"></i>
+                                            Published
+                                        </span>
+                                    @else
+                                        <span class="badge badge-secondary">
+                                            <i data-feather="edit" class="feather-12 mr-1"></i>
+                                            Draft
+                                        </span>
+                                    @endif
+                                </td>
+
+                                <!-- Date Column -->
+                                <td>
+                                    <div class="date-info">
+                                        <div class="published-date">
+                                            {{ \Carbon\Carbon::parse($article->date)->format('M j, Y') }}
+                                        </div>
+                                        <small class="text-muted">
+                                            {{ \Carbon\Carbon::parse($article->updated_at)->format('g:i A') }}
+                                        </small>
+                                    </div>
+                                </td>
+
+                                <!-- Views Column -->
+                                <td>
+                                    <div class="stats-info text-center">
+                                        <div class="views-count">
+                                            <i data-feather="eye" class="feather-14 text-muted"></i>
+                                            <span class="ml-1">{{ $article->views ?? 0 }}</span>
                                         </div>
                                     </div>
-                                </div>
-                            @endif
-                        </div>
+                                </td>
 
-                        <div class="ml-auto bd-highlight mg-t-10 mg-r-10">
-                            <form class="form-inline" id="searchForm">
-                                <div class="search-form mg-r-10">
-                                    <input name="search" type="search" id="search" class="form-control" placeholder="Search by Title" value="{{ $filter->search }}">
-                                    <button class="btn filter" id="btnSearch"><i data-feather="search"></i></button>
-                                </div>
-                                <a class="btn btn-success btn-sm mg-b-5 mt-lg-0 mt-md-0 mt-sm-0 mt-1" href="javascript:void(0)" data-toggle="modal" data-target="#advanceSearchModal">{{__('common.advance_search')}}</a>
-                            </form>
-                        </div>
-                        <div class="mg-t-10">
-                            @if(auth()->user()->has_access_to_route('news.create'))
-                                <a class="btn btn-primary btn-sm mg-b-20" href="{{ route('news.create') }}">{{__('standard.news.article.create')}}</a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Filters -->
-
-            <!-- Start Pages -->
-            <div class="col-md-12">
-                <div class="table-list mg-b-10">
-                    <div class="table-responsive-lg">
-                        <table class="table mg-b-0 table-light table-hover" style="table-layout: fixed;word-wrap: break-word;">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10%">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="checkbox_all">
-                                            <label class="custom-control-label" for="checkbox_all"></label>
-                                        </div>
-                                    </th>
-                                    <th style="width: 40%;overflow: hidden;">Title</th>
-                                    <th style="width: 10%">Category</th>
-                                    <th style="width: 10%">Type</th>
-                                    <th style="width: 10%">Visibility</th>
-                                    <th style="width: 10%">Updated</th>
-                                    <th style="width: 10%">Options</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($news as $new)
-                                    <tr id="row{{$new->id}}" class="row_cb">
-                                        <th>
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input cb" id="cb{{$new->id}}">
-                                                <label class="custom-control-label" for="cb{{$new->id}}"></label>
-                                            </div>
-                                        </th>
-                                        <td style="overflow: hidden;" title="{{$new->name}}">
-                                            <strong @if($new->trashed()) style="text-decoration:line-through;" @endif> {{$new->name}}</strong>
-                                            <p class="mg-b-0 tx-gray-500 tx-11">
-                                               <a target="_blank" href="{{route('news.front.show',$new->slug)}}">{{route('news.front.show',$new->slug)}}</a>
-                                            </p>
-                                        </td>
-                                        <td>
-                                            {{$new->category->name}}
-                                        </td>
-                                        <td>
-                                            @if($new->is_featured=='1')<span class="badge badge-success">Featured</span>@endif</td>
-                                        <td style="text-transform:capitalize !important;">{!! ($new->trashed() ? '<span class="badge badge-danger">Deleted</span>':strtolower($new->status)) !!}</td>
-                                        <td><span class="text-nowrap">{{ Setting::date_for_listing($new->updated_at) }}</span></td>
-                                        <td>
-                                            @if($new->trashed())
-                                                @if (auth()->user()->has_access_to_route('news.restore'))
-                                                    <nav class="nav table-options justify-content-end flex-nowrap">
-                                                        <a class="nav-link" href="{{route('news.restore',$new->id)}}" title="Restore this news"><i data-feather="rotate-ccw"></i></a>
-                                                    </nav>
-                                                @endif
-                                            @else
-                                                <nav class="nav table-options justify-content-end flex-nowrap">
-                                                    <a class="nav-link" target="_blank" href="{{route('news.front.show',$new->slug)}}" title="View News"><i data-feather="eye"></i></a>
-
-                                                    @if(auth()->user()->has_access_to_route('news.edit'))
-                                                        <a class="nav-link" href="{{ route('news.edit', $new->id) }}" title="Edit News"><i data-feather="edit"></i></a>
-                                                    @endif
-
-                                                    @if(auth()->user()->has_access_to_route('news.change.status') || auth()->user()->has_access_to_route('news.delete'))
-                                                        <a class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i data-feather="settings"></i>
-                                                        </a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            @if (auth()->user()->has_access_to_route('news.change.status'))
-                                                                @if(strtoupper($new->status)=='PUBLISHED')
-                                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="post_form('{{route('news.change.status')}}','PRIVATE',{{$new->id}})"> Private</a>
-                                                                @else
-                                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="post_form('{{route('news.change.status')}}','PUBLISHED',{{$new->id}})"> Publish</a>
-                                                                @endif
-                                                            @endif
-
-                                                            @if (auth()->user()->has_access_to_route('news.delete'))
-                                                                <a class="dropdown-item" href="javascript:void(0);" onclick="delete_one_page({{$new->id}},'{{$new->name}}');">Delete</a>
-                                                            @endif
-                                                        </div>
-                                                    @endif
-                                                </nav>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="7" style="text-align: center;"> <p class="text-danger">No news found.</p></td>
-                                    </tr>
-                                @endforelse
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- End Pages -->
-
-            <div class="col-md-6">
-                <div class="mg-t-5">
-                    @if ($news->firstItem() == null)
-                        <p class="tx-gray-400 tx-12 d-inline">{{__('common.showing_zero_items')}}</p>
-                    @else
-                        <p class="tx-gray-400 tx-12 d-inline">Showing {{ $news->firstItem() }} to {{ $news->lastItem() }} of {{ $news->total() }} items</p>
-                    @endif
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="text-md-right float-md-right mg-t-5">
-                    <div>
-                        {{ $news->appends((array) $filter)->links() }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <form action="" id="posting_form" style="display:none;" method="post">
-        @csrf
-        <input type="text" id="pages" name="pages">
-        <input type="text" id="status" name="status">
-    </form>
-
-    <div id="advanceSearchModal" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <form role="form" id="advanceFilterForm" method="GET" action="{{route('news.index.advance-search')}}">
-                    <div class="modal-header">
-                        <h4 class="modal-title">{{__('common.advance_search')}}</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="control-label">Title</label>
-                            <div>
-                                <input type="text" class="form-control input-sm" name="name" value="{{ $advanceSearchData->name }}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Contents</label>
-                            <div>
-                                <input type="text" class="form-control input-sm" name="contents" value="{{ $advanceSearchData->contents }}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Teaser</label>
-                            <div>
-                                <input type="text" class="form-control input-sm" name="teaser" value="{{ $advanceSearchData->teaser }}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Category</label>
-                            <div>
-                                <select name="category_id" class="form-control input-sm">
-                                    <option value="">- All Category -</option>
-                                    @php $noCategory = 0; @endphp
-                                    @foreach($uniqueNewsByCategory as $news)
-                                        @php $categoryId = ($news->category_id) ? $news->category_id : 0; @endphp
-                                        @if ($categoryId == 0)
-                                            @if ($noCategory)
-                                                @continue
-                                            @endif
-                                            @php $noCategory += 1; @endphp
+                                <!-- Actions Column -->
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        @if(auth()->user()->has_access_to_route('news.edit'))
+                                            <a href="{{ route('news.edit', $article->id) }}"
+                                               class="btn btn-outline-primary btn-sm"
+                                               title="Edit Article">
+                                                <i data-feather="edit" class="feather-14"></i>
+                                            </a>
                                         @endif
-                                        <option value="{{ $categoryId }}" @if ($advanceSearchData->category_id != null && $advanceSearchData->category_id == $news->category_id) selected @endif>{{$news->category->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Last Modified by</label>
-                            <div>
-                                <select name="user_id" class="form-control input-sm">
-                                    <option value="">- All Users -</option>
-                                    @foreach($uniqueNewsByUser as $page)
-                                        <option value="{{$page->user_id}}" @if ($advanceSearchData->user_id == $page->user_id) selected @endif>{{$page->user->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Visibility</label>
-                            <div>
-                                <select class="form-control input-sm" name="status">
-                                    <option value="">- Published & Private -</option>
-                                    <option value="published" @if ($advanceSearchData->status == 'published') selected @endif>Published only</option>
-                                    <option value="private" @if ($advanceSearchData->status == 'private') selected @endif>Private only</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Featured News</label>
-                            <div>
-                                <select class="form-control input-sm" name="is_featured">
-                                    <option value="">- Featured & Not Featured -</option>
-                                    <option value="1" @if ($advanceSearchData->is_featured == '1') selected @endif>Featured only</option>
-                                    <option value="0" @if ($advanceSearchData->is_featured == '0') selected @endif>Not featured only</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">SEO Title</label>
-                            <div>
-                                <input type="text" class="form-control input-sm" name="meta_title" value="{{ $advanceSearchData->meta_title }}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">SEO Description</label>
-                            <div>
-                                <input type="text" class="form-control input-sm" name="meta_description" value="{{ $advanceSearchData->meta_description }}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">SEO Keyword</label>
-                            <div>
-                                <input type="text" class="form-control input-sm" name="meta_keyword" value="{{ $advanceSearchData->meta_keyword }}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="control-label" for="updated_at1">Date Modified (From)</label>
-                                    <input type="date" class="form-control input-sm" id="updated_at1" name="updated_at1" value="{{ $advanceSearchData->updated_at1 }}">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label" for="updated_at2">Date Modified (To)</label>
-                                    <input type="date" class="form-control input-sm" id="updated_at2" name="updated_at2" value="{{ $advanceSearchData->updated_at2 }}" min="{{ $advanceSearchData->updated_at1 }}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-info" href="{{ route('news.index') }}">Reset</a>
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                        <input type="submit" value="{{__('common.search')}}" class="btn btn-success">
-                    </div>
-                </form>
+
+                                        @if($article->status == 'Published')
+                                            <a href="{{ url('/news/' . $article->slug) }}"
+                                               target="_blank"
+                                               class="btn btn-outline-info btn-sm"
+                                               title="View Live">
+                                                <i data-feather="external-link" class="feather-14"></i>
+                                            </a>
+                                        @endif
+
+                                        <button onclick="deleteArticle({{ $article->id }})"
+                                                class="btn btn-outline-danger btn-sm"
+                                                title="Delete Article">
+                                            <i data-feather="trash-2" class="feather-14"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center py-5">
+                                    <div class="empty-state">
+                                        <i data-feather="file-text" class="feather-48 text-muted mb-3"></i>
+                                        <h5 class="text-muted">No News Articles Found</h5>
+                                        <p class="text-muted mb-3">You haven't created any news articles yet.</p>
+                                        @if(auth()->user()->has_access_to_route('news.create'))
+                                            <a href="{{ route('news.create') }}" class="btn btn-primary">
+                                                <i data-feather="plus" class="feather-16 mr-2"></i> Create Your First Article
+                                            </a>
+                                        @endif
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <div class="modal effect-scale" id="prompt-delete-many" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">{{__('common.delete_mutiple_confirmation_title')}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>{{__('common.delete_mutiple_confirmation')}}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-danger" id="btnDeleteMany">Yes, Delete</button>
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+    <!-- Pagination -->
+    @if(isset($news) && $news->hasPages())
+        <div class="d-flex justify-content-between align-items-center mg-t-30">
+            <div>
+                <p class="text-muted mg-b-0">
+                    Showing {{ $news->firstItem() }} to {{ $news->lastItem() }} of {{ $news->total() }} articles
+                </p>
+            </div>
+            <div>
+                {!! $news->appends(request()->input())->links() !!}
             </div>
         </div>
-    </div>
+    @endif
+</div>
 
-    <div class="modal effect-scale" id="prompt-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">{{__('common.delete_confirmation_title')}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>{{__('common.delete_confirmation')}}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-danger" id="btnDelete">Yes, Delete</button>
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal effect-scale" id="prompt-no-selected" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">{{__('common.no_selected_title')}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>{{__('common.no_selected')}}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal effect-scale" id="prompt-update-status" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">{{__('common.update_confirmation_title')}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    You are about to <span id="newsStatus"></span> this item. Do you want to continue?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-danger" id="btnUpdateStatus">Yes, Update</button>
-                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('pagejs')
-    <script src="{{ asset('lib/bselect/dist/js/bootstrap-select.js') }}"></script>
-    <script src="{{ asset('lib/bselect/dist/js/i18n/defaults-en_US.js') }}"></script>
     <script src="{{ asset('lib/ion-rangeslider/js/ion.rangeSlider.min.js') }}"></script>
-    <script>
-        let listingUrl = "{{ route('news.index') }}";
-        let advanceListingUrl = "{{ route('news.index.advance-search') }}";
-        let searchType = "{{ $searchType }}";
-    </script>
-    <script src="{{ asset('js/listing.js') }}"></script>
 @endsection
 
 @section('customjs')
     <script>
-        /*** handles the changing of status of multiple pages ***/
-        function change_status(status){
+        $(function(){
+            'use strict'
 
-            var counter = 0;
-            var selected_pages = '';
-            $(".cb:checked").each(function(){
-                counter++;
-                fid = $(this).attr('id');
-                selected_pages += fid.substring(2, fid.length)+'|';
+            // Filter form submission
+            $('#filterForm').on('submit', function(e) {
+                e.preventDefault();
+                let formData = $(this).serialize();
+                window.location.href = "{{ route('news.index') }}?" + formData;
             });
 
-            if(parseInt(counter) < 1){
-                $('#prompt-no-selected').modal('show');
-                return false;
-            }
-            else{
-
-                if(parseInt(counter) > 1){ // ask for confirmation when multiple pages was selected
-                    let statusName = (status == 'PUBLISHED') ? 'PUBLISH' : status;
-                    $('#newsStatus').html(statusName)
-                    $('#prompt-update-status').modal('show');
-
-                    $('#btnUpdateStatus').on('click', function() {
-                        post_form('{{route('news.change.status')}}',status,selected_pages);
-                    });
-                }
-                else{
-                    post_form('{{route('news.change.status')}}',status,selected_pages);
-                }
-            }
-
-        }
-
-        function post_form(url,status,pages){
-
-            $('#posting_form').attr('action',url);
-            $('#pages').val(pages);
-            $('#status').val(status);
-            $('#posting_form').submit();
-
-        }
-
-        function delete_page(){
-            var counter = 0;
-            var selected_pages = '';
-            $(".cb:checked").each(function(){
-                counter++;
-                fid = $(this).attr('id');
-                selected_pages += fid.substring(2, fid.length)+'|';
+            // Reset filter
+            $('#reset').on('click', function() {
+                window.location.href = "{{ route('news.index') }}";
             });
 
-            if(parseInt(counter) < 1){
-                $('#prompt-no-selected').modal('show');
-                return false;
-            }
-            else{
-                $('#prompt-delete-many').modal('show');
-                $('#btnDeleteMany').on('click', function() {
-                    post_form('{{route('news.delete')}}','',selected_pages);
-                });
-
-            }
-        }
-
-        function delete_one_page(id,page){
-            $('#prompt-delete').modal('show');
-            $('#btnDelete').on('click', function() {
-                post_form('{{route('news.delete')}}','',id);
-            });
-        }
-
-
-
-        $('.cb').change(function() {
-            var id = ($(this).attr('id')).replace("cb", "");
-            if(this.checked) {
-                $('#row'+id).addClass("row-selected");
-            }
-            else{
-                $('#row'+id).removeClass("row-selected");
-            }
+            // Initialize feather icons
+            feather.replace();
         });
 
-        function reset_form(){
+        // Delete article function
+        function deleteArticle(articleId) {
+            // Get article title for confirmation
+            const articleRow = event.target.closest('tr');
+            const articleTitle = articleRow.querySelector('.article-title').textContent.trim();
 
-            $("#advance_search_form").find("input[type=text],input[type=date], textarea, select").val("");
+            // Custom confirmation dialog
+            const confirmationMessage = `Are you sure you want to delete this article?`;
 
+            if (confirm(confirmationMessage)) {
+                // Show loading state
+                const deleteButton = event.target.closest('button');
+                const originalContent = deleteButton.innerHTML;
+                deleteButton.innerHTML = '<i data-feather="loader" class="feather-14"></i>';
+                deleteButton.disabled = true;
+
+                // Create and submit form
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route("news.delete") }}';
+                form.style.display = 'none';
+
+                // Add CSRF token
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';
+                form.appendChild(csrfToken);
+
+                // Add article ID as 'pages' parameter (controller expects this)
+                const articleIdField = document.createElement('input');
+                articleIdField.type = 'hidden';
+                articleIdField.name = 'pages';
+                articleIdField.value = articleId;
+                form.appendChild(articleIdField);
+
+                // Add form to document and submit
+                document.body.appendChild(form);
+
+                // Debug: Log what we're sending
+                console.log('Deleting article:', {
+                    articleId: articleId,
+                    action: form.action,
+                    csrfToken: csrfToken.value
+                });
+
+                // Submit form
+                form.submit();
+            }
         }
 
-        function check_date(feld){
-            if($('#search_datestart').val() && $('#search_dateend').val()){
-                if($('#search_datestart').val() > $('#search_dateend').val()){
-                    alert('Date Start should not be later than Date End!');
-                    $('#'+feld).val('');
-                    return false;
-                }
-            }
-            else{
-                return true;
+        // Alternative AJAX delete function for better error handling
+        function deleteArticleAjax(articleId) {
+            // Get article title for confirmation
+            const articleRow = event.target.closest('tr');
+            const articleTitle = articleRow.querySelector('.article-title').textContent.trim();
+
+            if (confirm(`Are you sure you want to delete "${articleTitle}"?\n\nThis action cannot be undone.`)) {
+                const deleteButton = event.target.closest('button');
+                const originalContent = deleteButton.innerHTML;
+
+                // Show loading state
+                deleteButton.innerHTML = '<i data-feather="loader" class="feather-14"></i>';
+                deleteButton.disabled = true;
+
+                // Create form data
+                const formData = new FormData();
+                formData.append('_token', '{{ csrf_token() }}');
+                formData.append('pages', articleId);
+
+                // AJAX request
+                fetch('{{ route("news.delete") }}', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    console.log('Delete response:', response);
+                    if (response.ok) {
+                        // Success - reload page to show updated list
+                        window.location.reload();
+                    } else {
+                        throw new Error('Delete failed with status: ' + response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error('Delete error:', error);
+
+                    // Restore button
+                    deleteButton.innerHTML = originalContent;
+                    deleteButton.disabled = false;
+                    feather.replace();
+
+                    // Show error message
+                    alert('Failed to delete article. Please check the console for details and try again.');
+                });
             }
         }
     </script>
-
-
 @endsection

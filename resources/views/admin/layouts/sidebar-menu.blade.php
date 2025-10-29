@@ -8,8 +8,8 @@
     <li class="nav-label mg-t-25">CMS</li>
     <li class="nav-item @if (url()->current() == route('dashboard')) active @endif">
         <a href="{{ route('dashboard') }}" class="nav-link"><i data-feather="home"></i><span>Dashboard</span></a>
-    </li>    
-    
+    </li>
+
     @if (auth()->user()->has_access_to_pages_module() || auth()->user()->has_access_to('pages') || auth()->user()->role_id == '9')
         <li class="nav-item with-sub @if (request()->routeIs('pages*')) active show @endif">
             <a href="" class="nav-link"><i data-feather="layers"></i> <span>Pages</span></a>
@@ -77,7 +77,15 @@
                     <li @if (\Route::current()->getName() == 'news-categories.create') class="active" @endif><a href="{{ route('news-categories.create') }}">Create a Category</a></li>
                 @endif
             </ul>
-        </li> 
+        </li>
+    @endif
+    @if (auth()->user()->has_access_to_pages_module() || auth()->user()->has_access_to('services') || auth()->user()->role_id == '9')
+        <li class="nav-item with-sub @if (request()->routeIs('services*')) active show @endif">
+            <a href="" class="nav-link"><i data-feather="layers"></i> <span>Services</span></a>
+            <ul>
+                <li @if (\Route::current()->getName() == 'services.edit' || \Route::current()->getName() == 'services.index' || \Route::current()->getName() == 'services.index.advance-search') class="active" @endif><a href="{{ route('services.index') }}">Manage Services</a></li>
+            </ul>
+        </li>
     @endif
 
     @if (auth()->user()->is_an_admin() || auth()->user()->has_access_to('settings'))
@@ -111,10 +119,11 @@
             <ul>
                 <li @if (request()->routeIs('role*')) class="active" @endif><a href="{{ route('role.index') }}">Roles</a></li>
                 <li @if (request()->routeIs('access*')) class="active" @endif><a href="{{ route('access.index') }}">Access Rights</a></li>
-                <li @if (request()->routeIs('permission*')) class="active" @endif><a href="{{ route('permission.index') }}">Permissions</a></li>
+                <li @if (request()->routeIs('permission*')) class="active" @endif><a href="">Permissions</a></li>
             </ul>
         </li>
     @endif
+
 
     <!-- @if (auth()->user()->has_access_to_module('ecommerce'))
         <li class="nav-label mg-t-25">E-Commerce</li>
@@ -163,7 +172,7 @@
                 @endif
 
                 {{--<li @if (\Route::current()->getName() == 'product-attributes.index' || \Route::current()->getName() == 'product-attributes.edit') class="active" @endif><a href="{{ route('product-attributes.index') }}">Manage Attibutes</a></li>
-                
+
                 <li @if (\Route::current()->getName() == 'product-attributes.create') class="active" @endif><a href="{{ route('product-attributes.create') }}">Create Attibute</a></li>--}}
             </ul>
         </li>
@@ -220,7 +229,7 @@
         </li>
     @endif --}}
 
-    
+
     <li class="nav-item with-sub @if (request()->routeIs('mailing-list*')) active show @endif">
         <a href="" class="nav-link"><i data-feather="credit-card"></i> <span>Mailing List</span></a>
         <ul>
@@ -238,7 +247,7 @@
                     <li @if (\Route::current()->getName() == 'mailing-list.groups.create') class="active" @endif><a href="{{ route('mailing-list.groups.create') }}">Create a Group</a></li>
                 @endif
             @endif
-            
+
             @if (auth()->user()->has_access_to_campaign_module())
                 <li @if (\Route::current()->getName() == 'mailing-list.campaigns.index' || \Route::current()->getName() == 'mailing-list.campaigns.edit') class="active" @endif><a href="{{ route('mailing-list.campaigns.index') }}">Manage Campaigns</a></li>
                 @if(auth()->user()->has_access_to_route('mailing-list.campaigns.create'))
@@ -252,7 +261,7 @@
         </ul>
     </li>
 
-    
+
     @if (auth()->user()->is_an_admin() || auth()->user()->has_access_to('page_modals'))
         <li class="nav-item with-sub @if (request()->routeIs('page-modals*')) active show @endif">
             <a href="" class="nav-link"><i data-feather="edit"></i> <span>Page Modals</span></a>
@@ -307,14 +316,14 @@
         <li class="nav-item @if (\Route::current()->getName() == 'report.favorites')) active show @endif">
             <a href="{{ route('report.favorites') }}" class="nav-link" target="_blank"><i data-feather="file"></i> <span>Customer Favorites</span></a>
         </li> --}}
-        
+
     @endif
 
 
     @if (auth()->user()->is_an_admin() || auth()->user()->has_access_to('reports'))
         <li class="nav-label mg-t-25">Mobile Reports</li>
 
-    
+
         <li class="nav-item @if (\Route::current()->getName() == 'report.best-sellers.mobile')) active show @endif">
             <a href="{{ route('report.best-sellers.mobile') }}" class="nav-link" target="_blank"><i data-feather="file"></i> <span>Best Sellers</span></a>
         </li>
@@ -330,11 +339,11 @@
         <li class="nav-item @if (\Route::current()->getName() == 'report.top-products.mobile')) active show @endif">
             <a href="{{ route('report.top-products.mobile') }}" class="nav-link" target="_blank"><i data-feather="file"></i> <span>Top Rated Products</span></a>
         </li>
-        
+
         <li class="nav-item @if (\Route::current()->getName() == 'report.subscribers.mobile')) active show @endif">
             <a href="{{ route('report.subscribers.mobile') }}" class="nav-link" target="_blank"><i data-feather="file"></i> <span>Subscribers</span></a>
         </li>
-        
+
     @endif -->
 
     <!-- <li class="nav-item with-sub @if (request()->routeIs('resources*') || request()->routeIs('resource-categories*')) active show @endif" style="@if(auth()->user()->role_id != '1') display: none; @endif">

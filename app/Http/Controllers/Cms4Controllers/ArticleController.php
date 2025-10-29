@@ -49,11 +49,11 @@ class ArticleController extends Controller
         $searchType = 'simple_search';
 
         return view('admin.cms4.news.index', compact(
-            'news', 
-            'filter', 
-            'advanceSearchData', 
-            'uniqueNewsByCategory', 
-            'uniqueNewsByUser', 
+            'news',
+            'filter',
+            'advanceSearchData',
+            'uniqueNewsByCategory',
+            'uniqueNewsByUser',
             'searchType'
         ));
     }
@@ -132,6 +132,13 @@ class ArticleController extends Controller
      */
     public function update(ArticleRequest $request, Article $news)
     {
+        \Log::info('Article update started', [
+            'article_id' => $news->id,
+            'has_news_image' => $request->hasFile('news_image'),
+            'has_delete_image' => $request->has('delete_image'),
+            'image_url_input' => $request->input('image_url')
+        ]);
+
         $updateData = $request->validated();
 
         $updateData['slug'] = $news->name != $updateData['name'] ? ModelHelper::convert_to_slug(Article::class, $updateData['name']) : $news['slug'];
@@ -139,20 +146,34 @@ class ArticleController extends Controller
         $updateData['is_featured'] = $news->is_featured ? $request->has('is_featured') : Article::can_set_featured() && $request->has('is_featured');
         $updateData['user_id'] = auth()->id();
 
-        if (isset($request->delete_image) || $request->hasFile('news_image')) {
-            FileHelper::delete_file($news->get_image_url_storage_path());
+        // Handle image upload/deletion
+        if ($request->has('delete_image') || $request->hasFile('news_image')) {
+            if ($news->image_url) {
+                FileHelper::delete_file($news->get_image_url_storage_path());
+            }
             $updateData['image_url'] = null;
             if ($request->hasFile('news_image')) {
-                $updateData['image_url'] = FileHelper::move_to_folder($request->file('news_image'), 'news_image')['url'];
+                $uploadResult = FileHelper::move_to_folder($request->file('news_image'), 'news_image');
+                $updateData['image_url'] = $uploadResult['url']; // Store full URL
             }
+        } elseif ($request->filled('image_url')) {
+            // Only update image_url if no file was uploaded and URL is provided
+            $updateData['image_url'] = $request->image_url;
         }
 
-        if (isset($request->delete_thumbnail) || $request->hasFile('news_thumbnail')) {
-            FileHelper::delete_file($news->get_thumbnail_url_storage_path());
+        // Handle thumbnail upload/deletion
+        if ($request->has('delete_thumbnail') || $request->hasFile('news_thumbnail')) {
+            if ($news->thumbnail_url) {
+                FileHelper::delete_file($news->get_thumbnail_url_storage_path());
+            }
             $updateData['thumbnail_url'] = null;
             if ($request->hasFile('news_thumbnail')) {
-                $updateData['thumbnail_url'] = FileHelper::move_to_folder($request->file('news_thumbnail'), 'news_image/news_thumbnail')['url'];
+                $uploadResult = FileHelper::move_to_folder($request->file('news_thumbnail'), 'news_image/news_thumbnail');
+                $updateData['thumbnail_url'] = $uploadResult['url']; // Store full URL
             }
+        } elseif ($request->filled('thumbnail_url')) {
+            // Only update thumbnail_url if no file was uploaded and URL is provided
+            $updateData['thumbnail_url'] = $request->thumbnail_url;
         }
 
         $news->update($updateData);

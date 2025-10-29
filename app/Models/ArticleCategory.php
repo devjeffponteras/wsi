@@ -21,6 +21,11 @@ class ArticleCategory extends Model
         return $this->hasMany(Article::class, 'category_id', 'id');
     }
 
+    public function news()
+    {
+        return $this->hasMany(\App\Models\News::class, 'category_id', 'id');
+    }
+
     public function get_total_articles()
     {
         return $this->articles->count();

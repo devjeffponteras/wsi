@@ -340,8 +340,9 @@ class FrontController extends Controller
         $page->name = 'About Us';
         $page->slug = 'about-us';
         $breadcrumb = $this->breadcrumb($page);
+        $content = Page::where('name', 'About Us')->first();
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
-        return view('theme.pages.about-us', compact('footer', 'page', 'breadcrumb'));
+        return view('theme.pages.about-us', compact('content','footer', 'page', 'breadcrumb'));
     }
 
       public function services()
@@ -406,16 +407,115 @@ class FrontController extends Controller
         //return $content;
 }
 
-        public function news()
+     public function news()
     {
-        \Log::info('Loading services page with partials: theme.pages.news');
+        \Log::info('Loading news page with database articles');
         $page = new Page();
         $page->name = 'News';
         $page->slug = 'news';
         $breadcrumb = $this->breadcrumb($page);
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
-        return view('theme.pages.news', compact('footer', 'page', 'breadcrumb'));
 
-}
+        // Fetch articles from new News model
+        $featuredArticle = \App\Models\News::where('status', 'Published')
+            ->where('is_featured', 1)
+            ->with('category')
+            ->latest('date')
+            ->first();
+
+        $latestArticles = \App\Models\News::where('status', 'Published')
+            ->with('category')
+            ->latest('date')
+            ->limit(6)
+            ->get()
+            ->map(function($article) {
+                $article->excerpt = $article->teaser ? \Illuminate\Support\Str::limit($article->teaser, 120) : '';
+                return $article;
+            });
+
+        $quickLinkArticles = \App\Models\News::where('status', 'Published')
+            ->with('category')
+            ->latest('date')
+            ->limit(4)
+            ->offset(1)
+            ->get();
+
+        $categories = \App\Models\ArticleCategory::with(['news' => function($query) {
+                $query->where('status', 'Published');
+            }])
+            ->get();
+
+        // Group articles by category for different sections
+        $pressReleases = \App\Models\News::where('status', 'Published')
+            ->whereHas('category', function($q) {
+                $q->where('name', 'LIKE', '%Press Release%')
+                  ->orWhere('name', 'LIKE', '%Announcements%');
+            })
+            ->with('category')
+            ->latest('date')
+            ->limit(3)
+            ->get();
+
+        $companyUpdates = \App\Models\News::where('status', 'Published')
+            ->whereHas('category', function($q) {
+                $q->where('name', 'LIKE', '%Company%')
+                  ->orWhere('name', 'LIKE', '%Events%');
+            })
+            ->with('category')
+            ->latest('date')
+            ->limit(3)
+            ->get()
+            ->map(function($article) {
+                $article->excerpt = $article->teaser ? \Illuminate\Support\Str::limit($article->teaser, 120) : '';
+                return $article;
+            });
+
+        $thoughtLeadership = \App\Models\News::where('status', 'Published')
+            ->whereHas('category', function($q) {
+                $q->where('name', 'LIKE', '%Thought%')->orWhere('name', 'LIKE', '%Leadership%');
+            })
+            ->with('category')
+            ->latest('date')
+            ->limit(3)
+            ->get()
+            ->map(function($article) {
+                $article->excerpt = $article->teaser ? \Illuminate\Support\Str::limit($article->teaser, 120) : '';
+                return $article;
+            });
+
+        return view('theme.pages.news', compact(
+            'footer', 'page', 'breadcrumb', 'featuredArticle', 'latestArticles',
+            'quickLinkArticles', 'categories', 'pressReleases', 'companyUpdates', 'thoughtLeadership'
+        ));
+    }
+
+    public function news_detail($slug)
+    {
+        // Fetch the specific article
+        $news = \App\Models\News::where('slug', $slug)
+            ->where('status', 'Published')
+            ->with(['category', 'user'])
+            ->first();
+
+        if (!$news) {
+            abort(404, 'Article not found');
+        }
+
+        // Fetch latest articles for sidebar (excluding current article)
+        $latestArticles = \App\Models\News::where('status', 'Published')
+            ->where('id', '!=', $news->id)
+            ->with('category')
+            ->latest('date')
+            ->limit(5)
+            ->get();
+
+        $breadcrumb = ['Home' => url('/'), 'News' => url('/news'), $news->name => '#'];
+        $page = new Page();
+        $page->name = $news->name;
+        $page->slug = $slug;
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+
+        return view('theme.pages.news', compact('news', 'latestArticles', 'breadcrumb', 'page', 'footer'));
+    }
 
 }

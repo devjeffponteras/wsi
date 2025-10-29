@@ -329,6 +329,10 @@
         color: #2b56d3;
         margin-bottom: 1rem;
     }
+
+    #package_price{
+         margin-bottom: 22rem;
+    }
     .package-features {
         list-style: none;
         padding: 0;
@@ -451,7 +455,7 @@
         </div>
     </section>
     <!-- Hosting Overview -->
-     {!! $content->contents !!}
+   {!! $content->contents !!}
     <!-- CTA Section -->
     <section class="section-cta position-relative">
         <div class="cta-container scroll-animate">

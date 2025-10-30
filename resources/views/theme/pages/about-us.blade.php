@@ -2,6 +2,79 @@
 
 @section('pagecss')
 <link rel="stylesheet" href="{{ asset('theme/css/newstyle.css') }}" type="text/css" />
+<style>
+    /* About Us responsive overrides */
+
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 2rem 1.25rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .hero-title {
+        color: #fff;
+        margin: 0 0 0.5rem 0;
+        font-weight: 700;
+        line-height: 1.05;
+        font-size: clamp(1.8rem, 6vw, 3.2rem);
+    }
+
+    .hero-subtitle {
+        color: rgba(255,255,255,0.95);
+        margin: 0 auto;
+        max-width: 900px;
+        font-size: clamp(1rem, 2.6vw, 1.25rem);
+    }
+
+    /* Ensure any images inside content are fluid */
+    .article-body img, .content-wordings img, .card img {
+        max-width: 100% !important;
+        height: auto !important;
+        display: block;
+    }
+
+    /* CTA responsive text */
+    .section-cta .content-title h1 {
+        font-size: clamp(1.6rem, 6vw, 3.2rem) !important;
+        line-height: 1.1;
+    }
+
+    .section-cta .content-description p {
+        font-size: clamp(0.95rem, 3.2vw, 1.25rem) !important;
+    }
+
+    /* Contact card responsive */
+    .contact-us-page .card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Small screens: hide heavy video, use fallback hero image for performance */
+    @media (max-width: 768px) {
+        .hero-video { display: none; }
+        .hero-section { background-image: url('{{ asset('theme/images/banners/image1.jpg') }}'); background-size: cover; background-position: center; }
+        .hero-content { padding: 1.25rem; }
+        .hero-title { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+        .hero-subtitle { font-size: clamp(0.95rem, 4vw, 1.05rem); }
+
+        /* Ensure CTA stack looks good */
+        .contact-us-page .col-md-7, .contact-us-page .col-md-5 { width: 100%; max-width: 100%; }
+        .contact-us-page .col-md-5 { margin-top: 16px; }
+    }
+
+    /* Extra small phones */
+    @media (max-width: 420px) {
+        .hero-title { font-size: 1.4rem; }
+        .hero-subtitle { font-size: 0.95rem; }
+        .section-cta .content-title h1 { font-size: 1.6rem !important; }
+        .section-cta .content-description p { font-size: 0.95rem !important; }
+        .button.button-3d { width: 100%; padding: 10px 14px; }
+    }
+</style>
 @endsection
 
 @section('content')

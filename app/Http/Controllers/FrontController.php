@@ -326,6 +326,11 @@ class FrontController extends Controller
 
     }
 
+    /**
+     * Return quick links (latest articles) for a given category slug or 'all'.
+     * Responds with JSON array of articles {name, slug, date}
+     */
+
     public function portfolio() {
         $page = new Page();
         $page->name = 'Portfolio';

@@ -496,7 +496,7 @@
                                             </a>
                                         @endif
 
-                                        <button onclick="deleteArticle({{ $article->id }})"
+                                        <button onclick="deleteArticle({{ $article->id }}, event)"
                                                 class="btn btn-outline-danger btn-sm"
                                                 title="Delete Article">
                                             <i data-feather="trash-2" class="feather-14"></i>
@@ -569,9 +569,9 @@
         });
 
         // Delete article function
-        function deleteArticle(articleId) {
+        function deleteArticle(articleId, ev) {
             // Get article title for confirmation
-            const articleRow = event.target.closest('tr');
+            const articleRow = ev.target.closest('tr');
             const articleTitle = articleRow.querySelector('.article-title').textContent.trim();
 
             // Custom confirmation dialog
@@ -597,10 +597,10 @@
                 csrfToken.value = '{{ csrf_token() }}';
                 form.appendChild(csrfToken);
 
-                // Add article ID as 'pages' parameter (controller expects this)
+                // Add article ID as 'id' parameter (controller expects this)
                 const articleIdField = document.createElement('input');
                 articleIdField.type = 'hidden';
-                articleIdField.name = 'pages';
+                articleIdField.name = 'id';
                 articleIdField.value = articleId;
                 form.appendChild(articleIdField);
 
@@ -620,13 +620,13 @@
         }
 
         // Alternative AJAX delete function for better error handling
-        function deleteArticleAjax(articleId) {
+        function deleteArticleAjax(articleId, ev) {
             // Get article title for confirmation
-            const articleRow = event.target.closest('tr');
+            const articleRow = ev.target.closest('tr');
             const articleTitle = articleRow.querySelector('.article-title').textContent.trim();
 
             if (confirm(`Are you sure you want to delete "${articleTitle}"?\n\nThis action cannot be undone.`)) {
-                const deleteButton = event.target.closest('button');
+                const deleteButton = ev.target.closest('button');
                 const originalContent = deleteButton.innerHTML;
 
                 // Show loading state
@@ -636,7 +636,7 @@
                 // Create form data
                 const formData = new FormData();
                 formData.append('_token', '{{ csrf_token() }}');
-                formData.append('pages', articleId);
+                formData.append('id', articleId);
 
                 // AJAX request
                 fetch('{{ route("news.delete") }}', {

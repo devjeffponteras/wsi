@@ -42,7 +42,7 @@
             <h4 class="mg-b-0 tx-spacing--1">Edit a Page</h4>
         </div>
         <div>
-            <a class="btn btn-outline-primary btn-sm" href="/{{$page->get_url()}}" target="_blank">Preview Page</a>
+            <a class="btn btn-outline-primary btn-sm" href="{{ url($page->get_url()) }}" target="_blank">Preview Page</a>
         </div>
     </div>
     <form id="editForm" action="{{ route('pages.update',$page->id) }}" method="post" enctype="multipart/form-data">
@@ -57,7 +57,7 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
 
-                    <small id="page_slug"><a target="_blank" href="/{{$page->slug}}">{{env('APP_URL')}}/{{$page->slug}}</a></small>
+                    <small id="page_slug"><a target="_blank" href="{{ url($page->get_url()) }}">{{ url($page->get_url()) }}</a></small>
                     @error('slug')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -215,7 +215,7 @@
                                                 <i class="lnr lnr-enter-down font-16px"></i>
                                             </span>
                                         </button>
-                                        
+
                                         <button type="button" class="btn btn-hsm btn-link device-type" id="edit-code" data-toggle="tooltip" data-placement="bottom" title="Edit Code" type="button">
                                             <span class="btn-wrapper--icon d-flex align-items-center">
                                                 <i class="lnr lnr-pencil4 font-16px"></i>
@@ -247,7 +247,7 @@
                                 </div>
                             </div>
                             <div id="gjs">
-                                
+
                             </div>
 
                             <!-- Export-modal -->

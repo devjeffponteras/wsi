@@ -74,10 +74,15 @@ class NewsController extends Controller
         $news = News::findOrFail($request->id);
         $news->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'News article deleted successfully!'
-        ]);
+        // If request expects JSON (AJAX), return JSON. Otherwise redirect back with flash message
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'News article deleted successfully!'
+            ]);
+        }
+
+        return redirect()->route('news.index')->with('success', 'News article deleted successfully!');
     }
 
     /**

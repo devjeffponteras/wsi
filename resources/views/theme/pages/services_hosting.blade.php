@@ -329,9 +329,8 @@
         color: #2b56d3;
         margin-bottom: 1rem;
     }
-
     #package_price{
-         margin-bottom: 22rem;
+         margin-bottom: 25.8rem;
     }
     .package-features {
         list-style: none;

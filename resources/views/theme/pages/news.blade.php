@@ -382,6 +382,13 @@
         display: block;
     }
 
+    /* Prevent CTA decorative images from creating horizontal overflow */
+    .section-cta { overflow: hidden; }
+    .section-cta .hero-decor { max-width: 770px; width: 42%; height: auto; bottom: 0; }
+    @media (max-width: 768px) {
+        .section-cta .hero-decor { display: none !important; }
+    }
+
     /* Press Releases specific styling */
     .press-releases-section {
         background: #fff;
@@ -958,8 +965,7 @@
         <!-- Video Background -->
         <video class="newsroom-hero-video" autoplay loop muted playsinline poster="{{ asset('theme/images/banners/videos/explore-poster.jpg') }}">
             <source src="{{ asset('theme/images/banners/videos/webfocus.webm') }}" type="video/webm">
-            <source src="{{ asset('theme/images/banners/videos/webfocus.mp4') }}" type="video/mp4">
-            <!-- Fallback image if video fails -->
+            <source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">            <!-- Fallback image if video fails -->
             <img src="{{ asset('theme/images/banners/image1.jpg') }}" alt="WebFocus Newsroom Banner" class="newsroom-hero-video-fallback">
         </video>
     </section>
@@ -1255,7 +1261,7 @@
                 </div>
             </div>
         </div>
-        <img class="position-absolute" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); bottom: 0; left: 10%;width: 770px;">
+    <img class="position-absolute hero-decor" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); left: 10%;">
     </section>
 </div>
 @endisset

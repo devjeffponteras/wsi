@@ -29,7 +29,7 @@
             <div class="col-lg-4 col-md-3">
                <ul class="list-unstyled text-white-50">
                     <a href="{{ url('/') }}" class="standard-logo d-inline-block mb-3 text-center text-md-start">
-                    <img src="{{ asset('images/logos/logo-light.png') }}" alt="{{ Setting::info()->company_name ?? 'Company Name' }}" style="max-height: 100px;">
+                    <img src="{{ asset('images/logos/white-wsi-logo.png') }}" alt="{{ Setting::info()->company_name ?? 'Company Name' }}" style="max-height: 100px;">
                 </a>
                     <li class="mb-3 d-flex align-items-start">
                         <i class="bi bi-geo-alt-fill me-2" style="font-size: 1.2rem; color: #1697f9;"></i>

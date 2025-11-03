@@ -219,6 +219,12 @@
             min-width: 150px;
         }
     }
+    /* Prevent CTA decorative images from creating horizontal overflow */
+    .section-cta { overflow: hidden; }
+    .section-cta .hero-decor { max-width: 770px; width: 42%; height: auto; bottom: 0; }
+    @media (max-width: 768px) {
+        .section-cta .hero-decor { display: none !important; }
+    }
 </style>
 @endsection
 
@@ -245,7 +251,7 @@
     <!-- Why a Custom Domain Matters -->
     {!! $content->contents !!}
     <!-- Domain Checker -->
-    
+
     <!-- FAQ Section -->
     <section class="section" style="background: linear-gradient(135deg, #f0f9ff, #ffffff);">
         <div class="container mx-auto px-6">
@@ -360,7 +366,7 @@
                 </div>
             </div>
         </div>
-        <img class="position-absolute" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); bottom: 0; left: 10%;width: 770px;">
+    <img class="position-absolute hero-decor" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); left: 10%;">
     </section>
 </div>
 @endsection

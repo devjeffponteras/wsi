@@ -4,6 +4,12 @@
 <link rel="stylesheet" href="{{ asset('theme/css/newstyle.css') }}" type="text/css" />
 <style>
 
+    /* Prevent CTA decorative images from creating horizontal overflow */
+    .section-cta { overflow: hidden; }
+    .section-cta .hero-decor { max-width: 770px; width: 42%; height: auto; bottom: 0; }
+    @media (max-width: 768px) {
+        .section-cta .hero-decor { display: none !important; }
+    }
 </style>
 @endsection
 
@@ -116,7 +122,7 @@
                 </div>
             </div>
         </div>
-        <img class="position-absolute" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); bottom: 0; left: 10%;width: 770px;">
+    <img class="position-absolute hero-decor" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); left: 10%;">
     </section>
 </div>
 @endsection

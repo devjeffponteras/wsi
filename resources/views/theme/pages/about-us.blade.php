@@ -41,11 +41,17 @@
     .section-cta .content-title h1 {
         font-size: clamp(1.6rem, 6vw, 3.2rem) !important;
         line-height: 1.1;
+        margin: 0;
     }
 
     .section-cta .content-description p {
         font-size: clamp(0.95rem, 3.2vw, 1.25rem) !important;
     }
+
+    /* Prevent decorative images from causing horizontal overflow */
+    .section-cta { overflow: hidden; }
+
+    .hero-decor { max-width: 770px; width: 42%; height: auto; bottom: 0; }
 
     /* Contact card responsive */
     .contact-us-page .card {
@@ -63,7 +69,16 @@
 
         /* Ensure CTA stack looks good */
         .contact-us-page .col-md-7, .contact-us-page .col-md-5 { width: 100%; max-width: 100%; }
-        .contact-us-page .col-md-5 { margin-top: 16px; }
+        .contact-us-page .col-md-5 { margin-top: 12px; }
+
+        /* Make form columns full width and buttons stack */
+        .row.g-2 .col-md-6 { width: 100%; max-width: 100%; }
+        .row.g-2 .col-md-6 .button.button-3d, .row.g-2 .col-md-6 button.button-3d { width: 100%; }
+        .card.p-4 { padding: 1rem; }
+
+        /* Shrink hero decorative svg so it doesn't overflow on mobile */
+        .hero-section img.position-absolute { width: 220px !important; left: 4% !important; bottom: 0 !important; }
+        .section-cta .hero-decor { display: none !important; }
     }
 
     /* Extra small phones */
@@ -73,6 +88,9 @@
         .section-cta .content-title h1 { font-size: 1.6rem !important; }
         .section-cta .content-description p { font-size: 0.95rem !important; }
         .button.button-3d { width: 100%; padding: 10px 14px; }
+        /* Further reduce hero svg on very small phones */
+        .hero-section img.position-absolute { width: 160px !important; left: 6% !important; }
+        .section-cta .hero-decor { display: none !important; }
     }
 </style>
 @endsection

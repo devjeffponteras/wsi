@@ -1,178 +1,24 @@
 @extends('admin.layouts.app')
 
 @section('pagetitle')
-    Edit News Article
+    Update Article
 @endsection
 
 @section('pagecss')
     <link href="{{ asset('lib/bselect/dist/css/bootstrap-select.css') }}" rel="stylesheet">
-    <link href="{{ asset('lib/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet">
 
-    <style>
-        /* Article Body Styling - Matches News Detail Page Exactly */
-        .article-body h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #1e40af;
-            margin: 2.5rem 0 1.5rem 0;
-            line-height: 1.2;
-            border-bottom: 3px solid #e5e7eb;
-            padding-bottom: 0.75rem;
-        }
-
-        .article-body h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2rem 0 1rem 0;
-            line-height: 1.3;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.5rem;
-        }
-
-        .article-body h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #374151;
-            margin: 1.5rem 0 0.75rem 0;
-            line-height: 1.4;
-        }
-
-        .article-body h4 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #4b5563;
-            margin: 1.25rem 0 0.5rem 0;
-            line-height: 1.4;
-        }
-
-        .article-body p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #374151;
-            margin: 0 0 1.5rem 0;
-            text-align: justify;
-        }
-
-        .article-body ul, .article-body ol {
-            margin: 1.5rem 0;
-            padding-left: 2rem;
-        }
-
-        .article-body li {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #374151;
-            margin: 0.5rem 0;
-        }
-
-        .article-body ul li {
-            list-style-type: disc;
-        }
-
-        .article-body ol li {
-            list-style-type: decimal;
-        }
-
-        .article-body strong {
-            font-weight: 700;
-            color: #1f2937;
-        }
-
-        .article-body em {
-            font-style: italic;
-            color: #6b7280;
-        }
-
-        .article-body blockquote {
-            background: #f8fafc;
-            border-left: 4px solid #1e40af;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 8px 8px 0;
-            font-style: italic;
-            color: #4b5563;
-        }
-
-        .article-body img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-
-        /* Preview Container Styling - Matches News Detail Page */
-        .content-preview {
-            background: white !important;
-            border: 2px solid #e5e7eb !important;
-            border-radius: 12px !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .preview-title {
-            color: #1f2937;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 1rem;
-        }
-
-        .preview-output.article-body {
-            margin-bottom: 0;
-        }
-
-        #content-preview h6 {
-            color: #1f2937;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 1rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .content-preview {
-                padding: 1.5rem;
-            }
-
-            .article-body h1 {
-                font-size: 1.75rem;
-                margin: 2rem 0 1rem 0;
-            }
-
-            .article-body h2 {
-                font-size: 1.5rem;
-                margin: 1.5rem 0 0.75rem 0;
-            }
-
-            .article-body h3 {
-                font-size: 1.25rem;
-                margin: 1.25rem 0 0.5rem 0;
-            }
-
-            .article-body h4 {
-                font-size: 1.1rem;
-                margin: 1rem 0 0.5rem 0;
-            }
-
-            .article-body p,
-            .article-body li {
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-
-            .article-body ul, .article-body ol {
-                padding-left: 1.5rem;
-            }
-        }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('lib/custom-grapesjs/grapesjs/dist/css/grapes.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('lib/custom-grapesjs/assets/css/custom-grapesjs.css') }}" />
+    <link rel="stylesheet" href="{{ asset('lib/custom-grapesjs/linearicon/css/linearicons.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('lib/grapesjs/tooltip.css') }}" />
+    <link rel="stylesheet" href="{{ asset('lib/grapesjs/grapesjs-plugin-filestack.css') }}" />
+    <link rel="stylesheet" href="{{ asset('lib/grapesjs/tui-color-picker.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('lib/grapesjs/tui-image-editor.min.css') }}" />
 @endsection
 
 @section('content')
+
 <div class="container pd-x-0">
     <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
         <div>
@@ -180,319 +26,607 @@
                 <ol class="breadcrumb breadcrumb-style1 mg-b-10">
                     <li class="breadcrumb-item" aria-current="page"><a href="{{route('dashboard')}}">CMS</a></li>
                     <li class="breadcrumb-item" aria-current="page"><a href="{{route('news.index')}}">News</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Edit Article</li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit a News</li>
                 </ol>
             </nav>
-            <h4 class="mg-b-0 tx-spacing--1">Edit News Article: {{ $news->name }}</h4>
+            <h4 class="mg-b-0 tx-spacing--1">Edit a News</h4>
+        </div>
+        <div>
+            <a class="btn btn-outline-primary btn-sm" href="{{ $news->get_url() }}" target="_blank">Preview News</a>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <form action="{{ route('news.update', $news->id) }}" method="post" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-
-                <div class="card">
-                    <div class="card-header">
-                        <h6 class="card-title">News Article Information</h6>
+    <form id="editForm" method="post" action="{{ route('news.update',$news->id) }}" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="row row-sm">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="d-block">Title *</label>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" maxlength="150"  name="name" id="name" value="{{ old('name',$news->name) }}" required>
+                    <small id="news_slug">{{ $news->get_url() }}</small>
+                    @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Date *</label>
+                    <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" id="date" required value="{{ old('date', optional($news->date)->format('Y-m-d')) }}">
+                    @error('date')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Category</label>
+                    <select id="category_id" class="selectpicker mg-b-5 @error('category_id') is-invalid @enderror" name="category_id" data-style="btn btn-outline-light btn-md btn-block tx-left" title="- None -" data-width="100%">
+                        <option value="0" @if (empty($news->category_id)) selected @endif>- None -</option>
+                        @forelse($categories as $category)
+                            <option value="{{$category->id}}" {{(old("category_id", $news->category_id) == $category->id ? "selected":"") }} >{{strtoupper($category->name)}}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                    @error('category_id')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Article banner</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input @error('news_image') is-invalid @enderror" name="news_image" id="news_image" @if (!empty($news->image_url)) title="{{$news->get_image_file_name()}}" @endif>
+                        <label class="custom-file-label" for="news_image" id="img_name">@if (empty($news->image_url)) Choose file @else {{$news->get_image_file_name()}} @endif</label>
                     </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label class="d-block">Title *</label>
-                            <input type="text" name="name" id="name" value="{{ old('name', $news->name)}}" class="form-control @error('name') is-invalid @enderror" required maxlength="255" placeholder="Enter news title">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="d-block">Slug</label>
-                            <input type="text" name="slug" id="slug" value="{{ old('slug', $news->slug)}}" class="form-control @error('slug') is-invalid @enderror" placeholder="Auto-generated if left empty">
-                            @error('slug')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="d-block">Category *</label>
-                            <select name="category_id" class="selectpicker mg-b-5 @error('category_id') is-invalid @enderror" data-style="btn btn-outline-light btn-md btn-block tx-left" title="Select category" data-width="100%" required>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ (old("category_id", $news->category_id) == $category->id ? "selected":"") }}>{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('category_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="d-block">Publication Date *</label>
-                            <input type="date" name="date" id="date" value="{{ old('date', $news->date ? \Carbon\Carbon::parse($news->date)->format('Y-m-d') : date('Y-m-d'))}}" class="form-control @error('date') is-invalid @enderror" required>
-                            @error('date')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="d-block">Teaser/Summary</label>
-                            <textarea name="teaser" id="teaser" class="form-control @error('teaser') is-invalid @enderror" rows="3" maxlength="500" placeholder="Brief description or summary of the article">{{ old('teaser', $news->teaser) }}</textarea>
-                            @error('teaser')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="d-block">Content *</label>
-
-                            <div class="alert alert-success mb-3">
-                                <h6><strong>📝 HTML Commands to Use:</strong></h6>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="bg-light p-3 rounded">
-                                            <p class="mb-2"><strong>Text Formatting:</strong></p>
-                                            <ul class="small mb-2">
-                                                <li><code>&lt;h1&gt;Main Title&lt;/h1&gt;</code></li>
-                                                <li><code>&lt;h2&gt;Section Title&lt;/h2&gt;</code></li>
-                                                <li><code>&lt;h3&gt;Sub Title&lt;/h3&gt;</code></li>
-                                                <li><code>&lt;p&gt;Paragraph text&lt;/p&gt;</code></li>
-                                                <li><code>&lt;strong&gt;Bold text&lt;/strong&gt;</code></li>
-                                                <li><code>&lt;em&gt;Italic text&lt;/em&gt;</code></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="bg-light p-3 rounded">
-                                            <p class="mb-2"><strong>Lists & Links:</strong></p>
-                                            <ul class="small mb-2">
-                                                <li><code>&lt;ul&gt;&lt;li&gt;Bullet item&lt;/li&gt;&lt;/ul&gt;</code></li>
-                                                <li><code>&lt;ol&gt;&lt;li&gt;Number item&lt;/li&gt;&lt;/ol&gt;</code></li>
-                                                <li><code>&lt;a href="url"&gt;Link text&lt;/a&gt;</code></li>
-                                                <li><code>&lt;img src="url" alt="text"&gt;</code></li>
-                                                <li><code>&lt;br&gt;</code> = Line break</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <small class="text-muted">💡 <strong>Tip:</strong> You can type these HTML tags directly or use the toolbar buttons!</small>
-                            </div>
-
-                            <textarea name="contents" id="contents" class="form-control summernote @error('contents') is-invalid @enderror" required>{{ old('contents', $news->contents) }}</textarea>
-                            @error('contents')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                    <p class="tx-10">
+                        Required image dimension: {{ env('NEWS_BANNER_WIDTH') }}px by {{ env('NEWS_BANNER_HEIGHT') }}px <br /> Maximum file size: 1MB <br /> Required file type: .jpeg .png
+                    </p>
+                    @error('news_image')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <div id="image_div" @if(empty($news->image_url)) style="display:none;" @endif>
+                        <img src="{{ $news->image_url }}" height="{{ env('IMAGE_DISPLAY_HEIGHT') }}" width="{{ env('IMAGE_DISPLAY_WIDTH') }}" id="img_temp" alt="">  <br /><br />
+                        <a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="remove_image()">Remove Image</a>
                     </div>
                 </div>
-        </div>
-
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="card-title">Publishing Options</h6>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="visibility" name="visibility" value="1" {{ old('visibility', $news->status == 'Published') ? 'checked' : '' }}>
-                            <label class="custom-control-label" for="visibility">Publish Immediately</label>
-                        </div>
-                        <small class="text-muted">Uncheck to save as draft</small>
+                <div class="form-group">
+                    <label class="d-block">Article thumbnail</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input @error('news_thumbnail') is-invalid @enderror" name="news_thumbnail" id="news_thumbnail" @if (!empty($news->thumbnail_url)) title="{{$news->get_image_file_name()}}" @endif>
+                        <label class="custom-file-label" for="news_thumbnail" id="img_name_thumbnail">@if (empty($news->thumbnail_url)) Choose file @else {{$news->get_image_file_name()}} @endif</label>
                     </div>
-
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="is_featured" name="is_featured" value="1" {{ old('is_featured', $news->is_featured) ? 'checked' : '' }}>
-                            <label class="custom-control-label" for="is_featured">Featured Article</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="card-title">Images</h6>
-                </div>
-                <div class="card-body">
-                    @if($news->banner_image || $news->thumbnail_image)
-                        <div class="current-image mb-3">
-                            <label class="d-block text-muted mb-2">Current Images:</label>
-                            @if($news->banner_image)
-                                <div class="mb-2">
-                                    <span class="d-block small">Banner Image:</span>
-                                    <img src="{{ $news->image }}" alt="{{ $news->name }} Banner" class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
-                                </div>
-                            @endif
-                            @if($news->thumbnail_image)
-                                <div class="mb-2">
-                                    <span class="d-block small">Thumbnail Image:</span>
-                                    <img src="{{ $news->thumbnail }}" alt="{{ $news->name }} Thumbnail" class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
-                                </div>
-                            @endif
-                            <div class="mt-2">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="delete_image" name="delete_image" value="1">
-                                    <label class="custom-control-label text-danger" for="delete_image">Delete current images</label>
-                                </div>
-                            </div>
-                        </div>
+                    @error('news_thumbnail')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    @if (env('NEWS_THUMBNAIL_WIDTH') && env('NEWS_THUMBNAIL_HEIGHT'))
+                        <p class="tx-10">
+                            Required image dimension: {{ env('NEWS_THUMBNAIL_WIDTH') }}px by {{ env('NEWS_THUMBNAIL_HEIGHT') }}px <br /> Maximum file size: 1MB <br /> Required file type: .jpeg .png
+                        </p>
                     @endif
-
-                    <div class="form-group">
-                        <label class="d-block">Banner Image</label>
-                        <input type="file" name="news_image" id="news_image" class="form-control-file @error('news_image') is-invalid @enderror" accept="image/*">
-                        <small class="text-muted">Main banner image for the article. Accepted formats: JPG, PNG, GIF. Max size: 5MB. Leave empty to keep current image.</small>
-                        @error('news_image')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-
-                        <!-- Image Preview -->
-                        <div id="image_preview" class="mt-3" style="display: none;">
-                            <label class="d-block">New Banner Image Preview:</label>
-                            <img id="image_preview_img" src="" alt="Banner Image Preview" class="img-fluid" style="max-width: 300px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px;">
-                        </div>
+                    <div id="image_div_thumbnail" @if(empty($news->thumbnail_url)) style="display:none;" @endif>
+                        <img src="{{ $news->thumbnail_url }}" height="100" width="150" id="img_temp_thumbnail" alt="">  <br /><br />
+                        <a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="remove_image_thumbnail()">Remove Image</a>
                     </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label class="d-block">Content *</label>
 
-                    <div class="form-group">
-                        <label class="d-block">Thumbnail Image</label>
-                        <input type="file" name="news_thumbnail" id="news_thumbnail" class="form-control-file @error('news_thumbnail') is-invalid @enderror" accept="image/*">
-                        <small class="text-muted">Smaller version for article listings and previews. Accepted formats: JPG, PNG, GIF. Max size: 2MB</small>
-                        @error('news_thumbnail')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                    <div class="grid h-100 overflow-hidden" id="editor-area">
+                        <div class="grid-item grid-item--behavior-fixed" style="flex-basis: 275px;margin-left:-275px" id="layers">
+                            <div class="app-content--sidebar h-100" id="sidebar-inner-1">
+                                <div class="app-content--sidebar__content scrollbar-container">
+                                    <div class="nav-header">
+                                        <i class="lnr lnr-layers font-20px mr-3"></i>
+                                        <span>Layers</span>
+                                    </div>
 
-                        <!-- Thumbnail Preview -->
-                        <div id="thumbnail_preview" class="mt-3" style="display: none;">
-                            <label class="d-block">New Thumbnail Image Preview:</label>
-                            <img id="thumbnail_preview_img" src="" alt="Thumbnail Image Preview" class="img-fluid" style="max-width: 200px; max-height: 150px; border: 1px solid #ddd; border-radius: 4px;">
-                        </div>
-
-                        @if($news->thumbnail_image)
-                            <div class="mt-3">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="delete_thumbnail" name="delete_thumbnail" value="1">
-                                    <label class="custom-control-label text-danger" for="delete_thumbnail">Delete current thumbnail</label>
+                                    <div class="layer-view overflow-auto">
+                                        <div class="layers-container"></div>
+                                    </div>
                                 </div>
                             </div>
-                        @endif
+                        </div>
+                        <div class="grid-item position-relative overflow-hidden" id="grapesjs-editor">
+                            <div class="app-header px-0">
+                                <div class="position-relative d-flex justify-content-start">
+                                    <button class="gjs-panel-vw" data-toggle="tooltip" data-placement="right" title="Show Layers" id="layers-view-btn" type="button">
+                                        <i class="lnr lnr-chevron-right font-16px"></i>
+                                        <i class="lnr lnr-chevron-left font-16px"></i>
+                                    </button>
+
+                                    <button class="gjs-panel-add" data-toggle="tooltip" data-placement="bottom" title="Blocks" id="add-blocks-btn" type="button">
+                                        <i class="fa fa-plus font-16px"></i>
+                                    </button>
+
+                                    <div class="gjs-panel-res gjs-pn-buttons">
+                                        <button type="button" class="btn btn-link btn-hsm device-type mr-1 bg-neutral-first px-0" id="desktop-view" data-toggle="tooltip" data-placement="bottom" title="Desktop" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-screen font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type mr-1 px-0" id="tablet-view" data-toggle="tooltip" data-placement="bottom" title="Tablet" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-tablet font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type px-0" id="mobile-view" data-toggle="tooltip" data-placement="bottom" title="Mobile" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-phone font-16px"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="position-relative d-flex justify-content-start">
+                                    <div class="gjs-panel-tool gjs-pn-buttons">
+                                        <button type="button" class="btn btn-link btn-hsm device-type mr-1 swv" id="sw-visibility" data-toggle="tooltip" data-placement="bottom" title="Show Borders" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-border-style font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type mr-1" id="editor-fullscreen" data-toggle="tooltip" data-placement="bottom" title="Fullscreen" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-expand font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type" data-toggle="tooltip" data-placement="bottom" title="Export" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center" data-toggle="modal" id="export" data-target="#editor-export">
+                                                <i class="lnr lnr-code font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type" data-toggle="tooltip" data-placement="bottom" title="Import" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center" data-toggle="modal" id="export" data-target="#editor-import">
+                                                <i class="lnr lnr-enter-down font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type" id="editor-undo" data-toggle="tooltip" data-placement="bottom" title="Undo" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-undo2 font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type" id="editor-redo" data-toggle="tooltip" data-placement="bottom" title="Redo" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-redo2 font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type" data-toggle="tooltip" data-placement="bottom" title="Clear Canvas" id="canvas-clear" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-trash2 font-16px"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <button class="gjs-panel-vw" data-toggle="tooltip" data-placement="left" title="Show Styles & Properties" id="styles-view-btn" type="button">
+                                        <i class="lnr lnr-chevron-left font-16px"></i>
+                                        <i class="lnr lnr-chevron-right font-16px"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="gjs">
+
+                            </div>
+
+                            <!-- Export-modal -->
+                            <div class="modal fade" id="editor-export" tabindex="-1" role="dialog" aria-labelledby="modal-b4" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title" id="modal-title-default">
+                                                <i class="lnr lnr-exit-right"></i>
+                                                Export
+                                            </h6>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body row">
+                                            <div class="col-lg-12">
+                                                <ul class="nav nav-line" id="myTab3" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="html-export-tab" data-toggle="tab" href="#html-export" role="tab" aria-controls="home" aria-selected="true">
+                                                            HTML
+                                                            <div class="divider"></div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="css-export-tab" data-toggle="tab" href="#css-export" role="tab" aria-controls="profile" aria-selected="false">
+                                                            CSS
+                                                            <div class="divider"></div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="tab-content p-2 pb-0">
+                                                    <div class="tab-pane fade" id="html-export" role="tabpanel" aria-labelledby="html-export-tab">
+
+                                                    </div>
+                                                    <div class="tab-pane fade" id="css-export" role="tabpanel" aria-labelledby="css-export-tab">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary ml-auto" id='gjs-export-zip'>
+                                                <i class="lnr lnr-file-zip"></i>
+                                                Export to ZIP
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- import modal -->
+                            <div class="modal fade" id="editor-import" tabindex="-1" role="dialog" aria-labelledby="modal-b4" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title" id="modal-title-default">
+                                                <i class="lnr lnr-enter-right"></i>
+                                                Import
+                                            </h6>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body row">
+                                            <div class="col-lg-12">
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary ml-auto" id='import-component'>
+                                                <i class="lnr lnr-check"></i>
+                                                Import
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="grid-item grid-item--behavior-fixed h-100" style="flex-basis: 280px;margin-right:-280px" id="styles-or-traits-mgr">
+                            <div class="nav-header">
+                                <i class="lnr lnr-palette font-20px mr-3"></i>
+                                <span>Styles & Properties</span>
+                            </div>
+                            <div class="style-view position-relative overflow-auto">
+                                <div id="selector-mgr">
+
+                                </div>
+                                <div id="traits-mgr">
+
+                                </div>
+                                <div id="styles-mgr">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- block panel -->
+                        <div class="panel-blocks">
+                            <div id="gjsSearch" class="app-content--sidebar__header py-3 panel-blocks-header">
+                                <div class="grid grid--align-center">
+                                    <div class="grid-item">
+                                        <div class="input-group-container">
+                                            <div id="searchDiv" class="position-relative">
+                                                <input id="searchInputBlk" class="input-group__input--select input-box" type="text" placeholder="Search block" />
+                                            </div>
+                                            <div id="blocksDiv" class="position-relative">
+                                                <select id="block-select" class="input-group__input--select input-box">
+                                                    <option value="1" selected>Basic Blocks</option>
+                                                    <option value="2">Built-in Blocks</option>
+                                                </select>
+                                                <i class="select-group__icon is-abs--r is-no-pointer icon fa fa-null"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-item grid-item--behavior-fixed ml-2">
+                                        <button type="button" class="btn btn-block btn-hinfo btn-sm px-2" id="searchBtn">
+                                            <span class="btn-wrapper--icon">
+                                                <i class="lnr lnr-magnifier"></i>
+                                                <i class="lnr lnr-cross2"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="blocks-mgr">
+
+                            </div>
+                        </div>
                     </div>
+
+                    <input type="hidden" name="json" id="json" value="{{ old('json', $news->json) }}">
+                    <input type="hidden" name="contents" id="contents" value="{{ old('contents', $news->contents) }}">
+                    <input type="hidden" name="styles" id="styles" value="{{ str_replace(array("'", "&#039;"), "", old('styles', $news->styles) ) }}">
+
+                    @error('contents')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <span class="invalid-feedback" role="alert" id="contentsRequired" style="display: none;">
+                        <strong>The content field is required</strong>
+                    </span>
                 </div>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="card-title">SEO Settings</h6>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="d-block">Teaser *</label>
+                    <textarea class="form-control @error('teaser') is-invalid @enderror" name="teaser" rows="4" required>{{ old('teaser', $news->teaser) }}</textarea>
+                    @error('teaser')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label class="d-block">Meta Title</label>
-                        <input type="text" name="meta_title" id="meta_title" value="{{ old('meta_title', $news->meta_title)}}" class="form-control @error('meta_title') is-invalid @enderror" maxlength="60" placeholder="SEO title">
-                        @error('meta_title')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
 
-                    <div class="form-group">
-                        <label class="d-block">Meta Keywords</label>
-                        <input type="text" name="meta_keyword" id="meta_keyword" value="{{ old('meta_keyword', $news->meta_keyword)}}" class="form-control @error('meta_keyword') is-invalid @enderror" placeholder="keyword1, keyword2, keyword3" data-role="tagsinput">
-                        @error('meta_keyword')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                <div class="form-group">
+                    <label class="d-block">Page Visibility</label>
+                    <div class="custom-control custom-switch @error('visibility') is-invalid @enderror">
+                        <input type="checkbox" class="custom-control-input" name="visibility" {{ (((old("visibility", strtoupper($news->status)) == "ON") || (old("visibility", strtoupper($news->status)) == "PUBLISHED")) ? "checked":"") }} id="customSwitch1">
+                        <label class="custom-control-label" id="label_visibility" for="customSwitch1">{{ (((old("visibility", strtoupper($news->status)) == "ON") || (old("visibility", strtoupper($news->status)) == "PUBLISHED")) ? "Published":"Private") }}</label>
                     </div>
+                    @error('visibility')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
 
-                    <div class="form-group">
-                        <label class="d-block">Meta Description</label>
-                        <textarea name="meta_description" id="meta_description" class="form-control @error('meta_description') is-invalid @enderror" rows="3" maxlength="160" placeholder="Brief description for search engines">{{ old('meta_description', $news->meta_description) }}</textarea>
-                        @error('meta_description')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+
+                <div class="form-group">
+                    <label class="d-block">Display @if (Article::has_featured_limit()) (Max Featured: {{ Article::has_featured_limit() }}) @endif</label>
+                    <div class="custom-control custom-switch @error('is_featured') is-invalid @enderror">
+                        <input type="checkbox" class="custom-control-input" name="is_featured" {{ (old("is_featured",$news->is_featured) ? "checked":"") }} {{ (($news->is_featured == '1') ? "checked":"") }} id="customSwitch2"  @if ($news->is_featured != '1' && Article::cannot_create_featured_news()) disabled @endif>
+                        <label class="custom-control-label" for="customSwitch2">Featured</label>
                     </div>
+                    @error('is_featured')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
-            <div class="mg-t-20 text-center">
-                <button class="btn btn-primary btn-sm btn-uppercase" type="submit" style="min-width: 150px;">Update News Article</button>
-                <a class="btn btn-outline-secondary btn-sm btn-uppercase mg-l-10" href="{{ route('news.index') }}" style="min-width: 100px;">Cancel</a>
+            <div class="col-lg-12 mg-t-30">
+                <h4 class="mg-b-0 tx-spacing--1">Manage SEO</h4>
+                <hr>
+            </div>
+
+            <div class="col-lg-6 mg-t-30">
+                <div class="form-group">
+                    <label class="d-block">Title <code>(meta title)</code></label>
+                    <input type="text" class="form-control @error('meta_title') is-invalid @enderror" name="meta_title" value="{{ old('meta_title',$news->meta_title) }}" maxlength="150">
+                    @error('meta_title')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <p class="tx-11 mg-t-4">{{ __('standard.seo.title') }}</p>
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Description <code>(meta description)</code></label>
+                    <textarea rows="3" class="form-control @error('meta_description') is-invalid @enderror" name="meta_description">{{ old('meta_description',$news->meta_description) }}</textarea>
+                    @error('meta_description')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <p class="tx-11 mg-t-4">{{ __('standard.seo.description') }}</p>
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Keywords <code>(meta keywords)</code></label>
+                    <textarea rows="3" class="form-control @error('meta_keyword') is-invalid @enderror" name="meta_keyword" maxlength="150">{{ old('meta_keyword',$news->meta_keyword) }}</textarea>
+                    @error('meta_keyword')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <p class="tx-11 mg-t-4">{{ __('standard.seo.keywords') }}</p>
+                </div>
+            </div>
+
+            <div class="col-lg-12 mg-t-30">
+                <button class="btn btn-primary btn-sm btn-uppercase" type="submit">Update News</button>
+                <a href="{{ route('news.index') }}" class="btn btn-outline-secondary btn-sm btn-uppercase">Cancel</a>
             </div>
         </div>
     </form>
-    </div>
 </div>
 @endsection
 
 @section('pagejs')
+    <script>
+        // jQuery Typing
+        (function(f){function l(g,h){function d(a){if(!e){e=true;c.start&&c.start(a,b)}}function i(a,j){if(e){clearTimeout(k);k=setTimeout(function(){e=false;c.stop&&c.stop(a,b)},j>=0?j:c.delay)}}var c=f.extend({start:null,stop:null,delay:400},h),b=f(g),e=false,k;b.keypress(d);b.keydown(function(a){if(a.keyCode===8||a.keyCode===46)d(a)});b.keyup(i);b.blur(function(a){i(a,0)})}f.fn.typing=function(g){return this.each(function(h,d){l(d,g)})}})(jQuery);
+
+        $(document).ready( function($){
+
+            $('#icons-filter').typing({
+                stop: function (event, $elem) {
+                    var filterValue = $elem.val(),
+                        count = 0;
+
+                    if( $elem.val() ) {
+
+                        $(".icons-list li").each(function(){
+                            if ($(this).text().search(new RegExp(filterValue, "i")) < 0) {
+                                $(this).fadeOut();
+                            } else {
+                                $(this).show();
+                                count++
+                            }
+                        });
+                    } else {
+                        $(".icons-list li").show();
+                    }
+
+                    count = 0;
+                },
+                delay: 500
+            });
+
+        });
+    </script>
+    <script>
+        @php
+            $jsPage = json_encode(old('json', $news->json));
+            echo "var jsPage = $jsPage;\n";
+            $jsHtml = str_replace("/", "\/", old('contents', $news->contents) );
+            echo "var jsHtml = `$jsHtml`;\n";
+            $jsStyle = str_replace(array("'", "&#039;"), "", old('styles', $news->styles) );
+            echo "var jsStyle = `$jsStyle`;";
+        @endphp
+    </script>
+    <script src="{{ asset('lib/custom-grapesjs/assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('lib/bselect/dist/js/bootstrap-select.js') }}"></script>
-    <script src="{{ asset('lib/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+    <script src="{{ asset('lib/bselect/dist/js/i18n/defaults-en_US.js') }}"></script>
+    <script src="{{ asset('lib/owl.carousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('js/file-upload-validation.js') }}"></script>
+    <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button-2.js') }}"></script>
+
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs/dist/grapes.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-blocks-basic.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-pkurg-bootstrap4-plugin.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-lory-slider.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-touch.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-parser-postcss.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-tooltip.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-tui-image-editor.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-typed.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-style-bg.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/tui-code-snippet.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/tui-color-picker.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-plugin-ckeditor.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-plugin-export.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-blocks-bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/b4bulder-custom-blocks.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-preset-webpage.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-plugin-animation.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-swiper-slider.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/assets/js/custom-grapesjs.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/assets/js/bamburgh.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.0/typed.min.js"></script>
 @endsection
 
 @section('customjs')
     <script>
+
         $(function() {
             $('.selectpicker').selectpicker();
+        });
 
-            // Initialize Summernote
-            $('.summernote').summernote({
-                height: 400,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['height', ['height']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview']],
-                    ['help', ['help']]
-                ]
-            });
-
-            // Initialize tags input
-            $('[data-role="tagsinput"]').tagsinput();
-
-            // Auto-generate slug from title (only if slug is empty)
-            $('#name').on('input', function() {
-                if ($('#slug').val() === '') {
-                    let slug = $(this).val()
-                        .toLowerCase()
-                        .replace(/[^a-z0-9 -]/g, '')
-                        .replace(/\s+/g, '-')
-                        .replace(/-+/g, '-')
-                        .trim('-');
-                    $('#slug').val(slug);
-                }
-            });
-
-            // Image preview functionality
-            $('#news_image').on('change', function() {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#image_preview_img').attr('src', e.target.result);
-                        $('#image_preview').show();
-                    }
-                    reader.readAsDataURL(file);
+        $(function() {
+            $("#customSwitch1").change(function () {
+                if (this.checked) {
+                    $('#label_visibility').html('Published');
                 } else {
-                    $('#image_preview').hide();
+                    $('#label_visibility').html('Private');
                 }
             });
 
-            // Thumbnail preview functionality
-            $('#news_thumbnail').on('change', function() {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#thumbnail_preview_img').attr('src', e.target.result);
-                        $('#thumbnail_preview').show();
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    $('#thumbnail_preview').hide();
+            /** Generation of the page slug **/
+            $('#name').change(function () {
+                let url = $('#name').val().trim();
+
+                if (url == "{{ $news->name }}") {
+                    $('#news_slug').html("{{ $news->get_url() }}");
+                    return false;
                 }
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('news.get-slug') }}",
+                    data: {url: url, _token: "{{ csrf_token() }}"}
+                }).done(function (response) {
+                    slug_url = '{{env('APP_URL')}}/news/' + response;
+                    $('#news_slug').html("<a target='_blank' href='" + slug_url + "'>" + slug_url + "</a>");
+                });
             });
         });
+    </script>
+    <script>
+        function readURL(file) {
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#img_name').html(file.name);
+                $('#news_image').attr('title', file.name);
+                $('#img_temp').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(file);
+            $('#image_div').show();
+        }
+
+        $("#news_image").change(function(evt) {
+            $('#editForm').prepend('<input type="hidden" name="delete_image" value="1"/>');
+            $('#img_name').html('Choose file');
+            $('#img_temp').attr('src', '');
+            $('#image_div').hide();
+
+            let files = evt.target.files;
+            let maxSize = 1;
+            let validateFileTypes = ["image/jpeg", "image/png"];
+            let requiredWidth = "{{ env('NEWS_BANNER_WIDTH') }}";
+            let requiredHeight =  "{{ env('NEWS_BANNER_HEIGHT') }}";
+
+            validate_files(files, readURL, maxSize, validateFileTypes, requiredWidth, requiredHeight, empty_banner_value);
+        });
+
+        function empty_banner_value()
+        {
+            $('#news_image').val('');
+            $('#news_image').removeAttr('title');
+        }
+
+        function remove_image() {
+            $('#editForm').prepend('<input type="hidden" name="delete_image" value="1"/>');
+            $('#img_name').html('Choose file');
+            $('#news_image').removeAttr('title');
+            $('#news_image').val('');
+            $('#img_temp').attr('src', '');
+            $('#image_div').hide();
+            $('#prompt-remove').modal('hide');
+        }
+
+
+        function readURLThumb(file) {
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#img_name_thumbnail').html(file.name);
+                $('#news_thumbnail').attr('title', file.name);
+                $('#img_temp_thumbnail').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(file);
+            $('#image_div_thumbnail').show();
+        }
+
+        $("#news_thumbnail").change(function(evt) {
+            $('#editForm').prepend('<input type="hidden" name="delete_thumbnail" value="1"/>');
+            $('#img_name_thumbnail').html('Choose file');
+            $('#img_temp_thumbnail').attr('src', '');
+            $('#image_div_thumbnail').hide();
+
+            let files = evt.target.files;
+            let maxSize = 1;
+            let validateFileTypes = ["image/jpeg", "image/png"];
+            let requiredWidth = "{{ env('NEWS_THUMBNAIL_WIDTH') }}";
+            let requiredHeight =  "{{ env('NEWS_THUMBNAIL_HEIGHT') }}";
+
+            validate_files(files, readURLThumb, maxSize, validateFileTypes, requiredWidth, requiredHeight, empty_thumbnail_value);
+        });
+
+        function empty_thumbnail_value()
+        {
+            $('#news_thumbnail').val('');
+            $('#news_thumbnail').removeAttr('title');
+        }
+
+        function remove_image_thumbnail() {
+            $('#editForm').prepend('<input type="hidden" name="delete_thumbnail" value="1"/>');
+            $('#img_name_thumbnail').html('Choose file');
+            $('#news_thumbnail').removeAttr('title');
+            $('#news_thumbnail').val('');
+            $('#img_temp_thumbnail').attr('src', '');
+            $('#image_div_thumbnail').hide();
+        }
     </script>
 @endsection

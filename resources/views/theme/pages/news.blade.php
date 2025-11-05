@@ -201,6 +201,12 @@
         font-weight: 700;
         margin-bottom: 15px;
         line-height: 1.2;
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.92);
+        color: #1e293b;
+        padding: 10px 18px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
     }
 
     .featured-article-summary {
@@ -361,14 +367,21 @@
     }
 
     .read-more-btn {
-        color: #1e40af;
+        display: inline-block;
+        color: #1e293b;
         text-decoration: none;
         font-weight: 600;
-        transition: color 0.3s ease;
+        background: rgba(255, 255, 255, 0.94);
+        padding: 10px 18px;
+        border-radius: 999px;
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.18);
+        transition: all 0.3s ease;
     }
 
     .read-more-btn:hover {
-        color: #3b82f6;
+        color: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(37, 99, 235, 0.28);
     }
 
     /* Media Type Sections */
@@ -546,11 +559,7 @@
                 <div class="col-lg-8">
                     <article class="article-main-content">
                         <!-- Article Body -->
-                        @if($news->thumbnail_image)
-                            <div class="article-thumbnail-wrapper" style="text-align:center; margin-bottom: 32px;">
-                                <img src="{{ $news->thumbnail }}" alt="{{ $news->name }} Thumbnail" class="article-thumbnail-image" style="max-width: 600px; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.12);">
-                            </div>
-                        @endif
+
                         <div class="article-body">
                             {!! $news->contents !!}
                         </div>
@@ -596,13 +605,6 @@
                                 <div class="latest-articles">
                                     @foreach($latestArticles as $article)
                                         <article class="latest-article-item">
-                                            <div class="latest-article-image">
-                                                @if($article->thumbnail_image)
-                                                    <img src="{{ $article->thumbnail }}" alt="{{ $article->name }}">
-                                                @else
-                                                    <img src="{{ asset('theme/images/banners/image1.jpg') }}" alt="{{ $article->name }}">
-                                                @endif
-                                            </div>
                                             <div class="latest-article-content">
                                                 <h5><a href="{{ url('/news/' . $article->slug) }}">{{ $article->name }}</a></h5>
                                                 <time class="latest-article-date">{{ \Carbon\Carbon::parse($article->date)->format('M j, Y') }}</time>

@@ -1,0 +1,20 @@
+[
+	{
+		"id": 1,
+		"title": "Include privacy partials",
+		"description": "In privacy-policy layout, include privacy-policy-modal, privacy-terms-combined-modal, and privacy-styles partials so standalone page has modal functionality.",
+		"status": "completed"
+	},
+	{
+		"id": 2,
+		"title": "Provide CMS home block with sample images",
+		"description": "Deliver copy-paste HTML+CSS snippet for counters, feature cards, logos, portfolio, and testimonials using sample images and inline styles.",
+		"status": "completed"
+	},
+	{
+		"id": 3,
+		"title": "Prep CMS-ready news sample content",
+		"description": "Create copy-paste HTML for the News page similar to CMS home blocks, with placeholder content and scoped CSS.",
+		"status": "completed"
+	}
+]

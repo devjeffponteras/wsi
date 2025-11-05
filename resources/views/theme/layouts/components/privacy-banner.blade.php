@@ -3,8 +3,8 @@
     <div class="privacy-inner" style="display:flex; align-items:center; justify-content:center; gap:12px; max-width:1200px; margin:0 auto; flex-wrap:wrap;">
         <div class="privacy-text" style="flex:1; text-align:center; font-size:14px; line-height:1.2; max-width:900px;">
             By using the site, you agree to our
-            <a href="#" id="privacyTermsLink" style="color: #ff0000; text-decoration: underline; cursor: pointer;">Privacy Policy & Terms of Use</a>.
-            <button id="agreeButton" class="privacy-cta-inline" style="background-color: #4CCD99; color: white; border: none; padding: 8px 14px; margin-left: 8px; cursor: pointer; border-radius: 20px; display: inline-block;">I Agree</button>
+            <a href="{{ route('privacy-terms') }}" style="color: #ff0000; text-decoration: underline; cursor: pointer;">Privacy Policy & Terms of Use</a>.
+            <button id="agreeButton" type="button" data-redirect="{{ route('home') }}" class="privacy-cta-inline" style="background-color: #4CCD99; color: white; border: none; padding: 8px 14px; margin-left: 8px; cursor: pointer; border-radius: 20px; display: inline-block;" onclick="if (typeof window.acceptPrivacy === 'function') { window.acceptPrivacy(this.dataset.redirect); } else { window.location.href = this.dataset.redirect; }">I Agree</button>
         </div>
     </div>
 </div>

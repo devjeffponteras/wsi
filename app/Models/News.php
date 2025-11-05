@@ -80,6 +80,11 @@ class News extends Model
         return url('/news/' . $this->slug);
     }
 
+    public function get_url()
+    {
+        return $this->getUrlAttribute();
+    }
+
     // Scopes
     public function scopePublished($query)
     {

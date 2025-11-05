@@ -66,6 +66,7 @@ Route::get('/phpinfo', function () {
     Route::get('/services_edit/{page}', [ServicesController::class, 'edit'])->name('services.edit');
 
     Route::get('/privacy-policy/', [FrontController::class, 'privacy_policy'])->name('privacy-policy');
+    Route::get('/privacy-terms', [FrontController::class, 'privacy_terms'])->name('privacy-terms');
     Route::post('/contact-us', [FrontController::class, 'contact_us'])->name('contact-us');
 
     Route::get('/search', [FrontController::class, 'search'])->name('search');

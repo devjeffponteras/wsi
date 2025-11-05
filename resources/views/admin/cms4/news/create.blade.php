@@ -1,274 +1,32 @@
 @extends('admin.layouts.app')
 
 @section('pagetitle')
-    News Management
+    Create News
 @endsection
 
 @section('pagecss')
     <link href="{{ asset('lib/bselect/dist/css/bootstrap-select.css') }}" rel="stylesheet">
-    <link href="{{ asset('lib/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet">
+    {{-- <script src="{{ asset('lib/ckeditor/ckeditor.js') }}"></script> --}}
 
-    <style>
-        /* Article Body Styling - Matches News Detail Page Exactly */
-        .article-body h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #1e40af;
-            margin: 2.5rem 0 1.5rem 0;
-            line-height: 1.2;
-            border-bottom: 3px solid #e5e7eb;
-            padding-bottom: 0.75rem;
-        }
-
-        .article-body h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin: 2rem 0 1rem 0;
-            line-height: 1.3;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.5rem;
-        }
-
-        .article-body h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #374151;
-            margin: 1.5rem 0 0.75rem 0;
-            line-height: 1.4;
-        }
-
-        .article-body h4 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #4b5563;
-            margin: 1.25rem 0 0.5rem 0;
-            line-height: 1.4;
-        }
-
-        .article-body p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #374151;
-            margin: 0 0 1.5rem 0;
-            text-align: justify;
-        }
-
-        .article-body ul, .article-body ol {
-            margin: 1.5rem 0;
-            padding-left: 2rem;
-        }
-
-        .article-body li {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #374151;
-            margin: 0.5rem 0;
-        }
-
-        .article-body ul li {
-            list-style-type: disc;
-        }
-
-        .article-body ol li {
-            list-style-type: decimal;
-        }
-
-        .article-body strong {
-            font-weight: 700;
-            color: #1f2937;
-        }
-
-        .article-body em {
-            font-style: italic;
-            color: #6b7280;
-        }
-
-        .article-body blockquote {
-            background: #f8fafc;
-            border-left: 4px solid #1e40af;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 8px 8px 0;
-            font-style: italic;
-            color: #4b5563;
-        }
-
-        .article-body img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin: 1.5rem 0;
-        }
-
-        /* Preview Container Styling - Matches News Detail Page */
-        .content-preview {
-            background: white !important;
-            border: 2px solid #e5e7eb !important;
-            border-radius: 12px !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .preview-title {
-            color: #1f2937;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 1rem;
-        }
-
-        .preview-output.article-body {
-            margin-bottom: 0;
-        }
-
-        #content-preview h6 {
-            color: #1f2937;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 1rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .content-preview {
-                padding: 1.5rem;
-            }
-
-            .article-body h1 {
-                font-size: 1.75rem;
-                margin: 2rem 0 1rem 0;
-            }
-
-            .article-body h2 {
-                font-size: 1.5rem;
-                margin: 1.5rem 0 0.75rem 0;
-            }
-
-            .article-body h3 {
-                font-size: 1.25rem;
-                margin: 1.25rem 0 0.5rem 0;
-            }
-
-            .article-body h4 {
-                font-size: 1.1rem;
-                margin: 1rem 0 0.5rem 0;
-            }
-
-            .article-body p,
-            .article-body li {
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-
-            .article-body ul, .article-body ol {
-                padding-left: 1.5rem;
-            }
-        }
-        }
-
-        .note-toolbar {
-            background: #f6f8fa !important;
-            border-bottom: 1px solid #d0d7de !important;
-            padding: 8px 12px !important;
-        }
-
-        .note-editable {
-            background: white !important;
-            font-family: 'Calibri', 'Arial', sans-serif !important;
-            font-size: 14px !important;
-            line-height: 1.5 !important;
-            padding: 20px !important;
-            min-height: 400px !important;
-            color: #24292f !important;
-        }
-
-        .note-editable h1 { font-size: 24px !important; font-weight: bold !important; margin: 16px 0 12px 0 !important; }
-        .note-editable h2 { font-size: 20px !important; font-weight: bold !important; margin: 14px 0 10px 0 !important; }
-        .note-editable h3 { font-size: 16px !important; font-weight: bold !important; margin: 12px 0 8px 0 !important; }
-        .note-editable p { margin: 0 0 12px 0 !important; }
-        .note-editable ul, .note-editable ol { margin: 12px 0 !important; padding-left: 24px !important; }
-        .note-editable blockquote { border-left: 3px solid #d0d7de !important; padding: 12px 16px !important; margin: 16px 0 !important; background: #f6f8fa !important; font-style: italic !important; }
-
-        /* Content Block Styles */
-        .content-paragraph {
-            margin: 0 0 15px 0 !important;
-            line-height: 1.6 !important;
-            font-size: 14px !important;
-        }
-
-        .content-title-large {
-            font-size: 28px !important;
-            font-weight: bold !important;
-            color: #2563eb !important;
-            margin: 20px 0 15px 0 !important;
-            padding: 10px 0 !important;
-            border-bottom: 3px solid #e5e7eb !important;
-        }
-
-        .content-heading-medium {
-            font-size: 20px !important;
-            font-weight: 600 !important;
-            color: #374151 !important;
-            margin: 18px 0 12px 0 !important;
-            padding: 8px 0 !important;
-        }
-
-        .content-heading-small {
-            font-size: 16px !important;
-            font-weight: 600 !important;
-            color: #4b5563 !important;
-            margin: 15px 0 10px 0 !important;
-            padding: 5px 0 !important;
-        }
-
-        .content-quote {
-            background: #f8fafc !important;
-            border-left: 4px solid #3b82f6 !important;
-            padding: 15px 20px !important;
-            margin: 15px 0 !important;
-            font-style: italic !important;
-            color: #475569 !important;
-            border-radius: 0 6px 6px 0 !important;
-        }
-
-        .content-alert {
-            background: #fef2f2 !important;
-            border: 1px solid #fecaca !important;
-            border-left: 4px solid #ef4444 !important;
-            padding: 15px 20px !important;
-            margin: 15px 0 !important;
-            border-radius: 0 6px 6px 0 !important;
-            color: #991b1b !important;
-        }
-
-        .content-info {
-            background: #eff6ff !important;
-            border: 1px solid #bfdbfe !important;
-            border-left: 4px solid #3b82f6 !important;
-            padding: 15px 20px !important;
-            margin: 15px 0 !important;
-            border-radius: 0 6px 6px 0 !important;
-            color: #1e40af !important;
-        }
-
-        .content-success {
-            background: #f0fdf4 !important;
-            border: 1px solid #bbf7d0 !important;
-            border-left: 4px solid #22c55e !important;
-            padding: 15px 20px !important;
-            margin: 15px 0 !important;
-            border-radius: 0 6px 6px 0 !important;
-            color: #15803d !important;
-        }
-    </style>
+    <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+            rel="stylesheet"
+        />
+    {{-- <link rel="stylesheet" href="{{ asset('lib/grapesjs/toastr.min.css') }}" /> --}}
+    <link rel="stylesheet" href="{{ asset('lib/custom-grapesjs/grapesjs/dist/css/grapes.min.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('lib/custom-grapesjs/assets/css/bamburgh.css') }}" /> --}}
+    <link rel="stylesheet" href="{{ asset('lib/custom-grapesjs/assets/css/custom-grapesjs.css') }}" />
+    <link rel="stylesheet" href="{{ asset('lib/custom-grapesjs/linearicon/css/linearicons.min.css') }}" />
+    {{-- <link rel="stylesheet" href="{{ asset('lib/grapesjs/grapick.min.css') }}" /> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('lib/grapesjs/grapesjs-preset-webpage.min.css') }}" /> --}}
+    <link rel="stylesheet" href="{{ asset('lib/grapesjs/tooltip.css') }}" />
+    <link rel="stylesheet" href="{{ asset('lib/grapesjs/grapesjs-plugin-filestack.css') }}" />
+    <link rel="stylesheet" href="{{ asset('lib/grapesjs/tui-color-picker.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('lib/grapesjs/tui-image-editor.min.css') }}" />
 @endsection
 
 @section('content')
+
 <div class="container pd-x-0">
     <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
         <div>
@@ -279,315 +37,583 @@
                     <li class="breadcrumb-item active" aria-current="page">Create a News</li>
                 </ol>
             </nav>
-            <h4 class="mg-b-0 tx-spacing--1">Create a News Article</h4>
+            <h4 class="mg-b-0 tx-spacing--1">Create a News</h4>
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-md-12">
-            <form action="{{ route('news.store') }}" method="post" enctype="multipart/form-data">
+    <form method="post" action="{{ route('news.store') }}" enctype="multipart/form-data">
+        <div class="row row-sm">
+            <div class="col-lg-6">
                 @csrf
-                @method('POST')
-
-                <div class="card">
-                    <div class="card-header">
-                        <h6 class="card-title">News Article Information</h6>
+                <div class="form-group">
+                    <label class="d-block">Title *</label>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') }}" required maxlength="150">
+                    @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <small id="news_slug"></small>
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Date *</label>
+                    <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" required id="date" value="{{ old('date',date('d/m/Y')) }}">
+                    @error('date')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Category</label>
+                    <select id="category_id" class="selectpicker mg-b-5 @error('category_id') is-invalid @enderror" name="category_id" data-style="btn btn-outline-light btn-md btn-block tx-left" title="- None -" data-width="100%">
+                        <option value="0" selected>- None -</option>
+                        @forelse($categories as $category)
+                            <option value="{{$category->id}}">{{strtoupper($category->name)}}</option>
+                        @empty
+                        @endforelse
+                    </select>
+                    @error('category_id')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Article banner</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input @error('news_image') is-invalid @enderror" name="news_image" id="news_image"  accept="image/*">
+                        <label class="custom-file-label" for="news_image" id="img_name">Choose file</label>
                     </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label class="d-block">Title *</label>
-                            <input type="text" name="name" id="name" value="{{ old('name')}}" class="form-control @error('name') is-invalid @enderror" required maxlength="255" placeholder="Enter news title">
-                            @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
+                    <p class="tx-10">
+                        Required image dimension: {{ env('NEWS_BANNER_WIDTH') }}px by {{ env('NEWS_BANNER_HEIGHT') }}px <br /> Maximum file size: 1MB <br /> Required file type: .jpeg .png
+                    </p>
+                    @error('news_image')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <div id="image_div" style="display:none;">
+                        <img src="" id="img_temp" alt="" height="{{ env('IMAGE_DISPLAY_HEIGHT') }}" width="{{ env('IMAGE_DISPLAY_WIDTH') }}">  <br /><br />
+                        <a href="javascript:void(0)" class="btn btn-xs btn-danger" onclick="remove_image();">Remove Image</a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Article thumbnail</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input @error('news_thumbnail') is-invalid @enderror" name="news_thumbnail" id="news_thumbnail"  accept="image/*">
+                        <label class="custom-file-label" for="news_thumbnail" id="img_name_thumbnail">Choose file</label>
+                    </div>
+                    @error('news_thumbnail')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    @if (env('NEWS_THUMBNAIL_WIDTH') && env('NEWS_THUMBNAIL_HEIGHT'))
+                        <p class="tx-10">
+                            Required image dimension: {{ env('NEWS_THUMBNAIL_WIDTH') }}px by {{ env('NEWS_THUMBNAIL_HEIGHT') }}px <br /> Maximum file size: 1MB <br /> Required file type: .jpeg .png
+                        </p>
+                    @endif
+                    <div id="image_div_thumbnail" style="display:none;">
+                        <img src="" id="img_temp_thumbnail" alt="">  <br /><br />
+                        <a href="javascript:void(0)" class="btn btn-xs btn-danger" onclick="remove_image_thumbnail();">Remove Image</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label class="d-block">Content *</label>
 
-                        <div class="form-group">
-                            <label class="d-block">Slug</label>
-                            <input type="text" name="slug" id="slug" value="{{ old('slug')}}" class="form-control @error('slug') is-invalid @enderror" placeholder="Auto-generated if left empty">
-                            @error('slug')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="d-block">Category *</label>
-                            <select name="category_id" class="selectpicker mg-b-5 @error('category_id') is-invalid @enderror" data-style="btn btn-outline-light btn-md btn-block tx-left" title="Select category" data-width="100%" required>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ (old("category_id") == $category->id ? "selected":"") }}>{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                            @error('category_id')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="d-block">Publication Date *</label>
-                            <input type="date" name="date" id="date" value="{{ old('date', date('Y-m-d'))}}" class="form-control @error('date') is-invalid @enderror" required>
-                            @error('date')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="d-block">Teaser/Summary</label>
-                            <textarea name="teaser" id="teaser" class="form-control @error('teaser') is-invalid @enderror" rows="3" maxlength="500" placeholder="Brief description or summary of the article">{{ old('teaser') }}</textarea>
-                            @error('teaser')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="d-block">Content *</label>
-
-                            <div class="alert alert-success mb-3">
-                                <h6><strong>📝 HTML Commands to Use:</strong></h6>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="bg-light p-3 rounded">
-                                            <p class="mb-2"><strong>Text Formatting:</strong></p>
-                                            <ul class="small mb-2">
-                                                <li><code>&lt;h1&gt;Main Title&lt;/h1&gt;</code></li>
-                                                <li><code>&lt;h2&gt;Section Title&lt;/h2&gt;</code></li>
-                                                <li><code>&lt;h3&gt;Sub Title&lt;/h3&gt;</code></li>
-                                                <li><code>&lt;p&gt;Paragraph text&lt;/p&gt;</code></li>
-                                                <li><code>&lt;strong&gt;Bold text&lt;/strong&gt;</code></li>
-                                                <li><code>&lt;em&gt;Italic text&lt;/em&gt;</code></li>
-                                            </ul>
-                                        </div>
+                    <div class="grid h-100 overflow-hidden" id="editor-area">
+                        <div class="grid-item grid-item--behavior-fixed" style="flex-basis: 275px;margin-left:-275px" id="layers">
+                            <div class="app-content--sidebar h-100" id="sidebar-inner-1">
+                                <div class="app-content--sidebar__content scrollbar-container">
+                                    <div class="nav-header">
+                                        <i class="lnr lnr-layers font-20px mr-3"></i>
+                                        <span>Layers</span>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="bg-light p-3 rounded">
-                                            <p class="mb-2"><strong>Lists & Links:</strong></p>
-                                            <ul class="small mb-2">
-                                                <li><code>&lt;ul&gt;&lt;li&gt;Bullet item&lt;/li&gt;&lt;/ul&gt;</code></li>
-                                                <li><code>&lt;ol&gt;&lt;li&gt;Number item&lt;/li&gt;&lt;/ol&gt;</code></li>
-                                                <li><code>&lt;a href="url"&gt;Link text&lt;/a&gt;</code></li>
-                                                <li><code>&lt;img src="url" alt="text"&gt;</code></li>
-                                                <li><code>&lt;br&gt;</code> = Line break</li>
-                                            </ul>
+
+                                    <div class="layer-view overflow-auto">
+                                        <div class="layers-container"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-item position-relative overflow-hidden" id="grapesjs-editor">
+                            <div class="app-header px-0">
+                                <div class="position-relative d-flex justify-content-start">
+                                    <button class="gjs-panel-vw" data-toggle="tooltip" data-placement="right" title="Show Layers" id="layers-view-btn" type="button">
+                                        <i class="lnr lnr-chevron-right font-16px"></i>
+                                        <i class="lnr lnr-chevron-left font-16px"></i>
+                                    </button>
+
+                                    <button class="gjs-panel-add" data-toggle="tooltip" data-placement="bottom" title="Blocks" id="add-blocks-btn" type="button">
+                                        <i class="fa fa-plus font-16px"></i>
+                                    </button>
+
+                                    <div class="gjs-panel-res gjs-pn-buttons">
+                                        <button type="button" class="btn btn-link btn-hsm device-type mr-1 bg-neutral-first px-0" id="desktop-view" data-toggle="tooltip" data-placement="bottom" title="Desktop" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-screen font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type mr-1 px-0" id="tablet-view" data-toggle="tooltip" data-placement="bottom" title="Tablet" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-tablet font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type px-0" id="mobile-view" data-toggle="tooltip" data-placement="bottom" title="Mobile" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-phone font-16px"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="position-relative d-flex justify-content-start">
+                                    <div class="gjs-panel-tool gjs-pn-buttons">
+                                        <button type="button" class="btn btn-link btn-hsm device-type mr-1 swv" id="sw-visibility" data-toggle="tooltip" data-placement="bottom" title="Show Borders" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-border-style font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type mr-1" id="editor-fullscreen" data-toggle="tooltip" data-placement="bottom" title="Fullscreen" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-expand font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type" data-toggle="tooltip" data-placement="bottom" title="Export" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center" data-toggle="modal" id="export" data-target="#editor-export">
+                                                <i class="lnr lnr-code font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type" data-toggle="tooltip" data-placement="bottom" title="Import" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center" data-toggle="modal" id="export" data-target="#editor-import">
+                                                <i class="lnr lnr-enter-down font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type" id="editor-undo" data-toggle="tooltip" data-placement="bottom" title="Undo" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-undo2 font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type" id="editor-redo" data-toggle="tooltip" data-placement="bottom" title="Redo" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-redo2 font-16px"></i>
+                                            </span>
+                                        </button>
+
+                                        <button type="button" class="btn btn-hsm btn-link device-type" data-toggle="tooltip" data-placement="bottom" title="Clear Canvas" id="canvas-clear" type="button">
+                                            <span class="btn-wrapper--icon d-flex align-items-center">
+                                                <i class="lnr lnr-trash2 font-16px"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <button class="gjs-panel-vw" data-toggle="tooltip" data-placement="left" title="Show Styles & Properties" id="styles-view-btn" type="button">
+                                        <i class="lnr lnr-chevron-left font-16px"></i>
+                                        <i class="lnr lnr-chevron-right font-16px"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="gjs">
+
+                            </div>
+
+                            <!-- Export-modal -->
+                            <div class="modal fade" id="editor-export" tabindex="-1" role="dialog" aria-labelledby="modal-b4" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title" id="modal-title-default">
+                                                <i class="lnr lnr-exit-right"></i>
+                                                Export
+                                            </h6>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body row">
+                                            <div class="col-lg-12">
+                                                <ul class="nav nav-line" id="myTab3" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="html-export-tab" data-toggle="tab" href="#html-export" role="tab" aria-controls="home" aria-selected="true">
+                                                            HTML
+                                                            <div class="divider"></div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="css-export-tab" data-toggle="tab" href="#css-export" role="tab" aria-controls="profile" aria-selected="false">
+                                                            CSS
+                                                            <div class="divider"></div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+
+                                                <div class="tab-content p-2 pb-0">
+                                                    <div class="tab-pane fade" id="html-export" role="tabpanel" aria-labelledby="html-export-tab">
+
+                                                    </div>
+                                                    <div class="tab-pane fade" id="css-export" role="tabpanel" aria-labelledby="css-export-tab">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary ml-auto" id='gjs-export-zip'>
+                                                <i class="lnr lnr-file-zip"></i>
+                                                Export to ZIP
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                                <small class="text-muted">💡 <strong>Tip:</strong> You can type these HTML tags directly or use the toolbar buttons!</small>
                             </div>
 
-                            <textarea name="contents" id="contents" class="form-control summernote @error('contents') is-invalid @enderror" required>{{ old('contents') }}</textarea>
-                            @error('contents')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <!-- import modal -->
+                            <div class="modal fade" id="editor-import" tabindex="-1" role="dialog" aria-labelledby="modal-b4" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title" id="modal-title-default">
+                                                <i class="lnr lnr-enter-right"></i>
+                                                Import
+                                            </h6>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body row">
+                                            <div class="col-lg-12">
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary ml-auto" id='import-component'>
+                                                <i class="lnr lnr-check"></i>
+                                                Import
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
+                        <div class="grid-item grid-item--behavior-fixed h-100" style="flex-basis: 280px;margin-right:-280px" id="styles-or-traits-mgr">
+                            <div class="nav-header">
+                                <i class="lnr lnr-palette font-20px mr-3"></i>
+                                <span>Styles & Properties</span>
+                            </div>
+                            <div class="style-view position-relative overflow-auto">
+                                <div id="selector-mgr">
+
+                                </div>
+                                <div id="traits-mgr">
+
+                                </div>
+                                <div id="styles-mgr">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- block panel -->
+                        <div class="panel-blocks">
+                            <div id="gjsSearch" class="app-content--sidebar__header py-3 panel-blocks-header">
+                                <div class="grid grid--align-center">
+                                    <div class="grid-item">
+                                        <div class="input-group-container">
+                                            <div id="searchDiv" class="position-relative">
+                                                <input id="searchInputBlk" class="input-group__input--select input-box" type="text" placeholder="Search block" />
+                                            </div>
+                                            <div id="blocksDiv" class="position-relative">
+                                                <select id="block-select" class="input-group__input--select input-box">
+                                                    <option value="1" selected>Basic Blocks</option>
+                                                    <option value="2">Built-in Blocks</option>
+                                                </select>
+                                                <i class="select-group__icon is-abs--r is-no-pointer icon fa fa-null"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-item grid-item--behavior-fixed ml-2">
+                                        <button type="button" class="btn btn-block btn-hinfo btn-sm px-2" id="searchBtn">
+                                            <span class="btn-wrapper--icon">
+                                                <i class="lnr lnr-magnifier"></i>
+                                                <i class="lnr lnr-cross2"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="blocks-mgr">
+
+                            </div>
                         </div>
                     </div>
+
+                    <input type="hidden" name="json" id="json" value="">
+                    <input type="hidden" name="contents" id="contents" value="">
+                    <input type="hidden" name="styles" id="styles" value="">
+
+                    @error('contents')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <span class="invalid-feedback" role="alert" id="contentsRequired" style="display: none;">
+                        <strong>The content field is required</strong>
+                    </span>
                 </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="d-block">Teaser *</label>
+                    <textarea class="form-control @error('teaser') is-invalid @enderror" name="teaser" rows="4" required @htmlValidationMessage({{__('standard.empty_all_field')}})>{{ old("teaser") }}</textarea>
+                    @error('teaser')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Page Visibility</label>
+                    <div class="custom-control custom-switch @error('visibility') is-invalid @enderror">
+                        <input type="checkbox" class="custom-control-input" name="visibility" {{ (old("visibility") ? "checked":"") }} id="customSwitch1">
+                        <label class="custom-control-label" id="label_visibility" for="customSwitch1">@if (old("visibility")) Published @else Private @endif</label>
+                    </div>
+                    @error('visibility')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Display @if (Article::has_featured_limit()) (Max Featured: {{ Article::has_featured_limit() }}) @endif</label>
+                    <div class="custom-control custom-switch @error('is_featured') is-invalid @enderror">
+                        <input type="checkbox" class="custom-control-input" name="is_featured" {{ (old("is_featured") ? "checked":"") }} id="customSwitch2" @if (Article::cannot_create_featured_news()) disabled @endif >
+                        <label class="custom-control-label" for="customSwitch2">Featured</label>
+                    </div>
+                    @error('is_featured')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="col-lg-12 mg-t-30">
+                <h4 class="mg-b-0 tx-spacing--1">Manage SEO</h4>
+                <hr>
+            </div>
+
+            <div class="col-lg-6 mg-t-30">
+                <div class="form-group">
+                    <label class="d-block">Title <code>(meta title)</code></label>
+                    <input type="text" class="form-control @error('meta_title') is-invalid @enderror" name="meta_title" value="{{ old('meta_title') }}" maxlength="150">
+                    @error('meta_title')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <p class="tx-11 mg-t-4">{{ __('standard.seo.title') }}</p>
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Description <code>(meta description)</code></label>
+                    <textarea rows="3" class="form-control @error('meta_description') is-invalid @enderror" name="meta_description">{{ old('meta_description') }}</textarea>
+                    @error('meta_description')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <p class="tx-11 mg-t-4">{{ __('standard.seo.description') }}</p>
+                </div>
+                <div class="form-group">
+                    <label class="d-block">Keywords <code>(meta keywords)</code></label>
+                    <textarea rows="3" class="form-control @error('meta_keyword') is-invalid @enderror" name="meta_keyword" maxlength="150">{{ old('meta_keyword') }}</textarea>
+                    @error('meta_keyword')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <p class="tx-11 mg-t-4">{{ __('standard.seo.keywords') }}</p>
+                </div>
+            </div>
+
+            <div class="col-lg-12 mg-t-30">
+                <button class="btn btn-primary btn-sm btn-uppercase" type="submit">Save News</button>
+                <a href="{{ route('news.index') }}" class="btn btn-outline-secondary btn-sm btn-uppercase">Cancel</a>
+            </div>
         </div>
-
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="card-title">Publishing Options</h6>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="visibility" name="visibility" value="1" {{ old('visibility') ? 'checked' : '' }}>
-                            <label class="custom-control-label" for="visibility">Publish Immediately</label>
-                        </div>
-                        <small class="text-muted">Uncheck to save as draft</small>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="is_featured" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }}>
-                            <label class="custom-control-label" for="is_featured">Featured Article</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="card-title">Images</h6>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label class="d-block">Banner Image</label>
-                        <input type="file" name="news_image" id="news_image" class="form-control-file @error('news_image') is-invalid @enderror" accept="image/*">
-                        <small class="text-muted">Main banner image for the article. Accepted formats: JPG, PNG, GIF. Max size: 5MB</small>
-                        @error('news_image')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-
-                        <!-- Image Preview -->
-                        <div id="image_preview" class="mt-3" style="display: none;">
-                            <label class="d-block">Banner Image Preview:</label>
-                            <img id="image_preview_img" src="" alt="Banner Image Preview" class="img-fluid" style="max-width: 300px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px;">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="d-block">Thumbnail Image</label>
-                        <input type="file" name="news_thumbnail" id="news_thumbnail" class="form-control-file @error('news_thumbnail') is-invalid @enderror" accept="image/*">
-                        <small class="text-muted">Smaller version for article listings and previews. Accepted formats: JPG, PNG, GIF. Max size: 2MB</small>
-                        @error('news_thumbnail')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-
-                        <!-- Thumbnail Preview -->
-                        <div id="thumbnail_preview" class="mt-3" style="display: none;">
-                            <label class="d-block">Thumbnail Image Preview:</label>
-                            <img id="thumbnail_preview_img" src="" alt="Thumbnail Image Preview" class="img-fluid" style="max-width: 200px; max-height: 150px; border: 1px solid #ddd; border-radius: 4px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="card-title">SEO Settings</h6>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label class="d-block">Meta Title</label>
-                        <input type="text" name="meta_title" id="meta_title" value="{{ old('meta_title')}}" class="form-control @error('meta_title') is-invalid @enderror" maxlength="60" placeholder="SEO title">
-                        @error('meta_title')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label class="d-block">Meta Keywords</label>
-                        <input type="text" name="meta_keyword" id="meta_keyword" value="{{ old('meta_keyword')}}" class="form-control @error('meta_keyword') is-invalid @enderror" placeholder="keyword1, keyword2, keyword3" data-role="tagsinput">
-                        @error('meta_keyword')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label class="d-block">Meta Description</label>
-                        <textarea name="meta_description" id="meta_description" class="form-control @error('meta_description') is-invalid @enderror" rows="3" maxlength="160" placeholder="Brief description for search engines">{{ old('meta_description') }}</textarea>
-                        @error('meta_description')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            <div class="mg-t-20 text-center">
-                <button class="btn btn-primary btn-sm btn-uppercase" type="submit" style="min-width: 150px;">Create News Article</button>
-                <a class="btn btn-outline-secondary btn-sm btn-uppercase mg-l-10" href="{{ route('news.index') }}" style="min-width: 100px;">Cancel</a>
-            </div>
-        </div>
-    </form>
-    </div>
 </div>
 @endsection
 
 @section('pagejs')
+    <script>
+        // jQuery Typing
+        (function(f){function l(g,h){function d(a){if(!e){e=true;c.start&&c.start(a,b)}}function i(a,j){if(e){clearTimeout(k);k=setTimeout(function(){e=false;c.stop&&c.stop(a,b)},j>=0?j:c.delay)}}var c=f.extend({start:null,stop:null,delay:400},h),b=f(g),e=false,k;b.keypress(d);b.keydown(function(a){if(a.keyCode===8||a.keyCode===46)d(a)});b.keyup(i);b.blur(function(a){i(a,0)})}f.fn.typing=function(g){return this.each(function(h,d){l(d,g)})}})(jQuery);
+
+        $(document).ready( function($){
+
+            $('#icons-filter').typing({
+                stop: function (event, $elem) {
+                    var filterValue = $elem.val(),
+                        count = 0;
+
+                    if( $elem.val() ) {
+
+                        $(".icons-list li").each(function(){
+                            if ($(this).text().search(new RegExp(filterValue, "i")) < 0) {
+                                $(this).fadeOut();
+                            } else {
+                                $(this).show();
+                                count++
+                            }
+                        });
+                    } else {
+                        $(".icons-list li").show();
+                    }
+
+                    count = 0;
+                },
+                delay: 500
+            });
+
+        });
+    </script>
+    <script>
+        let jsPage = "";
+        let jsHtml = "";
+        let jsStyle = "";
+    </script>
+    <script src="{{ asset('lib/custom-grapesjs/assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('lib/bselect/dist/js/bootstrap-select.js') }}"></script>
-    <script src="{{ asset('lib/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
+    <script src="{{ asset('lib/bselect/dist/js/i18n/defaults-en_US.js') }}"></script>
+    <script src="{{ asset('lib/owl.carousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('js/file-upload-validation.js') }}"></script>
+    <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button-2.js') }}"></script>
+
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs/dist/grapes.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-blocks-basic.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-pkurg-bootstrap4-plugin.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-lory-slider.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-touch.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-parser-postcss.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-tooltip.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-tui-image-editor.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-typed.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-style-bg.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/tui-code-snippet.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/tui-color-picker.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-plugin-ckeditor.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-plugin-export.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-blocks-bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/b4bulder-custom-blocks.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-preset-webpage.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-plugin-animation.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/grapesjs-plugins/grapesjs-swiper-slider.min.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/assets/js/custom-grapesjs.js') }}"></script>
+    <script src="{{ asset('lib/custom-grapesjs/assets/js/bamburgh.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.0/typed.min.js"></script>
 @endsection
 
 @section('customjs')
     <script>
+
         $(function() {
             $('.selectpicker').selectpicker();
-
-            // Initialize Summernote
-            $('.summernote').summernote({
-                height: 400,
-                toolbar: [
-                    ['style', ['style']],
-                    ['font', ['bold', 'italic', 'underline', 'clear']],
-                    ['fontname', ['fontname']],
-                    ['fontsize', ['fontsize']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['height', ['height']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview']],
-                    ['help', ['help']]
-                ]
-            });
-
-            // Initialize tags input
-            $('[data-role="tagsinput"]').tagsinput();
-
-            // Auto-generate slug from title
-            $('#name').on('input', function() {
-                if ($('#slug').val() === '') {
-                    let slug = $(this).val()
-                        .toLowerCase()
-                        .replace(/[^a-z0-9 -]/g, '')
-                        .replace(/\s+/g, '-')
-                        .replace(/-+/g, '-')
-                        .trim('-');
-                    $('#slug').val(slug);
-                }
-            });
-
-            // Image preview functionality
-            $('#news_image').on('change', function() {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#image_preview_img').attr('src', e.target.result);
-                        $('#image_preview').show();
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    $('#image_preview').hide();
-                }
-            });
-
-            // Thumbnail preview functionality
-            $('#news_thumbnail').on('change', function() {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#thumbnail_preview_img').attr('src', e.target.result);
-                        $('#thumbnail_preview').show();
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    $('#thumbnail_preview').hide();
-                }
-            });
-
-            // Preview for URL inputs
-            $('#image_url').on('input', function() {
-                const url = $(this).val();
-                if (url && isValidImageUrl(url)) {
-                    $('#image_preview_img').attr('src', url);
-                    $('#image_preview').show();
-                } else if (!$('#news_image')[0].files.length) {
-                    $('#image_preview').hide();
-                }
-            });
-
-            $('#thumbnail_url').on('input', function() {
-                const url = $(this).val();
-                if (url && isValidImageUrl(url)) {
-                    $('#thumbnail_preview_img').attr('src', url);
-                    $('#thumbnail_preview').show();
-                } else if (!$('#news_thumbnail')[0].files.length) {
-                    $('#thumbnail_preview').hide();
-                }
-            });
-
-            // Helper function to validate image URLs
-            function isValidImageUrl(url) {
-                try {
-                    new URL(url);
-                    return /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
-                } catch {
-                    return false;
-                }
-            }
         });
+
+        $(function() {
+            $("#customSwitch1").change(function() {
+                if(this.checked) {
+                    $('#label_visibility').html('Published');
+                }
+                else{
+                    $('#label_visibility').html('Private');
+                }
+            });
+
+            $('#name').change(function(){
+                let url = $('#name').val();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('news.get-slug') }}",
+                    data: { url: url, _token: "{{ csrf_token() }}" }
+                }).done(function(response){
+                    slug_url = '{{env('APP_URL')}}/news/'+response;
+                    $('#news_slug').html("<a target='_blank' href='"+slug_url+"'>"+slug_url+"</a>");
+                });
+            });
+        });
+    </script>
+    <script>
+        function readURL(file) {
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#img_name').html(file.name);
+                $('#news_image').attr('title', file.name);
+                $('#img_temp').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(file);
+            $('#image_div').show();
+        }
+
+        $("#news_image").change(function(evt) {
+
+            $('#img_name').html('Choose file');
+            $('#img_temp').attr('src', '');
+            $('#image_div').hide();
+
+            let files = evt.target.files;
+            let maxSize = 1;
+            let validateFileTypes = ["image/jpeg", "image/png"];
+            let requiredWidth = "{{ env('NEWS_BANNER_WIDTH') }}";
+            let requiredHeight =  "{{ env('NEWS_BANNER_HEIGHT') }}";
+
+            validate_files(files, readURL, maxSize, validateFileTypes, requiredWidth, requiredHeight, empty_banner_value);
+        });
+
+        function empty_banner_value()
+        {
+            $('#news_image').removeAttr('title');
+            $('#news_image').val('');
+        }
+
+        function remove_image() {
+            $('#img_name').html('Choose file');
+            $('#news_image').removeAttr('title');
+            $('#news_image').val('');
+            $('#img_temp').attr('src', '');
+            $('#image_div').hide();
+        }
+
+        // Thumbnail
+        function readURLThumb(file) {
+            let reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#img_name_thumbnail').html(file.name);
+                $('#news_thumbnail').attr('title', file.name);
+                $('#img_temp_thumbnail').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(file);
+            $('#image_div_thumbnail').show();
+        }
+
+        $("#news_thumbnail").change(function(evt) {
+
+            $('#img_name_thumbnail').html('Choose file');
+            $('#img_temp_thumbnail').attr('src', '');
+            $('#image_div_thumbnail').hide();
+
+            let files = evt.target.files;
+            let maxSize = 1;
+            let validateFileTypes = ["image/jpeg", "image/png"];
+            let requiredWidth = "{{ env('NEWS_THUMBNAIL_WIDTH') }}";
+            let requiredHeight =  "{{ env('NEWS_THUMBNAIL_HEIGHT') }}";
+
+            validate_files(files, readURLThumb, maxSize, validateFileTypes, requiredWidth, requiredHeight, empty_thumbnail_value);
+        });
+
+        function empty_thumbnail_value()
+        {
+            $('#news_thumbnail').val('');
+            $('#news_thumbnail').removeAttr('title');
+        }
+
+        function remove_image_thumbnail(){
+            $('#img_name_thumbnail').html('Choose file');
+            $('#news_thumbnail').removeAttr('title');
+            $('#news_thumbnail').val('');
+            $('#img_temp_thumbnail').attr('src', '');
+            $('#image_div_thumbnail').hide();
+        }
+
     </script>
 @endsection

@@ -68,6 +68,31 @@ class FrontController extends Controller
 
     }
 
+    public function privacy_terms()
+    {
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+
+        $page = new Page();
+        $page->name = 'Privacy Policy & Terms of Use';
+
+        $breadcrumb = $this->breadcrumb($page);
+
+        // Load CMS-managed content like services_dms pattern (prefer slug, fallback to name)
+        $content = Page::where('slug', 'privacy-terms')
+            ->orWhere('slug', 'privacy-policy-terms-of-use')
+            ->orWhere('name', 'Privacy Policy & Terms of Use')
+            ->first();
+
+        // Force home banner display on this page
+        return view('theme.pages.privacy-terms', [
+            'page' => $page,
+            'footer' => $footer,
+            'breadcrumb' => $breadcrumb,
+            'content' => $content,
+            'forceHomeBanner' => true,
+        ]);
+    }
+
     public function sitemap()
     {
         // return $this->page('sitemap');
@@ -349,6 +374,7 @@ class FrontController extends Controller
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
         return view('theme.pages.about-us', compact('content','footer', 'page', 'breadcrumb'));
     }
+
 
       public function services()
     {

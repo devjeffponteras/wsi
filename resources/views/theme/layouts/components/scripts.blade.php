@@ -127,6 +127,20 @@
 </script>
 
 <script>
+    // Shared acceptance utility available globally
+    window.acceptPrivacy = function(redirectTo) {
+        try {
+            localStorage.setItem('privacyAccepted', 'true');
+            localStorage.setItem('popState', 'shown');
+        } catch (e) {}
+        if (typeof jQuery !== 'undefined' && jQuery('#privacyBanner').length) {
+            jQuery('#privacyBanner').fadeOut();
+        }
+        if (redirectTo) {
+            window.location.href = redirectTo;
+        }
+    };
+
     // Privacy Banner and Unified Modal functionality
     $(document).ready(function() {
         // Show privacy banner if not accepted
@@ -134,10 +148,17 @@
             $('#privacyBanner').show();
         }
 
-        // Handle I Agree button click
+        // Handle I Agree button click (use shared function) and redirect to Home
         $('#agreeButton').click(function() {
-            $('#privacyBanner').fadeOut();
-            localStorage.setItem('privacyAccepted', 'true');
+            if (typeof window.acceptPrivacy === 'function') {
+                window.acceptPrivacy("{{ route('home') }}");
+            } else {
+                // Fallback
+                $('#privacyBanner').fadeOut();
+                try { localStorage.setItem('privacyAccepted', 'true'); } catch(e) {}
+                try { localStorage.setItem('popState','shown'); } catch(e) {}
+                window.location.href = "{{ route('home') }}";
+            }
         });
 
         // Handle Privacy & Terms link click

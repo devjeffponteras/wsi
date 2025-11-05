@@ -1,348 +1,318 @@
 @extends('admin.layouts.app')
 
 @section('pagetitle')
-    News Categories Management
+    Manage Category
 @endsection
 
 @section('pagecss')
+    <link href="{{ asset('lib/ion-rangeslider/css/ion.rangeSlider.min.css') }}" rel="stylesheet">
     <style>
-        .category-stats {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
+        .table {
+            word-wrap: break-word;
+            /*border-collapse: separate;*/
+            /*border-spacing:0 12px;*/
         }
-        .stat-item {
-            text-align: center;
+        a.disabled {
+            pointer-events: none;
+            cursor: default;
+            color: #272727;
         }
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            display: block;
-        }
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        .table thead th {
-            background: #f8f9fa;
-            border: none;
-            color: #495057;
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 15px 12px;
-            vertical-align: middle;
-        }
-        .table tbody td {
-            padding: 15px 12px;
-            vertical-align: middle;
-            border-top: 1px solid #e9ecef;
-        }
-        .table tbody tr:hover {
-            background-color: #f8f9fa;
-        }
-        .badge {
-            font-size: 0.75rem;
-            font-weight: 500;
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
-        .badge-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .badge-secondary {
-            background: #e2e3e5;
-            color: #6c757d;
-            border: 1px solid #d6d8db;
-        }
-        .filter-section {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 1px solid #e9ecef;
-        }
-        .filter-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #495057;
-            margin-bottom: 15px;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #6c757d;
-        }
-        .empty-state i {
-            font-size: 4rem;
-            margin-bottom: 20px;
-            opacity: 0.5;
+        .row-selected {
+            background-color: #92b7da !important;
         }
     </style>
 @endsection
 
 @section('content')
-<div class="container pd-x-0">
-    <!-- Header Section -->
-    <div class="d-sm-flex align-items-center justify-content-between mg-b-30">
-        <div>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb breadcrumb-style1 mg-b-5">
-                    <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">News Categories</li>
-                </ol>
-            </nav>
-            <h4 class="mg-b-0 tx-spacing--1"> News Categories</h4>
-            <p class="text-muted mg-b-0">Organize your news articles with categories</p>
+    <div class="container pd-x-0">
+        <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+            <div>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-style1 mg-b-5">
+                        <li class="breadcrumb-item" aria-current="page"><a href="{{route('dashboard')}}">CMS</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">News Categories</li>
+                    </ol>
+                </nav>
+                <h4 class="mg-b-0 tx-spacing--1">Manage News Categories</h4>
+            </div>
         </div>
-        <div class="d-flex gap-2">
-            @if(auth()->user()->has_access_to_route('news-categories.create'))
-                <a class="btn btn-primary" href="{{ route('news-categories.create') }}">
-                    <i data-feather="plus" class="wd-16 mg-r-5"></i> Create Category
-                </a>
-            @endif
-        </div>
-    </div>
 
-    <!-- Search Filter -->
-    <div class="filter-section">
-        <div class="filter-title"> Search Categories</div>
-        <form id="filterForm" class="row">
-            <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="Search categories..." value="{{ request('search') }}">
+        <div class="row row-sm">
+
+            <!-- Start Filters -->
+            <div class="col-md-12">
+
+                <div class="filter-buttons mg-b-10">
+                    <div class="d-md-flex bd-highlight">
+                        <div class="bd-highlight mg-r-10 mg-t-10">
+                            <div class="dropdown d-inline mg-r-5">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{__('common.filters')}}
+                                </button>
+                                <div class="dropdown-menu">
+                                    <form id="filterForm" class="pd-20">
+                                        <div class="form-group">
+                                            <label for="exampleDropdownFormEmail1">{{__('common.sort_by')}}</label>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="orderBy1" name="orderBy" class="custom-control-input" value="updated_at" @if ($filter->orderBy == 'updated_at') checked @endif>
+                                                <label class="custom-control-label" for="orderBy1">{{__('common.date_modified')}}</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="orderBy2" name="orderBy" class="custom-control-input" value="name" @if ($filter->orderBy == 'name') checked @endif>
+                                                <label class="custom-control-label" for="orderBy2">{{__('common.name')}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleDropdownFormEmail1">{{__('common.sort_order')}}</label>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="sortByAsc" name="sortBy" class="custom-control-input" value="asc" @if ($filter->sortBy == 'asc') checked @endif>
+                                                <label class="custom-control-label" for="sortByAsc">{{__('common.ascending')}}</label>
+                                            </div>
+
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="sortByDesc" name="sortBy" class="custom-control-input" value="desc"  @if ($filter->sortBy == 'desc') checked @endif>
+                                                <label class="custom-control-label" for="sortByDesc">{{__('common.descending')}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="showDeleted" name="showDeleted" class="custom-control-input" @if ($filter->showDeleted) checked @endif>
+                                                <label class="custom-control-label" for="showDeleted">{{__('common.show_deleted')}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mg-b-40">
+                                            <label class="d-block">{{__('common.item_displayed')}}</label>
+                                            <input id="displaySize" type="text" class="js-range-slider" name="perPage" value="{{ $filter->perPage }}"/>
+                                        </div>
+                                        <button id="filter" type="button" class="btn btn-sm btn-primary">{{__('common.apply_filters')}}</button>
+                                    </form>
+                                </div>
+                            </div>
+                            @if (auth()->user()->has_access_to_route('news-categories.delete'))
+                                <div class="list-search d-inline">
+                                    <div class="dropdown d-inline mg-r-10">
+                                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item tx-danger" href="javascript:void(0)" onclick="delete_category()">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                        <div class="ml-auto bd-highlight mg-t-10">
+                            <form class="form-inline" id="searchForm">
+                                <div class="search-form mg-r-10">
+                                    <input name="search" type="search" id="search" class="form-control"  placeholder="Search by Name" value="{{ $filter->search }}">
+                                    <button class="btn filter" id="btnSearch"><i data-feather="search"></i></button>
+                                </div>
+                                @if (auth()->user()->has_access_to_route('news-categories.create'))
+                                    <a class="btn btn-primary btn-sm mg-b-5 mt-lg-0 mt-md-0 mt-sm-0 mt-1" href="{{ route('news-categories.create') }}">Create a Category</a>
+                                @endif
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="col-md-3">
-                <select name="status" class="form-control">
-                    <option value="">All Status</option>
-                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active Only</option>
-                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive Only</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <select name="orderBy" class="form-control">
-                    <option value="name" {{ request('orderBy') == 'name' ? 'selected' : '' }}>Sort by Name</option>
-                    <option value="created_at" {{ request('orderBy') == 'created_at' ? 'selected' : '' }}>Sort by Date</option>
-                    <option value="articles_count" {{ request('orderBy') == 'articles_count' ? 'selected' : '' }}>Sort by Article Count</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <div class="d-flex gap-2">
-                    <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                    <a href="{{ route('news-categories.index') }}" class="btn btn-secondary btn-sm">Reset</a>
+            <!-- End Filters -->
+
+            <!-- Start Pages -->
+            <div class="col-md-12">
+                <div class="table-list mg-b-10">
+                    <div class="table-responsive-lg">
+                        <table class="table mg-b-0 table-light table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="checkbox_all">
+                                        <label class="custom-control-label" for="checkbox_all"></label>
+                                    </div>
+                                </th>
+                                <th scope="col" width="30%">Category Name</th>
+                                <th scope="col" width="35%">Url</th>
+                                <th scope="col" width="10%">Total News</th>
+                                <th scope="col" width="20%">Options</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($categories as $category)
+                                <tr id="row{{$category->id}}" class="row_cb">
+                                    <th>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input cb" id="cb{{ $category->id }}">
+                                            <label class="custom-control-label" for="cb{{ $category->id }}"></label>
+                                        </div>
+                                    </th>
+                                    <td><strong @if($category->trashed()) style="text-decoration:line-through;" @endif> {{ $category->name }}</strong></td>
+                                    <td><a target="_blank" href="{{route('news.front.index')}}?type=category&criteria={{$category->id}}" @if($category->get_total_articles() == 0) class="disabled" @endif>
+                                            {{route('news.front.index')."?type=category&criteria=".$category->id}}</a></td>
+                                    <td>{{ $category->get_total_articles() }}</td>
+                                    <td>
+                                        @if($category->trashed())
+                                            @if (auth()->user()->has_access_to_route('news-categories.restore'))
+                                                <nav class="nav table-options">
+                                                    <a class="nav-link" href="{{route('news-categories.restore',$category->id)}}" title="Restore this category"><i data-feather="rotate-ccw"></i></a>
+                                                </nav>
+                                            @endif
+                                        @else
+                                            <nav class="nav table-options">
+                                                @if (auth()->user()->has_access_to_route('news-categories.edit'))
+                                                    <a class="nav-link" href="{{ route('news-categories.edit',$category->id) }}" title="Edit Category"><i data-feather="edit"></i></a>
+                                                @endif
+                                                @if (auth()->user()->has_access_to_route('news-categories.delete'))
+                                                    <a class="nav-link" href="javascript:void(0)" onclick="delete_one_category({{$category->id}})" title="Delete Category"><i data-feather="trash"></i></a>
+                                                @endif
+                                            </nav>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <th colspan="5" style="text-align: center;"> <p class="text-danger">No categories found.</p></th>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </form>
+            <!-- End Pages -->
+
+            <div class="col-md-6">
+                <div class="mg-t-5">
+                    @if ($categories->firstItem() == null)
+                        <p class="tx-gray-400 tx-12 d-inline">{{__('common.showing_zero_items')}}</p>
+                    @else
+                        <p class="tx-gray-400 tx-12 d-inline">Showing {{($categories->firstItem() ?? 0)}} to {{($categories->lastItem() ?? 0)}} of {{$categories->total()}} items</p>
+                    @endif
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-md-right float-md-right mg-t-5">
+                    {{ $categories->appends((array) $filter)->links() }}
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <!-- Categories Table -->
-    <div class="card">
-        <div class="card-body pd-0">
-            <div class="table-responsive">
-                <table class="table table-hover mg-b-0">
-                    <thead class="thead-light">
-                        <tr>
-                            <th>Category Name</th>
-                            <th width="150">Slug</th>
-                            <th width="100">Status</th>
-                            <th width="120">Articles</th>
-                            <th width="120">Created</th>
-                            <th width="140">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($categories as $category)
-                            <tr>
-                                <!-- Category Name -->
-                                <td>
-                                    <div class="category-info">
-                                        <h6 class="category-title mb-1">
-                                            <i data-feather="folder" class="feather-14 mr-2"></i>
-                                            {{ $category->name }}
-                                        </h6>
-                                        @if($category->description)
-                                            <p class="category-description text-muted mb-0">
-                                                {{ Str::limit($category->description, 80) }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                </td>
+    <form action="" id="posting_form" style="display:none;" method="post">
+        @csrf
+        <input type="text" id="pages" name="pages">
+        <input type="text" id="status" name="status">
+    </form>
 
-                                <!-- Slug -->
-                                <td>
-                                    <code class="small">{{ $category->slug }}</code>
-                                </td>
 
-                                <!-- Status -->
-                                <td>
-                                    @if($category->is_active ?? true)
-                                        <span class="badge badge-success">
-                                            <i data-feather="check-circle" class="feather-12 mr-1"></i>
-                                            Active
-                                        </span>
-                                    @else
-                                        <span class="badge badge-secondary">
-                                            <i data-feather="x-circle" class="feather-12 mr-1"></i>
-                                            Inactive
-                                        </span>
-                                    @endif
-                                </td>
-
-                                <!-- Articles Count -->
-                                <td class="text-center">
-                                    <div class="articles-count">
-                                        <span class="badge badge-light">
-                                            {{ $category->get_total_articles() }} articles
-                                        </span>
-                                    </div>
-                                </td>
-
-                                <!-- Created Date -->
-                                <td>
-                                    <div class="date-info">
-                                        <div class="created-date">
-                                            {{ $category->created_at->format('M j, Y') }}
-                                        </div>
-                                        <small class="text-muted">
-                                            {{ $category->created_at->format('g:i A') }}
-                                        </small>
-                                    </div>
-                                </td>
-
-                                <!-- Actions -->
-                                <td>
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        @if(auth()->user()->has_access_to_route('news-categories.edit'))
-                                            <a href="{{ route('news-categories.edit', $category->id) }}"
-                                               class="btn btn-outline-primary btn-sm"
-                                               title="Edit Category">
-                                                <i data-feather="edit" class="feather-14"></i>
-                                            </a>
-                                        @endif
-
-                                        @if($category->get_total_articles() > 0)
-                                            <a href="{{ route('news.index', ['category_id' => $category->id]) }}"
-                                               class="btn btn-outline-info btn-sm"
-                                               title="View Articles">
-                                                <i data-feather="file-text" class="feather-14"></i>
-                                            </a>
-                                        @endif
-
-                                        <button onclick="deleteCategory({{ $category->id }})"
-                                                class="btn btn-outline-danger btn-sm"
-                                                title="Delete Category">
-                                            <i data-feather="trash-2" class="feather-14"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center py-5">
-                                    <div class="empty-state">
-                                        <i data-feather="folder" class="feather-48 text-muted mb-3"></i>
-                                        <h5 class="text-muted">No Categories Found</h5>
-                                        <p class="text-muted mb-3">You haven't created any news categories yet.</p>
-                                        @if(auth()->user()->has_access_to_route('news-categories.create'))
-                                            <a href="{{ route('news-categories.create') }}" class="btn btn-primary">
-                                                <i data-feather="plus" class="feather-16 mr-2"></i> Create Your First Category
-                                            </a>
-                                        @endif
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+    <div class="modal effect-scale" id="prompt-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{__('common.delete_confirmation_title')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{__('common.delete_confirmation')}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" id="btnDelete">Yes, Delete</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Pagination -->
-    @if(isset($categories) && $categories->hasPages())
-        <div class="d-flex justify-content-between align-items-center mg-t-30">
-            <div>
-                <p class="text-muted mg-b-0">
-                    Showing {{ $categories->firstItem() }} to {{ $categories->lastItem() }} of {{ $categories->total() }} categories
-                </p>
-            </div>
-            <div>
-                {!! $categories->appends(request()->input())->links() !!}
+    <div class="modal effect-scale" id="prompt-multiple-delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{__('common.delete_mutiple_confirmation_title')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{__('common.delete_mutiple_confirmation')}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-danger" id="btnDeleteMultiple">Yes, Delete</button>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
-    @endif
-</div>
+    </div>
+
+    <div class="modal effect-scale" id="prompt-no-selected" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">{{__('common.no_selected_title')}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{__('common.no_selected')}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
-@section('customjs')
+@section('pagejs')
+    <script src="{{ asset('lib/bselect/dist/js/bootstrap-select.js') }}"></script>
+    <script src="{{ asset('lib/bselect/dist/js/i18n/defaults-en_US.js') }}"></script>
+    <script src="{{ asset('lib/ion-rangeslider/js/ion.rangeSlider.min.js') }}"></script>
     <script>
-        $(function(){
-            'use strict'
+        let listingUrl = "{{ route('news-categories.index') }}";
+        let advanceListingUrl = "";
+        let searchType = "{{ $searchType }}";
+    </script>
+    <script src="{{ asset('js/listing.js') }}"></script>
 
-            // Initialize feather icons
-            feather.replace();
+    <script>
+        function post_form(url,status,pages){
+            $('#posting_form').attr('action',url);
+            $('#pages').val(pages);
+            $('#status').val(status);
+            $('#posting_form').submit();
+        }
 
-            // Filter form submission
-            $('#filterForm').on('submit', function(e) {
-                e.preventDefault();
-                let formData = $(this).serialize();
-                window.location.href = "{{ route('news-categories.index') }}?" + formData;
+        function delete_category(){
+            var counter = 0;
+            var selected_pages = '';
+            $(".cb:checked").each(function(){
+                counter++;
+                fid = $(this).attr('id');
+                selected_pages += fid.substring(2, fid.length)+'|';
             });
-        });
 
-        // Delete category function
-        function deleteCategory(categoryId) {
-            // Get category name for confirmation
-            const categoryRow = event.target.closest('tr');
-            const categoryName = categoryRow.querySelector('.category-title').textContent.trim();
-
-            // Custom confirmation dialog
-            const confirmationMessage = `Are you sure you want to delete this category?\n\n"${categoryName}"\n\nThis action cannot be undone. Articles in this category will need to be reassigned.`;
-
-            if (confirm(confirmationMessage)) {
-                // Show loading state
-                const deleteButton = event.target.closest('button');
-                const originalContent = deleteButton.innerHTML;
-                deleteButton.innerHTML = '<i data-feather="loader" class="feather-14"></i>';
-                deleteButton.disabled = true;
-
-                // Create and submit form
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '{{ route("news-categories.delete") }}';
-                form.style.display = 'none';
-
-                // Add CSRF token
-                const csrfToken = document.createElement('input');
-                csrfToken.type = 'hidden';
-                csrfToken.name = '_token';
-                csrfToken.value = '{{ csrf_token() }}';
-                form.appendChild(csrfToken);
-
-                // Add category ID as 'pages' parameter (controller expects this)
-                const categoryIdField = document.createElement('input');
-                categoryIdField.type = 'hidden';
-                categoryIdField.name = 'pages';
-                categoryIdField.value = categoryId;
-                form.appendChild(categoryIdField);
-
-                // Add form to document and submit
-                document.body.appendChild(form);
-
-                // Debug: Log what we're sending
-                console.log('Deleting category:', {
-                    categoryId: categoryId,
-                    action: form.action,
-                    csrfToken: csrfToken.value
+            if(parseInt(counter) < 1){
+                $('#prompt-no-selected').modal('show');
+                return false;
+            }
+            else{
+                $('#prompt-multiple-delete').modal('show');
+                $('#btnDeleteMultiple').on('click', function() {
+                    post_form("{{route('news-categories.delete')}}",'',selected_pages);
                 });
 
-                // Submit form
-                form.submit();
             }
+        }
+
+        function delete_one_category(id){
+            $('#prompt-delete').modal('show');
+            $('#btnDelete').on('click', function() {
+                post_form('{{route('news-categories.delete')}}','',id);
+            });
         }
     </script>
 @endsection

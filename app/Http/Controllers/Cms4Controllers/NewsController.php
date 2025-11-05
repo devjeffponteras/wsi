@@ -71,18 +71,42 @@ class NewsController extends Controller
      */
     public function delete(Request $request)
     {
-        $news = News::findOrFail($request->id);
-        $news->delete();
+        $ids = [];
 
-        // If request expects JSON (AJAX), return JSON. Otherwise redirect back with flash message
+        if ($request->filled('id')) {
+            $ids[] = (int) $request->id;
+        } elseif ($request->filled('pages')) {
+            $ids = array_values(array_filter(array_map('intval', explode('|', $request->pages))));
+        }
+
+        if (empty($ids)) {
+            return $request->ajax() || $request->wantsJson()
+                ? response()->json(['success' => false, 'message' => 'No news selected for deletion.'], 422)
+                : redirect()->route('news.index')->with('error', 'No news selected for deletion.');
+        }
+
+        $newsItems = News::whereIn('id', $ids)->get();
+
+        if ($newsItems->isEmpty()) {
+            return $request->ajax() || $request->wantsJson()
+                ? response()->json(['success' => false, 'message' => 'Selected news not found.'], 404)
+                : redirect()->route('news.index')->with('error', 'Selected news not found.');
+        }
+
+        $newsItems->each->delete();
+
+        $message = count($ids) > 1
+            ? 'Selected news articles deleted successfully!'
+            : 'News article deleted successfully!';
+
         if ($request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'success' => true,
-                'message' => 'News article deleted successfully!'
+                'message' => $message
             ]);
         }
 
-        return redirect()->route('news.index')->with('success', 'News article deleted successfully!');
+        return redirect()->route('news.index')->with('success', $message);
     }
 
     /**

@@ -3,34 +3,12 @@
 
 @section('pagecss')
 <link rel="stylesheet" href="{{ asset('theme/css/newstyle.css') }}" type="text/css" />
-<style>
-    /* Prevent CTA decorative images from creating horizontal overflow */
-    .section-cta { overflow: hidden; }
-    .section-cta .hero-decor { max-width: 770px; width: 42%; height: auto; bottom: 0; }
-    @media (max-width: 768px) {
-        .section-cta .hero-decor { display: none !important; }
-    }
-</style>
 @endsection
 
 @section('content')
 <div class="flex flex-col min-h-screen">
     <!-- Hero Section -->
-    <section class="hero-section">
-        <video class="hero-video" autoplay loop muted playsinline>
-<source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">            Your browser does not support the video tag.
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title animate-slide-in-up">
-                Tailored Web Solutions <span class="text-white">for Your Success</span>
-            </h1>
-            <p class="hero-subtitle animate-slide-in-up">
-                WebFocus Solutions, Inc. crafts fast-loading, responsive, and SEO-ready websites that drive measurable results for your business.
-            </p>
-            <a href="#contact" class="btns btn-primary1 animate-slide-in-up" onclick="console.log('Request a Quote clicked')">Request a Quote</a>
-        </div>
-    </section>
+    
 
     <!-- Overview Section -->
     {!! $content->contents !!}
@@ -119,7 +97,7 @@
                 </div>
             </div>
         </div>
-    <img class="position-absolute hero-decor" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); left: 10%;">
+        <img class="position-absolute" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); bottom: 0; left: 10%;width: 770px;">
     </section>
 </div>
 

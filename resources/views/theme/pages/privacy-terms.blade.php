@@ -1,8 +1,15 @@
 @extends('theme.main')
 
+@php
+    $forcePageBanner = true;
+    if (isset($page) && empty($page->image_url)) {
+        $page->image_url = asset('theme/images/banners/no-banner.jpg');
+    }
+@endphp
+
 @section('content')
 
-        <div class="unified-content">
+    <div class="unified-content privacy-page-wrapper">
             {!! optional($content)->contents ?? '' !!}
         </div>
 
@@ -11,6 +18,7 @@
 @section('pagecss')
 <style>
     /* Page card styled like the modal content */
+    .privacy-page-wrapper { margin-top: 40px; }
     .privacy-page-card {
         background-color: #fefefe;
         padding: 28px; /* more inner space */

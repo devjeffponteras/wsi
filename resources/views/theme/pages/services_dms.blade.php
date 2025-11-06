@@ -4,37 +4,13 @@
 <link rel="stylesheet" href="{{ asset('theme/css/newstyle.css') }}" type="text/css" />
 <style>
 
-    /* Prevent CTA decorative images from creating horizontal overflow */
-    .section-cta { overflow: hidden; }
-    .section-cta .hero-decor { max-width: 770px; width: 42%; height: auto; bottom: 0; }
-    @media (max-width: 768px) {
-        .section-cta .hero-decor { display: none !important; }
-    }
 </style>
 @endsection
 
 @section('content')
 <div class="flex flex-col min-h-screen">
     <!-- Hero Section -->
-    <section class="hero-section">
-        <video class="hero-video" autoplay loop muted playsinline poster="{{ asset('storage/banners/fallback-poster.jpg') }}">
-            <source src="{{ asset('storage/banners/videoplayback.webm') }}" type="video/webm">
-            <source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">            <picture>
-                <source srcset="{{ asset('storage/banners/fallback-poster.webp') }}" type="image/webp">
-                <img src="{{ asset('storage/banners/fallback-poster.jpg') }}" alt="WebFocus Solutions Document Management Banner" class="hero-video-fallback">
-            </picture>
-            Your browser does not support the video tag.
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title animate-slide-in-up">
-                Streamline Your Document Workflow <span class="text-white">With FileHold</span>
-            </h1>
-            <p class="hero-subtitle animate-slide-in-up">
-                Organize, secure, and manage your documents efficiently with FileHold, the ultimate document management system designed for modern businesses.
-            </p>
-        </div>
-    </section>
+    
 
     <!-- Document Management Systems -->
     {!! $content->contents !!}
@@ -122,7 +98,7 @@
                 </div>
             </div>
         </div>
-    <img class="position-absolute hero-decor" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); left: 10%;">
+        <img class="position-absolute" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); bottom: 0; left: 10%;width: 770px;">
     </section>
 </div>
 @endsection

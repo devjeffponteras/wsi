@@ -219,69 +219,19 @@
             min-width: 150px;
         }
     }
-    /* Prevent CTA decorative images from creating horizontal overflow */
-    .section-cta { overflow: hidden; }
-    .section-cta .hero-decor { max-width: 770px; width: 42%; height: auto; bottom: 0; }
-    @media (max-width: 768px) {
-        .section-cta .hero-decor { display: none !important; }
-    }
 </style>
 @endsection
 
 @section('content')
 <div class="flex flex-col min-h-screen">
     <!-- Hero Section -->
-    <section class="hero-section">
-        <video class="hero-video" autoplay loop muted playsinline>
-            <source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title animate-slide-in-up">
-                Establish Your Online Presence <span class="text-white">with a Custom Domain</span>
-            </h1>
-            <p class="hero-subtitle animate-slide-in-up">
-                A domain name is your website’s address and the foundation of your online brand. Secure yours today and connect with millions worldwide.
-            </p>
-            <a href="#check-domain" class="btns btn-primary1 animate-slide-in-up" onclick="console.log('Check Domain Availability clicked')">Check Availability</a>
-        </div>
-    </section>
 
     <!-- Why a Custom Domain Matters -->
     {!! $content->contents !!}
     <!-- Domain Checker -->
-
+    
     <!-- FAQ Section -->
-    <section class="section" style="background: linear-gradient(135deg, #f0f9ff, #ffffff);">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-12 scroll-animate">
-                <h2 class="section-title">Frequently Asked Questions</h2>
-                <p class="section-subtitle">
-                    Got questions about domain registration? We’ve got answers.
-                </p>
-            </div>
-            <div class="scroll-animate">
-                <div class="faq-item stagger-1">
-                    <h3 class="faq-question">How do I choose a domain name?</h3>
-                    <p class="faq-answer">Select a domain name that reflects your brand, is easy to remember, and includes relevant keywords for SEO. Keep it short and avoid complex characters.</p>
-                </div>
-                <div class="faq-item stagger-2">
-                    <h3 class="faq-question">What happens if my domain is taken?</h3>
-                    <p class="faq-answer">If your desired domain is unavailable, try variations (e.g., adding a word or using a different extension like .co or .online). We can also help you negotiate with the current owner.</p>
-                </div>
-                <div class="faq-item stagger-3">
-                    <h3 class="faq-question">How long does it take to register a domain?</h3>
-                    <p class="faq-answer">Domain registration is typically instant once payment is confirmed, though some extensions (e.g., .edu.ph) may require additional verification.</p>
-                </div>
-                <div class="faq-item stagger-4">
-                    <h3 class="faq-question">Can I transfer my domain to WebFocus?</h3>
-                    <p class="faq-answer">Yes, we support seamless domain transfers. Contact our team to initiate the process and ensure no downtime for your website.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    
       <!-- CTA Section -->
     <section class="section-cta position-relative">
         <div class="cta-container scroll-animate">
@@ -366,7 +316,7 @@
                 </div>
             </div>
         </div>
-    <img class="position-absolute hero-decor" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); left: 10%;">
+        <img class="position-absolute" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); bottom: 0; left: 10%;width: 770px;">
     </section>
 </div>
 @endsection

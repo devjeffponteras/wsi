@@ -147,9 +147,9 @@
                                         </div>
                                     </th>
                                     <td><strong @if($category->trashed()) style="text-decoration:line-through;" @endif> {{ $category->name }}</strong></td>
-                                    <td><a target="_blank" href="{{route('news.front.index')}}?type=category&criteria={{$category->id}}" @if($category->get_total_articles() == 0) class="disabled" @endif>
-                                            {{route('news.front.index')."?type=category&criteria=".$category->id}}</a></td>
-                                    <td>{{ $category->get_total_articles() }}</td>
+                    <td><a target="blank" href="{{route('news.front.index')}}?type=category&criteria={{$category->id}}" @if($category->get_total_news() == 0) class="disabled" @endif>
+                        {{route('news.front.index')."?type=category&criteria=".$category->id}}</a></td>
+                    <td>{{ $category->get_total_news() }}</td>
                                     <td>
                                         @if($category->trashed())
                                             @if (auth()->user()->has_access_to_route('news-categories.restore'))

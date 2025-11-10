@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label class="d-block">Date *</label>
-                    <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" required id="date" value="{{ old('date',date('d/m/Y')) }}">
+                    <input type="date" class="form-control @error('date') is-invalid @enderror" name="date" required id="date" value="{{ old('date', date('Y-m-d')) }}">
                     @error('date')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -79,7 +79,7 @@
                         <label class="custom-file-label" for="news_image" id="img_name">Choose file</label>
                     </div>
                     <p class="tx-10">
-                        Required image dimension: {{ env('NEWS_BANNER_WIDTH') }}px by {{ env('NEWS_BANNER_HEIGHT') }}px <br /> Maximum file size: 1MB <br /> Required file type: .jpeg .png
+                        Required image dimension: {{ env('NEWS_BANNER_WIDTH') }}px by {{ env('NEWS_BANNER_HEIGHT') }}px <br /> Maximum file size: 5MB <br /> Required file type: .jpeg .png
                     </p>
                     @error('news_image')
                         <span class="text-danger">{{ $message }}</span>
@@ -100,7 +100,11 @@
                     @enderror
                     @if (env('NEWS_THUMBNAIL_WIDTH') && env('NEWS_THUMBNAIL_HEIGHT'))
                         <p class="tx-10">
-                            Required image dimension: {{ env('NEWS_THUMBNAIL_WIDTH') }}px by {{ env('NEWS_THUMBNAIL_HEIGHT') }}px <br /> Maximum file size: 1MB <br /> Required file type: .jpeg .png
+                            Required image dimension: {{ env('NEWS_THUMBNAIL_WIDTH') }}px by {{ env('NEWS_THUMBNAIL_HEIGHT') }}px <br /> Maximum file size: 5MB <br /> Required file type: .jpeg .png
+                        </p>
+                    @else
+                        <p class="tx-10">
+                            Maximum file size: 5MB <br /> Required file type: .jpeg .png
                         </p>
                     @endif
                     <div id="image_div_thumbnail" style="display:none;">
@@ -378,9 +382,9 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label class="d-block">Display @if (Article::has_featured_limit()) (Max Featured: {{ Article::has_featured_limit() }}) @endif</label>
+                    <label class="d-block">Display @if (\App\Models\News::featured_limit()) (Max Featured: {{ \App\Models\News::featured_limit() }}) @endif</label>
                     <div class="custom-control custom-switch @error('is_featured') is-invalid @enderror">
-                        <input type="checkbox" class="custom-control-input" name="is_featured" {{ (old("is_featured") ? "checked":"") }} id="customSwitch2" @if (Article::cannot_create_featured_news()) disabled @endif >
+                        <input type="checkbox" class="custom-control-input" name="is_featured" {{ (old("is_featured") ? "checked":"") }} id="customSwitch2" @if (\App\Models\News::cannot_create_featured_news()) disabled @endif >
                         <label class="custom-control-label" for="customSwitch2">Featured</label>
                     </div>
                     @error('is_featured')
@@ -550,7 +554,7 @@
             $('#image_div').hide();
 
             let files = evt.target.files;
-            let maxSize = 1;
+            let maxSize = 5;
             let validateFileTypes = ["image/jpeg", "image/png"];
             let requiredWidth = "{{ env('NEWS_BANNER_WIDTH') }}";
             let requiredHeight =  "{{ env('NEWS_BANNER_HEIGHT') }}";
@@ -593,7 +597,7 @@
             $('#image_div_thumbnail').hide();
 
             let files = evt.target.files;
-            let maxSize = 1;
+            let maxSize = 5;
             let validateFileTypes = ["image/jpeg", "image/png"];
             let requiredWidth = "{{ env('NEWS_THUMBNAIL_WIDTH') }}";
             let requiredHeight =  "{{ env('NEWS_THUMBNAIL_HEIGHT') }}";

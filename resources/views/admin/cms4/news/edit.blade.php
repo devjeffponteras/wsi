@@ -71,36 +71,40 @@
                 <div class="form-group">
                     <label class="d-block">Article banner</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input @error('news_image') is-invalid @enderror" name="news_image" id="news_image" @if (!empty($news->image_url)) title="{{$news->get_image_file_name()}}" @endif>
-                        <label class="custom-file-label" for="news_image" id="img_name">@if (empty($news->image_url)) Choose file @else {{$news->get_image_file_name()}} @endif</label>
+                        <input type="file" class="custom-file-input @error('news_image') is-invalid @enderror" name="news_image" id="news_image" @if (!empty($news->banner_image)) title="{{ $news->banner_image }}" @endif>
+                        <label class="custom-file-label" for="news_image" id="img_name">@if (empty($news->banner_image)) Choose file @else {{ $news->banner_image }} @endif</label>
                     </div>
                     <p class="tx-10">
-                        Required image dimension: {{ env('NEWS_BANNER_WIDTH') }}px by {{ env('NEWS_BANNER_HEIGHT') }}px <br /> Maximum file size: 1MB <br /> Required file type: .jpeg .png
+                        Required image dimension: {{ env('NEWS_BANNER_WIDTH') }}px by {{ env('NEWS_BANNER_HEIGHT') }}px <br /> Maximum file size: 5MB <br /> Required file type: .jpeg .png
                     </p>
                     @error('news_image')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
-                    <div id="image_div" @if(empty($news->image_url)) style="display:none;" @endif>
-                        <img src="{{ $news->image_url }}" height="{{ env('IMAGE_DISPLAY_HEIGHT') }}" width="{{ env('IMAGE_DISPLAY_WIDTH') }}" id="img_temp" alt="">  <br /><br />
+                    <div id="image_div" @if(empty($news->banner_image)) style="display:none;" @endif>
+                        <img src="{{ $news->image }}" height="{{ env('IMAGE_DISPLAY_HEIGHT') }}" width="{{ env('IMAGE_DISPLAY_WIDTH') }}" id="img_temp" alt="">  <br /><br />
                         <a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="remove_image()">Remove Image</a>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="d-block">Article thumbnail</label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input @error('news_thumbnail') is-invalid @enderror" name="news_thumbnail" id="news_thumbnail" @if (!empty($news->thumbnail_url)) title="{{$news->get_image_file_name()}}" @endif>
-                        <label class="custom-file-label" for="news_thumbnail" id="img_name_thumbnail">@if (empty($news->thumbnail_url)) Choose file @else {{$news->get_image_file_name()}} @endif</label>
+                        <input type="file" class="custom-file-input @error('news_thumbnail') is-invalid @enderror" name="news_thumbnail" id="news_thumbnail" @if (!empty($news->thumbnail_image)) title="{{ $news->thumbnail_image }}" @endif>
+                        <label class="custom-file-label" for="news_thumbnail" id="img_name_thumbnail">@if (empty($news->thumbnail_image)) Choose file @else {{ $news->thumbnail_image }} @endif</label>
                     </div>
                     @error('news_thumbnail')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                     @if (env('NEWS_THUMBNAIL_WIDTH') && env('NEWS_THUMBNAIL_HEIGHT'))
                         <p class="tx-10">
-                            Required image dimension: {{ env('NEWS_THUMBNAIL_WIDTH') }}px by {{ env('NEWS_THUMBNAIL_HEIGHT') }}px <br /> Maximum file size: 1MB <br /> Required file type: .jpeg .png
+                            Required image dimension: {{ env('NEWS_THUMBNAIL_WIDTH') }}px by {{ env('NEWS_THUMBNAIL_HEIGHT') }}px <br /> Maximum file size: 5MB <br /> Required file type: .jpeg .png
+                        </p>
+                    @else
+                        <p class="tx-10">
+                            Maximum file size: 5MB <br /> Required file type: .jpeg .png
                         </p>
                     @endif
-                    <div id="image_div_thumbnail" @if(empty($news->thumbnail_url)) style="display:none;" @endif>
-                        <img src="{{ $news->thumbnail_url }}" height="100" width="150" id="img_temp_thumbnail" alt="">  <br /><br />
+                    <div id="image_div_thumbnail" @if(empty($news->thumbnail_image)) style="display:none;" @endif>
+                        <img src="{{ $news->thumbnail }}" height="100" width="150" id="img_temp_thumbnail" alt="">  <br /><br />
                         <a href="javascript:void(0)" class="btn btn-sm btn-danger" onclick="remove_image_thumbnail()">Remove Image</a>
                     </div>
                 </div>
@@ -377,9 +381,9 @@
 
 
                 <div class="form-group">
-                    <label class="d-block">Display @if (Article::has_featured_limit()) (Max Featured: {{ Article::has_featured_limit() }}) @endif</label>
+                    <label class="d-block">Display @if (\App\Models\News::featured_limit()) (Max Featured: {{ \App\Models\News::featured_limit() }}) @endif</label>
                     <div class="custom-control custom-switch @error('is_featured') is-invalid @enderror">
-                        <input type="checkbox" class="custom-control-input" name="is_featured" {{ (old("is_featured",$news->is_featured) ? "checked":"") }} {{ (($news->is_featured == '1') ? "checked":"") }} id="customSwitch2"  @if ($news->is_featured != '1' && Article::cannot_create_featured_news()) disabled @endif>
+                        <input type="checkbox" class="custom-control-input" name="is_featured" {{ (old("is_featured",$news->is_featured) ? "checked":"") }} {{ (($news->is_featured == '1') ? "checked":"") }} id="customSwitch2"  @if ($news->is_featured != '1' && \App\Models\News::cannot_create_featured_news()) disabled @endif>
                         <label class="custom-control-label" for="customSwitch2">Featured</label>
                     </div>
                     @error('is_featured')
@@ -561,7 +565,7 @@
             $('#image_div').hide();
 
             let files = evt.target.files;
-            let maxSize = 1;
+            let maxSize = 5;
             let validateFileTypes = ["image/jpeg", "image/png"];
             let requiredWidth = "{{ env('NEWS_BANNER_WIDTH') }}";
             let requiredHeight =  "{{ env('NEWS_BANNER_HEIGHT') }}";
@@ -606,7 +610,7 @@
             $('#image_div_thumbnail').hide();
 
             let files = evt.target.files;
-            let maxSize = 1;
+            let maxSize = 5;
             let validateFileTypes = ["image/jpeg", "image/png"];
             let requiredWidth = "{{ env('NEWS_THUMBNAIL_WIDTH') }}";
             let requiredHeight =  "{{ env('NEWS_THUMBNAIL_HEIGHT') }}";

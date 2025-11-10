@@ -70,9 +70,15 @@ class UserController extends Controller
             'remember_token' => str_random(10)
         ]);
 
-        $user->send_reset_temporary_password_email();
+        try {
+            $user->send_reset_temporary_password_email();
+            $message = 'User created successfully. Activation email has been sent.';
+        } catch (\Exception $e) {
+            \Log::error('Failed to send user activation email: ' . $e->getMessage());
+            $message = 'User created successfully, but email could not be sent. Please check mail configuration.';
+        }
 
-        return redirect()->route('users.index')->with('success', 'Pending for activation. Please remind the user to check the email and activate the account.');
+        return redirect()->route('users.index')->with('success', $message);
     //    }
     }
 
@@ -249,9 +255,16 @@ class UserController extends Controller
         $requestData['department_id'] = json_encode($arr_departments);
 
         $user = User::create($requestData);
-        $user->send_reset_temporary_password_email();
+        
+        try {
+            $user->send_reset_temporary_password_email();
+            $message = 'Member created successfully. Activation email has been sent.';
+        } catch (\Exception $e) {
+            \Log::error('Failed to send member activation email: ' . $e->getMessage());
+            $message = 'Member created successfully, but email could not be sent. Please check mail configuration.';
+        }
 
-        return redirect()->route('members.index')->with('success', 'Pending for activation. Please remind the member to check the email and activate the account.');
+        return redirect()->route('members.index')->with('success', $message);
     }
 
 }

@@ -119,7 +119,7 @@
             <ul>
                 <li @if (request()->routeIs('role*')) class="active" @endif><a href="{{ route('role.index') }}">Roles</a></li>
                 <li @if (request()->routeIs('access*')) class="active" @endif><a href="{{ route('access.index') }}">Access Rights</a></li>
-                <li @if (request()->routeIs('permission*')) class="active" @endif><a href="">Permissions</a></li>
+                <li @if (request()->routeIs('permission*')) class="active" @endif><a href="{{ route('permission.index') }}">Permissions</a></li>
             </ul>
         </li>
     @endif

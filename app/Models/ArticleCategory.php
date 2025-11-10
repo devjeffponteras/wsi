@@ -31,6 +31,12 @@ class ArticleCategory extends Model
         return $this->articles->count();
     }
 
+    public function get_total_news()
+    {
+        // Use relationship count query to avoid loading all models unnecessarily
+        return $this->news()->count();
+    }
+
 
 
 

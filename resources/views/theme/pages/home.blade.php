@@ -67,6 +67,24 @@
             word-break: break-word;
         }
 
+        /* Prevent page jump when testimonials slide changes */
+        .testimonials-swiper {
+            min-height: 220px; /* keep a stable container height */
+        }
+        .testimonials-swiper .swiper-wrapper {
+            align-items: stretch; /* ensure slides fill the same height */
+        }
+        .testimonials-swiper .swiper-slide {
+            height: auto; /* allow content to flow but within fixed container */
+        }
+        .testimonials-swiper .testimonial,
+        .testimonials-swiper .testi-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* vertically center text within the fixed height */
+        }
+
         .featured-article-title {
             margin-bottom: 0;
         }
@@ -172,7 +190,7 @@
     $contents = $page->contents;
 
 // LATEST NEWS
-    $featuredArticles = Article::where('is_featured', 1)->where('status', 'Published')->skip(0)->take(3)->get();
+    $featuredArticles = \App\Models\News::where('is_featured', 1)->where('status', 'Published')->skip(0)->take(3)->get();
     if($featuredArticles->count()) {
 
         $featuredArticlesHTML = '';
@@ -180,13 +198,13 @@
         $prefooter = asset('theme/images/pre-footer.jpg');
 
         foreach ($featuredArticles as $index => $article) {
-            $imageUrl = (empty($article->thumbnail_url)) ? asset('theme/images/misc/no-image.jpg') : $article->thumbnail_url;
+            $imageUrl = (empty($article->thumbnail_image)) ? asset('theme/images/misc/no-image.jpg') : $article->thumbnail;
 
 
             $featuredArticlesHTML .= '
 
                 <div class="slide" data-thumb="'. $imageUrl .'">
-                    <a href="'. $article->get_url() .'" class="d-block position-relative">
+                    <div class="d-block position-relative">
                         <div class="row">
                             <div class="col-md-6 half-one position-default">
                                 <div class="floating-panel">
@@ -197,15 +215,15 @@
                                 </div>
                             </div>
                             <div class="col-md-6 p-5">
-                                <img class="rounded-corners" src="'. $imageUrl .'" alt="modair">
+                                <img class="rounded-corners" src="'. $imageUrl .'" alt="'. htmlspecialchars($article->name) .'">
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
 
                 ';
 
-            if (Article::has_featured_limit() && $index >= env('FEATURED_NEWS_LIMIT')) {
+            if (\App\Models\News::has_featured_limit() && $index >= env('FEATURED_NEWS_LIMIT')) {
                 break;
             }
         }
@@ -361,6 +379,37 @@
                         <div class="swiper-slide" data-gjs-type="swiper-slide">
                             <img data-gjs-type="image" src="images/clients/logo53.jpg" alt="Client logo">
                         </div>
+                            <!-- Duplicate set for seamless loop -->
+                            <div class="swiper-slide" data-gjs-type="swiper-slide">
+                                <img data-gjs-type="image" src="images/clients/logo37.jpg" alt="Client logo">
+                            </div>
+                            <div class="swiper-slide" data-gjs-type="swiper-slide">
+                                <img data-gjs-type="image" src="images/clients/logo32.jpg" alt="Client logo">
+                            </div>
+                            <div class="swiper-slide" data-gjs-type="swiper-slide">
+                                <img data-gjs-type="image" src="images/clients/logo4.jpg" alt="Client logo">
+                            </div>
+                            <div class="swiper-slide" data-gjs-type="swiper-slide">
+                                <img data-gjs-type="image" src="images/clients/logo3.jpg" alt="Client logo">
+                            </div>
+                            <div class="swiper-slide" data-gjs-type="swiper-slide">
+                                <img data-gjs-type="image" src="images/clients/logo13.jpg" alt="Client logo">
+                            </div>
+                            <div class="swiper-slide" data-gjs-type="swiper-slide">
+                                <img data-gjs-type="image" src="images/clients/logo8.jpg" alt="Client logo">
+                            </div>
+                            <div class="swiper-slide" data-gjs-type="swiper-slide">
+                                <img data-gjs-type="image" src="images/clients/logo6.jpg" alt="Client logo">
+                            </div>
+                            <div class="swiper-slide" data-gjs-type="swiper-slide">
+                                <img data-gjs-type="image" src="images/clients/logo21.jpg" alt="Client logo">
+                            </div>
+                            <div class="swiper-slide" data-gjs-type="swiper-slide">
+                                <img data-gjs-type="image" src="images/clients/logo63.jpg" alt="Client logo">
+                            </div>
+                            <div class="swiper-slide" data-gjs-type="swiper-slide">
+                                <img data-gjs-type="image" src="images/clients/logo53.jpg" alt="Client logo">
+                            </div>
                     </div>
                     <div class="swiper-button-prev" data-gjs-type="swiper-prev" tabindex="0" role="button" aria-label="Previous slide" aria-disabled="false"></div>
                     <div class="swiper-button-next" data-gjs-type="swiper-next" tabindex="0" role="button" aria-label="Next slide" aria-disabled="false"></div>
@@ -627,7 +676,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>  --}}
 @endsection
 
 
@@ -644,13 +693,17 @@
 
         const logoSwiper = new Swiper('#logo-swiper', {
             loop: true,
-            speed: 600,
+            speed: 2000,
             spaceBetween: 75,
-            slidesPerView: 'auto',
+            slidesPerView: 5,
+            centeredSlides: false,
             autoplay: {
-                delay: 3000,
-                disableOnInteraction: false
+                delay: 1,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: false,
+                waitForTransition: false
             },
+            allowTouchMove: true,
             navigation: {
                 nextEl: '#logo-swiper .swiper-button-next',
                 prevEl: '#logo-swiper .swiper-button-prev'
@@ -660,11 +713,12 @@
                 clickable: true
             },
             breakpoints: {
-                480: { slidesPerView: 'auto' },
-                768: { slidesPerView: 'auto' },
-                992: { slidesPerView: 'auto' },
-                1200: { slidesPerView: 'auto' },
-                1400: { slidesPerView: 'auto' }
+                320: { slidesPerView: 2, spaceBetween: 30 },
+                480: { slidesPerView: 3, spaceBetween: 40 },
+                768: { slidesPerView: 4, spaceBetween: 50 },
+                992: { slidesPerView: 5, spaceBetween: 60 },
+                1200: { slidesPerView: 6, spaceBetween: 70 },
+                1400: { slidesPerView: 7, spaceBetween: 75 }
             },
             loopedSlides: 10,
             loopAdditionalSlides: 10,
@@ -698,7 +752,7 @@
 
         const testimonialsSwiper = new Swiper('#testimonials-swiper', {
             loop: true,
-            autoHeight: true,
+            autoHeight: false, // keep height stable to avoid page shifting
             speed: 600,
             spaceBetween: 24,
             slidesPerView: 1,

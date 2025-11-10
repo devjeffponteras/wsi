@@ -560,6 +560,10 @@
                     <article class="article-main-content">
                         <!-- Article Body -->
 
+                        @if(!empty($news->thumbnail_image))
+                            <img src="{{ $news->thumbnail }}" alt="{{ $news->name }} thumbnail" class="article-thumbnail-image">
+                        @endif
+
                         <div class="article-body">
                             {!! $news->contents !!}
                         </div>
@@ -605,6 +609,13 @@
                                 <div class="latest-articles">
                                     @foreach($latestArticles as $article)
                                         <article class="latest-article-item">
+                                            <div class="latest-article-image">
+                                                @if(!empty($article->thumbnail_image))
+                                                    <img src="{{ $article->thumbnail }}" alt="{{ $article->name }} thumbnail">
+                                                @else
+                                                    <img src="{{ asset('theme/images/banners/image1.jpg') }}" alt="{{ $article->name }} thumbnail">
+                                                @endif
+                                            </div>
                                             <div class="latest-article-content">
                                                 <h5><a href="{{ url('/news/' . $article->slug) }}">{{ $article->name }}</a></h5>
                                                 <time class="latest-article-date">{{ \Carbon\Carbon::parse($article->date)->format('M j, Y') }}</time>

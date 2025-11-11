@@ -29,8 +29,8 @@ class SitemapController extends Controller
         ->orderBy('id', 'asc')
         ->get();
 
-    // Load article categories with their published articlesm 
-    $articleCategories = ArticleCategory::with('articles')->get();
+    // Load article categories with their published articles
+    $articleCategories = ArticleCategory::published()->with('articles')->get();
 
     // Return the sitemap view with the collected data
     return view('theme.sitemap', compact(
@@ -124,7 +124,7 @@ class SitemapController extends Controller
             ->with('subPages')
             ->get();
 
-        $articleCategories = ArticleCategory::with('articles')->get();
+    $articleCategories = ArticleCategory::published()->with('articles')->get();
 
         return response()
             ->view('theme.sitemap-xml', compact('customPages', 'articleCategories'))

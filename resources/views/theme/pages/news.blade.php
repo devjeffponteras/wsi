@@ -560,6 +560,22 @@
 </style>
 @endsection
 
+@section('after-banner')
+@empty($news)
+    <!-- Navigation Tabs -->
+    <nav class="newsroom-nav">
+        <div class="newsroom-nav-container">
+            <ul class="newsroom-nav-list">
+                <li class="newsroom-nav-item active" data-target="all-news">All News</li>
+                @foreach($categories as $category)
+                    <li class="newsroom-nav-item" data-target="{{ $category->slug }}">{{ $category->name }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </nav>
+@endempty
+@endsection
+
 @section('content')
 @isset($news)
     @if(!empty($news->styles))
@@ -1189,18 +1205,6 @@
 @else
 <!-- Main Newsroom Listing View -->
 <div class="newsroom-layout">
-
-    <!-- Navigation Tabs -->
-    <nav class="newsroom-nav">
-        <div class="newsroom-nav-container">
-            <ul class="newsroom-nav-list">
-                <li class="newsroom-nav-item active" data-target="all-news">All News</li>
-                @foreach($categories as $category)
-                    <li class="newsroom-nav-item" data-target="{{ $category->slug }}">{{ $category->name }}</li>
-                @endforeach
-            </ul>
-        </div>
-    </nav>
 
     <!-- Latest News Section -->
     <section id="all-news" class="media-section active">

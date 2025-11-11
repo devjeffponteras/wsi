@@ -62,11 +62,10 @@
                 <div class="form-group">
                     <label class="d-block">Category</label>
                     <select id="category_id" class="selectpicker mg-b-5 @error('category_id') is-invalid @enderror" name="category_id" data-style="btn btn-outline-light btn-md btn-block tx-left" title="- None -" data-width="100%">
-                        <option value="0" selected>- None -</option>
-                        @forelse($categories as $category)
-                            <option value="{{$category->id}}">{{strtoupper($category->name)}}</option>
-                        @empty
-                        @endforelse
+                        <option value="" {{ old('category_id') ? '' : 'selected' }}>- None -</option>
+                        @foreach($categories as $category)
+                            <option value="{{$category->id}}" {{ (string) old('category_id') === (string) $category->id ? 'selected' : '' }}>{{strtoupper($category->name)}}</option>
+                        @endforeach
                     </select>
                     @error('category_id')
                         <span class="text-danger">{{ $message }}</span>

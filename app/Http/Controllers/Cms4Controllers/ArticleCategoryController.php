@@ -10,6 +10,7 @@ use App\Helpers\ModelHelper;
 
 use App\Models\ArticleCategory;
 use App\Models\Permission;
+use Illuminate\Validation\Rule;
 
 class ArticleCategoryController extends Controller
 {
@@ -85,7 +86,7 @@ class ArticleCategoryController extends Controller
      */
     public function update(Request $request, ArticleCategory $newsCategory)
     {
-        $updateData = $this->validate_data($request);
+        $updateData = $this->validate_data($request, $newsCategory->id);
         if (strtolower($updateData['name']) != strtolower($newsCategory->name)) {
             $updateData['slug'] = ModelHelper::convert_to_slug(ArticleCategory::class, $updateData['name']);
         }
@@ -138,10 +139,20 @@ class ArticleCategoryController extends Controller
         return ModelHelper::convert_to_slug(ArticleCategory::class, $request->url);
     }
 
-    public function validate_data(Request $request)
+    public function validate_data(Request $request, ?int $ignoreId = null)
     {
         return $request->validate([
-            'name' => 'required|max:150',
+            'name' => [
+                'required',
+                'max:150',
+                Rule::unique('article_categories', 'name')
+                    ->ignore($ignoreId)
+                    ->whereNull('deleted_at'),
+            ],
+            'status' => [
+                'required',
+                Rule::in(['Published', 'Private']),
+            ],
         ]);
     }
 }

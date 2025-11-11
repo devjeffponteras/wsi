@@ -18,6 +18,22 @@ class NewsController extends Controller
     private $advanceSearchFields = ['teaser', 'is_featured', 'name', 'contents', 'status', 'meta_title', 'meta_keyword', 'meta_description', 'user_id', 'category_id', 'updated_at1', 'updated_at2'];
     private $sortFields = ['updated_at', 'name', 'is_featured'];
 
+    private function categoryOptions(?int $includeId = null)
+    {
+        return ArticleCategory::query()
+            ->where(function ($query) use ($includeId) {
+                $query->where('status', 'Published');
+
+                if ($includeId) {
+                    $query->orWhere('id', $includeId);
+                }
+            })
+            ->orderBy('name')
+            ->get()
+            ->unique('id')
+            ->values();
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -124,7 +140,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $categories = ArticleCategory::all();
+        $categories = $this->categoryOptions();
         return view('admin.cms4.news.create', compact('categories'));
     }
 
@@ -160,7 +176,7 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        $categories = ArticleCategory::all();
+        $categories = $this->categoryOptions($news->category_id);
         return view('admin.cms4.news.edit', compact('news', 'categories'));
     }
 

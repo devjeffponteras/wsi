@@ -34,10 +34,22 @@
                                 <div class="row row-sm">
                                     <div class="col-sm">
                                         <label class="tx-10 tx-uppercase tx-medium tx-spacing-1 mg-b-5 tx-color-03">Category Name <i class="tx-danger">*</i></label>
-                                        <input required type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="category_title" value="{{$newsCategory->name}}" @htmlValidationMessage({{__('standard.empty_all_field')}})>
+                                        <input required type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="category_title" value="{{ old('name', $newsCategory->name) }}" @htmlValidationMessage({{__('standard.empty_all_field')}})>
                                         @error('name')
                                             <span class="text-danger">{{ $message }}</span>
 										@enderror
+                                    </div>
+                                </div>
+                                <div class="row row-sm mg-t-20">
+                                    <div class="col-sm">
+                                        <label class="tx-10 tx-uppercase tx-medium tx-spacing-1 mg-b-5 tx-color-03">Status <i class="tx-danger">*</i></label>
+                                        <select name="status" class="form-control @error('status') is-invalid @enderror" required>
+                                            <option value="Published" {{ old('status', $newsCategory->status) === 'Published' ? 'selected' : '' }}>Published</option>
+                                            <option value="Private" {{ old('status', $newsCategory->status) === 'Private' ? 'selected' : '' }}>Private</option>
+                                        </select>
+                                        @error('status')
+                                            <span class="text-danger">{{ $message }}</span>
+									@enderror
                                     </div>
                                 </div>
                             </div>

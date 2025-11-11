@@ -13,7 +13,7 @@ class ArticleCategory extends Model
     use SoftDeletes;
 
     protected $table = 'article_categories';
-    protected $fillable = ['name', 'slug', 'user_id'];
+    protected $fillable = ['name', 'slug', 'status', 'user_id'];
     public $timestamps = true;
 
     public function articles()
@@ -24,6 +24,11 @@ class ArticleCategory extends Model
     public function news()
     {
         return $this->hasMany(\App\Models\News::class, 'category_id', 'id');
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'Published');
     }
 
     public function get_total_articles()
@@ -49,6 +54,7 @@ class ArticleCategory extends Model
     static $unrelatedFields = ['id', 'slug', 'created_at', 'updated_at', 'deleted_at'];
     static $logName = [
         'name' => 'name',
+        'status' => 'status',
     ];
     // END Need to change every model
 

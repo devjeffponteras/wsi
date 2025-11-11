@@ -38,8 +38,20 @@
                         <div class="col-sm-6">
                             <div class="form-group mg-b-20">
                                 <label class="mg-b-5 tx-color-03">Category Name <i class="tx-danger">*</i></label>
-                                <input required type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="category_title" @htmlValidationMessage({{__('standard.empty_all_field')}})>
+                                <input required type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="category_title" value="{{ old('name') }}" @htmlValidationMessage({{__('standard.empty_all_field')}})>
                                 @error('name')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group mg-b-20">
+                                <label class="mg-b-5 tx-color-03">Status <i class="tx-danger">*</i></label>
+                                <select name="status" class="form-control @error('status') is-invalid @enderror" required>
+                                    <option value="Published" {{ old('status', 'Published') === 'Published' ? 'selected' : '' }}>Published</option>
+                                    <option value="Private" {{ old('status') === 'Private' ? 'selected' : '' }}>Private</option>
+                                </select>
+                                @error('status')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

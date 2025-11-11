@@ -82,18 +82,20 @@ class FrontController extends Controller
             $page->name = 'Privacy Policy & Terms of Use';
         }
 
-        if (empty($page->image_url)) {
-            $page->image_url = asset('theme/images/banners/no-banner.jpg');
-        }
+
 
         $breadcrumb = $this->breadcrumb($page);
+
+        $forcePageBanner = true;
+        $forceHomeBanner = false;
 
         return view('theme.pages.privacy-terms', [
             'page' => $page,
             'footer' => $footer,
             'breadcrumb' => $breadcrumb,
             'content' => $content,
-            'forcePageBanner' => true,
+            'forcePageBanner' => $forcePageBanner,
+            'forceHomeBanner' => $forceHomeBanner,
         ]);
     }
 
@@ -370,26 +372,100 @@ class FrontController extends Controller
         public function aboutus()
     {
         \Log::info('Loading about page with partials: theme.pages.about-history, theme.pages.about-company, theme.pages.about-mission-vision');
-        $page = new Page();
-        $page->name = 'About Us';
-        $page->slug = 'about-us';
+
+        $pageRecord = Page::with(['album.banners' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }])
+            ->where(function ($query) {
+                $query->where('slug', 'about-us')->orWhere('name', 'About Us');
+            })
+            ->first();
+
+        if ($pageRecord) {
+            $page = $pageRecord;
+            if (empty($page->slug)) {
+                $page->slug = 'about-us';
+            }
+            if (empty($page->name)) {
+                $page->name = 'About Us';
+            }
+        } else {
+            $page = new Page();
+            $page->name = 'About Us';
+            $page->slug = 'about-us';
+        }
+
+        $forceHomeBanner = false;
+        $forcePageBanner = false;
+
+        $hasBanners = $page && $page->album && $page->album->banners && $page->album->banners->count() > 0;
+
+        if ($hasBanners) {
+            $forceHomeBanner = true;
+        } else {
+            $forcePageBanner = true;
+            if (empty($page->image_url)) {
+                $page->image_url = asset('theme/images/banners/no-banner.jpg');
+            }
+        }
+
         $breadcrumb = $this->breadcrumb($page);
-        $content = Page::where('name', 'About Us')->first();
+        $content = $pageRecord ?? Page::where('name', 'About Us')->first();
+        if (!$content) {
+            $content = new Page();
+        }
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
-        return view('theme.pages.about-us', compact('content','footer', 'page', 'breadcrumb'));
+
+        return view('theme.pages.about-us', compact('content','footer', 'page', 'breadcrumb', 'forceHomeBanner', 'forcePageBanner'));
     }
 
 
       public function services()
     {
         \Log::info('Loading about page with partials: theme.pages.about-history, theme.pages.about-company, theme.pages.about-mission-vision');
-        $page = new Page();
-        $page->name = 'Services';
-        $page->slug = 'services';
-        $breadcrumb = $this->breadcrumb(page: $page);
-         $content = Page::where('name', 'Services')->first();
+        $pageRecord = Page::with(['album.banners' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }])
+            ->where(function ($query) {
+                $query->where('slug', 'services')->orWhere('name', 'Services');
+            })
+            ->first();
+
+        if ($pageRecord) {
+            $page = $pageRecord;
+            if (empty($page->slug)) {
+                $page->slug = 'services';
+            }
+            if (empty($page->name)) {
+                $page->name = 'Services';
+            }
+        } else {
+            $page = new Page();
+            $page->name = 'Services';
+            $page->slug = 'services';
+        }
+
+        $forceHomeBanner = false;
+        $forcePageBanner = false;
+
+        $hasBanners = $page && $page->album && $page->album->banners && $page->album->banners->count() > 0;
+
+        if ($hasBanners) {
+            $forceHomeBanner = true;
+        } else {
+            $forcePageBanner = true;
+            if (empty($page->image_url)) {
+                $page->image_url = asset('theme/images/banners/no-banner.jpg');
+            }
+        }
+
+        $breadcrumb = $this->breadcrumb($page);
+        $content = $pageRecord ?? Page::where('name', 'Services')->first();
+        if (!$content) {
+            $content = new Page();
+        }
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
-        return view('theme.pages.services', compact('content','footer', 'page', 'breadcrumb'));
+        return view('theme.pages.services', compact('content','footer', 'page', 'breadcrumb', 'forceHomeBanner', 'forcePageBanner'));
     }
         public function services_domain()
     {
@@ -445,9 +521,17 @@ class FrontController extends Controller
      public function news()
     {
         \Log::info('Loading news page with database articles');
-        $page = new Page();
-        $page->name = 'News';
-        $page->slug = 'news';
+        $page = Page::with(['album.banners' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }])
+            ->where('slug', 'news')
+            ->first();
+
+        if (!$page) {
+            $page = new Page();
+            $page->name = 'News';
+            $page->slug = 'news';
+        }
         $breadcrumb = $this->breadcrumb($page);
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
 
@@ -470,10 +554,13 @@ class FrontController extends Controller
 
         $quickLinkArticles = \App\Models\News::where('status', 'Published')
             ->with('category')
-            ->latest('date')
-            ->limit(4)
-            ->offset(1)
-            ->get();
+            ->orderByDesc('date')
+            ->skip(1)
+            ->take(8)
+            ->get()
+            ->groupBy(function ($article) {
+                return \Carbon\Carbon::parse($article->date)->format('F j, Y');
+            });
 
         $categories = \App\Models\ArticleCategory::with(['news' => function($query) {
                 $query->where('status', 'Published');

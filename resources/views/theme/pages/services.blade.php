@@ -1,5 +1,23 @@
 @extends('theme.main')
 
+@php
+    $forceHomeBanner = $forceHomeBanner ?? false;
+    $forcePageBanner = $forcePageBanner ?? false;
+
+    if (!$forceHomeBanner && !$forcePageBanner) {
+        if (isset($page) && $page->album && $page->album->banners && $page->album->banners->count() > 0) {
+            $forceHomeBanner = true;
+        } else {
+            $forcePageBanner = true;
+            if (isset($page) && empty($page->image_url)) {
+                $page->image_url = asset('theme/images/banners/no-banner.jpg');
+            }
+        }
+    } elseif ($forcePageBanner && isset($page) && empty($page->image_url)) {
+        $page->image_url = asset('theme/images/banners/no-banner.jpg');
+    }
+@endphp
+
 @section('pagecss')
 <link rel="stylesheet" href="{{ asset('theme/css/newstyle.css') }}" type="text/css" />
 <style>
@@ -211,10 +229,10 @@
 
 
 .feature-cards .card-animate {
-    min-height: 360px; 
+    min-height: 360px;
 }
 .solution-card {
-    min-height: 620px; 
+    min-height: 620px;
     display: flex;
     flex-direction: column;
 }
@@ -226,7 +244,6 @@
 @endsection
 
 @section('content')
-<div class="flex flex-col min-h-screen">
     <!-- Hero Section -->
 
     {!! $content->contents !!}
@@ -317,7 +334,7 @@
         </div>
         <img class="position-absolute" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); bottom: 0; left: 10%;width: 770px;">
     </section>
-</div>
+
 @endsection
 
 @section('pagejs')

@@ -404,10 +404,13 @@
             });
 
             $('#updateForm').on('submit', function () {
+                // On submit, remove the inputs for the type that's not selected
                 if ($('#banner_type').is(':checked')) {
-                    $('#banners').html('');
+                    // Video mode - remove image inputs
+                    $('#banners .sorted').remove();
                 } else {
-                    $('#videos').html('');
+                    // Image mode - remove video inputs
+                    $('#videos .sorted').remove();
                 }
             });
 
@@ -434,20 +437,26 @@
 
             $("#banner_type").change(function() {
                 if(this.checked) {
+                    // Switching to Video mode
                     $('#banner_type_label').html('Video');
                     $('#imageDiv').hide();
                     $('#videoDiv').show();
                     $('#videoList').show();
                     $('#imageList').hide();
-                    $('#banners').html('');
+                    // Hide image cards but don't remove them
+                    $('#imageList .sorted').hide();
                 }
                 else{
+                    // Switching to Image mode
                     $('#videoDiv').hide();
                     $('#imageDiv').show();
                     $('#videoList').hide();
                     $('#imageList').show();
                     $('#banner_type_label').html('Image');
-                    $('#videos').html('');
+                    // Show image cards again
+                    $('#imageList .sorted').show();
+                    // Hide video cards but don't remove them
+                    $('#videoList .sorted').hide();
                 }
             });
 

@@ -35,7 +35,6 @@
 										<source src="{{ $resolved }}" type="{{ $mime }}">
 									</video>
 									<div class="banner-caption">
-										{{ $banner->url }}
 										<div class="container">
 											<div class="row align-items-center">
 												<div class="col-lg-12">
@@ -69,7 +68,6 @@
 									@endphp
 									<img src="{{ $resolved }}" alt="{{ $banner->title }}">
 									<div class="banner-caption">
-										{{ $banner->url }}
 										<div class="container">
 											<div class="row align-items-center">
 												<div class="col-lg-12">

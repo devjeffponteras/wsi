@@ -7,7 +7,7 @@
     .newsroom-container {
         max-width: 1400px;
         margin: 0 auto;
-        padding: 0 20px;
+
     }
 
     /* Hero Section */
@@ -15,47 +15,86 @@
         background: linear-gradient(135deg, rgba(30, 58, 138, 0.8) 0%, rgba(59, 130, 246, 0.8) 100%),
                     url('{{ asset("theme/images/banners/image1.jpg") }}') center/cover no-repeat;
         color: white;
-        min-height: 70vh;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .widget-toggle {
+        border: none;
+        background: transparent;
+        color: #1e40af;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        margin-top: -30px;
-        padding-top: 0;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
     }
 
-    .newsroom-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.3);
-        z-index: 1;
+    .widget-toggle:hover,
+    .widget-toggle:focus-visible {
+        background: rgba(30, 64, 175, 0.1);
+        color: #1e3a8a;
+        outline: none;
     }
 
-    /* Video Banner Option */
-    .newsroom-hero-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 0;
+    .widget-header .widget-title {
+        flex: 1;
+        text-align: center;
+        margin: 0;
     }
 
-    .newsroom-hero-video-fallback {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 0;
+    .collapsible-wrapper {
+        overflow: hidden;
+        position: relative;
+    }
+
+    .collapsible-inner {
+        transition: transform 0.26s ease, opacity 0.26s ease;
+        transform: translateX(0);
+        opacity: 1;
+        will-change: transform, opacity;
+    }
+
+    .collapsible-wrapper.collapsed .collapsible-inner {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+
+    .sidebar-widget.collapsible-widget {
+        transition: padding 0.26s ease, background 0.26s ease, box-shadow 0.26s ease, width 0.26s ease, max-width 0.26s ease;
+    }
+
+    .sidebar-widget.collapsible-widget.collapsed {
+        padding: 6px;
+        background: transparent;
+        box-shadow: none;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .sidebar-widget.collapsible-widget.collapsed .widget-header {
+        margin-bottom: 0;
+        justify-content: flex-end;
+        gap: 6px;
+    }
+
+    .sidebar-widget.collapsible-widget.collapsed .widget-title {
+        display: none;
+    }
+
+    .sidebar-widget.collapsible-widget.collapsed .widget-toggle {
+        background: #ffffff;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.15);
+    }
+
+    .sidebar-widget.collapsible-widget.collapsed .widget-toggle:hover,
+    .sidebar-widget.collapsible-widget.collapsed .widget-toggle:focus-visible {
+        background: #e2e8f0;
     }
 
     .newsroom-hero-content {
@@ -238,6 +277,25 @@
         border-bottom: 2px solid #e2e8f0;
     }
 
+    .quick-link-group {
+        margin-bottom: 20px;
+    }
+
+    .quick-link-date-heading {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #1e3a8a;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .quick-link-list {
+        display: flex;
+        flex-direction: column;
+    }
+
     .quick-link-item {
         display: block;
         padding: 15px 0;
@@ -253,13 +311,6 @@
 
     .quick-link-item:hover {
         color: #1e40af;
-    }
-
-    .quick-link-date {
-        font-size: 0.8rem;
-        color: #9ca3af;
-        display: block;
-        margin-bottom: 5px;
     }
 
     .quick-link-title {
@@ -511,6 +562,11 @@
 
 @section('content')
 @isset($news)
+    @if(!empty($news->styles))
+        <style>
+            {!! $news->styles !!}
+        </style>
+    @endif
 <!-- Individual News Article View -->
 <div class="article-detail-layout">
     <!-- Article Hero Section -->
@@ -555,14 +611,10 @@
     <!-- Article Content -->
     <section class="article-content-section">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
+            <div class="row article-layout-row">
+                <div class="col-lg-8 article-main-col">
                     <article class="article-main-content">
                         <!-- Article Body -->
-
-                        @if(!empty($news->thumbnail_image))
-                            <img src="{{ $news->thumbnail }}" alt="{{ $news->name }} thumbnail" class="article-thumbnail-image">
-                        @endif
 
                         <div class="article-body">
                             {!! $news->contents !!}
@@ -600,13 +652,21 @@
                 </div>
 
                 <!-- Sidebar -->
-                <div class="col-lg-4">
+                <div class="col-lg-4 article-sidebar-col">
                     <aside class="article-sidebar">
                         <!-- Latest Articles -->
                         @if(isset($latestArticles) && $latestArticles->count() > 0)
-                            <div class="sidebar-widget">
-                                <h4 class="widget-title">Latest News</h4>
-                                <div class="latest-articles">
+                            <div class="sidebar-widget collapsible-widget">
+                                <div class="widget-header">
+                                    <button class="widget-toggle" type="button" aria-expanded="true" aria-controls="latest-news-list" data-expanded-icon="fa-chevron-right" data-collapsed-icon="fa-chevron-left">
+                                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                                        <span class="visually-hidden">Toggle latest news</span>
+                                    </button>
+                                    <h4 class="widget-title">Latest News</h4>
+                                </div>
+                                <div class="collapsible-wrapper">
+                                    <div class="collapsible-inner">
+                                        <div id="latest-news-list" class="latest-articles collapsible-content">
                                     @foreach($latestArticles as $article)
                                         <article class="latest-article-item">
                                             <div class="latest-article-image">
@@ -622,16 +682,16 @@
                                             </div>
                                         </article>
                                     @endforeach
+                                        </div>
+                                        <div class="latest-news-footer">
+                                            <a href="{{ url('/news') }}" class="btn btn-outline-primary btn-block">
+                                                <i class="fas fa-arrow-left"></i> Back to News
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endif
-
-                        <!-- Back to Newsroom -->
-                        <div class="sidebar-widget">
-                            <a href="{{ url('/news') }}" class="btn btn-outline-primary btn-block">
-                                <i class="fas fa-arrow-left"></i> Back to News
-                            </a>
-                        </div>
                     </aside>
                 </div>
             </div>
@@ -643,6 +703,11 @@
 <style>
     .article-detail-layout {
         margin-top: -30px;
+    }
+
+    .article-detail-layout .container {
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
     .article-hero {
@@ -874,8 +939,19 @@
         text-decoration: none;
     }
 
+    .article-main-col,
+    .article-sidebar-col {
+        transition: all 0.3s ease;
+    }
+
+    .article-sidebar-col {
+        display: flex;
+    }
+
     .article-sidebar {
         padding-left: 40px;
+        padding-right: 0;
+        width: 100%;
     }
 
     .sidebar-widget {
@@ -886,6 +962,38 @@
         box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
+    .sidebar-widget.collapsible-widget {
+        transition: padding 0.26s ease, background 0.26s ease, box-shadow 0.26s ease, width 0.26s ease, max-width 0.26s ease;
+    }
+
+    .sidebar-widget.collapsible-widget.collapsed {
+        padding: 6px;
+        background: transparent;
+        box-shadow: none;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .sidebar-widget.collapsible-widget.collapsed .widget-header {
+        margin-bottom: 0;
+        gap: 6px;
+        justify-content: flex-end;
+    }
+
+    .sidebar-widget.collapsible-widget.collapsed .widget-title {
+        display: none;
+    }
+
+    .sidebar-widget.collapsible-widget.collapsed .widget-toggle {
+        background: #ffffff;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.15);
+    }
+
+    .sidebar-widget.collapsible-widget.collapsed .widget-toggle:hover,
+    .sidebar-widget.collapsible-widget.collapsed .widget-toggle:focus-visible {
+        background: #e2e8f0;
+    }
+
     .widget-title {
         color: #1e40af;
         font-size: 1.25rem;
@@ -893,6 +1001,57 @@
         margin-bottom: 20px;
         padding-bottom: 10px;
         border-bottom: 2px solid #e5e7eb;
+    }
+
+    .sidebar-widget.collapsible-widget .widget-title {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .widget-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .widget-toggle {
+        border: none;
+        background: transparent;
+        color: #1e40af;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .widget-toggle:hover,
+    .widget-toggle:focus-visible {
+        background: rgba(30, 64, 175, 0.1);
+        color: #1e3a8a;
+        outline: none;
+    }
+
+    .widget-header .widget-title {
+        flex: 1;
+        text-align: center;
+        margin: 0;
+    }
+
+    .collapsible-content {
+        transition: opacity 0.25s ease;
+        opacity: 1;
+    }
+
+    .collapsible-content[hidden] {
+        display: none;
+        opacity: 0;
     }
 
     .latest-article-item {
@@ -907,6 +1066,34 @@
         margin-bottom: 0;
         padding-bottom: 0;
         border-bottom: none;
+    }
+
+    .latest-news-footer {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .latest-news-footer .btn {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .latest-news-footer {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .latest-news-footer .btn {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
     }
 
     .latest-article-image {
@@ -944,7 +1131,36 @@
         color: #6b7280;
     }
 
+    @media (min-width: 992px) {
+        .article-layout-row.sidebar-collapsed {
+            flex-wrap: nowrap;
+            align-items: flex-start;
+        }
+
+        .article-layout-row.sidebar-collapsed .article-main-col {
+            flex: 1 1 calc(100% - 80px);
+            max-width: calc(100% - 80px);
+        }
+
+        .article-layout-row.sidebar-collapsed .article-sidebar-col {
+            max-width: 80px;
+            flex: 0 0 80px;
+            padding-left: 0;
+            padding-right: 0;
+            justify-content: flex-end;
+        }
+
+        .article-layout-row.sidebar-collapsed .article-sidebar {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
     @media (max-width: 992px) {
+        .article-sidebar-col {
+            display: block;
+        }
+
         .article-sidebar {
             padding-left: 0;
             margin-top: 40px;
@@ -973,15 +1189,6 @@
 @else
 <!-- Main Newsroom Listing View -->
 <div class="newsroom-layout">
-    <!-- Newsroom Hero Section -->
-    <section class="newsroom-hero">
-        <!-- Video Background -->
-        <video class="newsroom-hero-video" autoplay loop muted playsinline poster="{{ asset('theme/images/banners/videos/explore-poster.jpg') }}">
-            <source src="{{ asset('theme/images/banners/videos/webfocus.webm') }}" type="video/webm">
-            <source src="{{ asset('images/videoplayback.mp4') }}" type="video/mp4">            <!-- Fallback image if video fails -->
-            <img src="{{ asset('theme/images/banners/image1.jpg') }}" alt="WebFocus Newsroom Banner" class="newsroom-hero-video-fallback">
-        </video>
-    </section>
 
     <!-- Navigation Tabs -->
     <nav class="newsroom-nav">
@@ -1045,23 +1252,37 @@
                     <aside class="quick-links">
                         <h3>Quick Links</h3>
                         @if(isset($quickLinkArticles) && $quickLinkArticles->count() > 0)
-                            @foreach($quickLinkArticles as $article)
-                                <a href="{{ url('/news/' . $article->slug) }}" class="quick-link-item">
-                                    <span class="quick-link-date">{{ \Carbon\Carbon::parse($article->date)->format('F j, Y') }}</span>
-                                    <span class="quick-link-title">{{ $article->name }}</span>
-                                </a>
+                            @foreach($quickLinkArticles as $publishedDate => $articlesByDate)
+                                <div class="quick-link-group">
+                                    <span class="quick-link-date-heading">{{ $publishedDate }}</span>
+                                    <div class="quick-link-list">
+                                        @foreach($articlesByDate as $article)
+                                            <a href="{{ url('/news/' . $article->slug) }}" class="quick-link-item">
+                                                <span class="quick-link-title">{{ $article->name }}</span>
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @endforeach
                         @else
                             @php
-                                $quickLinks = \App\Models\News::where('status', 'Published')->latest('date')->take(4)->get();
+                                $quickLinks = \App\Models\News::where('status', 'Published')->orderByDesc('date')->take(6)->get()->groupBy(function ($article) {
+                                    return \Carbon\Carbon::parse($article->date)->format('F j, Y');
+                                });
                             @endphp
-                            @forelse($quickLinks as $quickLink)
-                            <a href="{{ url('/news/' . $quickLink->slug) }}" class="quick-link-item">
-                                <span class="quick-link-date">{{ \Carbon\Carbon::parse($quickLink->date)->format('F j, Y') }}</span>
-                                <span class="quick-link-title">{{ $quickLink->name }}</span>
-                            </a>
+                            @forelse($quickLinks as $publishedDate => $articlesByDate)
+                                <div class="quick-link-group">
+                                    <span class="quick-link-date-heading">{{ $publishedDate }}</span>
+                                    <div class="quick-link-list">
+                                        @foreach($articlesByDate as $quickLink)
+                                            <a href="{{ url('/news/' . $quickLink->slug) }}" class="quick-link-item">
+                                                <span class="quick-link-title">{{ $quickLink->name }}</span>
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @empty
-                            <p>No recent articles available.</p>
+                                <p>No recent articles available.</p>
                             @endforelse
                         @endif
                     </aside>
@@ -1336,6 +1557,128 @@ document.addEventListener('DOMContentLoaded', function() {
         card.style.transform = 'translateY(20px)';
         card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(card);
+    });
+
+    const COLLAPSE_DURATION = 260;
+
+    const toggleGroups = {};
+
+    document.querySelectorAll('.widget-toggle').forEach(button => {
+        const targetId = button.getAttribute('aria-controls');
+        if (!targetId) {
+            return;
+        }
+        if (!toggleGroups[targetId]) {
+            toggleGroups[targetId] = [];
+        }
+        toggleGroups[targetId].push(button);
+    });
+
+    Object.entries(toggleGroups).forEach(([targetId, buttons]) => {
+        const content = document.getElementById(targetId);
+        if (!content) {
+            return;
+        }
+
+    const wrapper = content.closest('.collapsible-wrapper');
+    const inner = wrapper ? wrapper.querySelector('.collapsible-inner') : null;
+    const widget = content.closest('.collapsible-widget');
+    const sidebarCol = widget ? widget.closest('.article-sidebar-col') : null;
+    const layoutRow = sidebarCol ? sidebarCol.closest('.article-layout-row') : content.closest('.article-layout-row');
+
+        const updateIconForButton = (btn, expanded) => {
+            const icon = btn.querySelector('i');
+            if (!icon) {
+                return;
+            }
+            const expandedIcon = btn.dataset.expandedIcon;
+            const collapsedIcon = btn.dataset.collapsedIcon;
+            if (expandedIcon && collapsedIcon) {
+                icon.classList.remove(expanded ? collapsedIcon : expandedIcon);
+                icon.classList.add(expanded ? expandedIcon : collapsedIcon);
+            }
+        };
+
+        const setExpandedState = (expanded) => {
+            const wasCollapsed = wrapper ? wrapper.classList.contains('collapsed') : false;
+            const wasHidden = content.hasAttribute('hidden');
+
+            buttons.forEach(btn => {
+                btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                btn.classList.toggle('is-collapsed', !expanded);
+                updateIconForButton(btn, expanded);
+            });
+
+            if (layoutRow) {
+                layoutRow.classList.toggle('sidebar-collapsed', !expanded);
+            }
+
+            if (expanded) {
+                if (wrapper) {
+                    wrapper.classList.remove('collapsed');
+                }
+                if (widget) {
+                    widget.classList.remove('collapsed');
+                }
+                content.removeAttribute('hidden');
+
+                if ((inner && wasCollapsed) || (inner && wasHidden)) {
+                    inner.style.transform = 'translateX(120%)';
+                    inner.style.opacity = '0';
+                    requestAnimationFrame(() => {
+                        inner.style.transform = 'translateX(0)';
+                        inner.style.opacity = '1';
+                    });
+                }
+
+                if (wasCollapsed || wasHidden) {
+                    content.style.opacity = '0';
+                    requestAnimationFrame(() => {
+                        content.style.opacity = '1';
+                    });
+                    setTimeout(() => {
+                        content.style.opacity = '';
+                        if (inner) {
+                            inner.style.transform = '';
+                            inner.style.opacity = '';
+                        }
+                    }, COLLAPSE_DURATION);
+                } else if (inner) {
+                    inner.style.transform = '';
+                    inner.style.opacity = '';
+                }
+            } else {
+                content.style.opacity = '0';
+                if (wrapper) {
+                    wrapper.classList.add('collapsed');
+                }
+                if (widget) {
+                    widget.classList.add('collapsed');
+                }
+                if (inner) {
+                    inner.style.transform = 'translateX(120%)';
+                    inner.style.opacity = '0';
+                }
+                setTimeout(() => {
+                    content.setAttribute('hidden', '');
+                    content.style.opacity = '';
+                    if (inner) {
+                        inner.style.transform = '';
+                        inner.style.opacity = '';
+                    }
+                }, COLLAPSE_DURATION);
+            }
+        };
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+                setExpandedState(!isExpanded);
+            });
+        });
+
+        const initialExpanded = buttons.length === 0 || buttons[0].getAttribute('aria-expanded') === 'true';
+        setExpandedState(initialExpanded);
     });
 
     // Reset form function (from services)

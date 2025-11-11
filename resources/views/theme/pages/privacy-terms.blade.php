@@ -1,15 +1,35 @@
 @extends('theme.main')
 
 @php
-    $forcePageBanner = true;
-    if (isset($page) && empty($page->image_url)) {
-        $page->image_url = asset('theme/images/banners/no-banner.jpg');
+    $forceHomeBanner = $forceHomeBanner ?? false;
+    $forcePageBanner = $forcePageBanner ?? false;
+
+    $hasAlbumBanners = isset($page) && $page->album && $page->album->banners && $page->album->banners->count() > 0;
+    $hasPageImage = isset($page) && !empty($page->image_url);
+
+    if (!$forceHomeBanner && !$forcePageBanner) {
+        if ($hasAlbumBanners) {
+            $forceHomeBanner = true;
+        } else {
+            $forcePageBanner = true;
+        }
+    }
+
+    $hasVisibleBanner = false;
+
+    if ($forceHomeBanner) {
+        $hasVisibleBanner = $hasAlbumBanners;
+    } elseif ($forcePageBanner) {
+        $hasVisibleBanner = $hasPageImage;
+    } else {
+        $hasVisibleBanner = $hasAlbumBanners || $hasPageImage;
     }
 @endphp
 
+
 @section('content')
 
-    <div class="unified-content privacy-page-wrapper">
+    <div class="unified-content privacy-page-wrapper{{ $hasVisibleBanner ? '' : ' no-banner' }}">
             {!! optional($content)->contents ?? '' !!}
         </div>
 
@@ -19,6 +39,7 @@
 <style>
     /* Page card styled like the modal content */
     .privacy-page-wrapper { margin-top: 40px; }
+    .privacy-page-wrapper.no-banner { margin-top: 0; }
     .privacy-page-card {
         background-color: #fefefe;
         padding: 28px; /* more inner space */

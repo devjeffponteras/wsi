@@ -183,7 +183,7 @@ class ArticleFrontController extends Controller
 
     public function categories($criteria){
 
-        $categories = DB::select('SELECT ifnull(c.name, "Uncategorized") as cat, ifnull(c.id,0) as cid,count(ifnull(c.id,0)) as total_articles FROM `articles` a left join article_categories c on c.id=a.category_id where a.deleted_at is null and status="Published" GROUP BY c.name,c.id ORDER BY c.id');
+    $categories = DB::select('SELECT IFNULL(c.name, "Uncategorized") AS cat, IFNULL(c.id,0) AS cid, COUNT(IFNULL(c.id,0)) AS total_articles FROM `articles` a LEFT JOIN article_categories c ON c.id=a.category_id WHERE a.deleted_at IS NULL AND a.status="Published" AND (c.id IS NULL OR c.status="Published") GROUP BY c.name,c.id ORDER BY c.id');
 
         $data = '<ul class="mb-0 pb-0">';
                     foreach($categories as $category){

@@ -38,7 +38,10 @@ class PageModalController extends Controller
     public function create()
     {
         $customPages = Page::select('name', 'slug')->where('parent_page_id', 0)->where('status', 'PUBLISHED')->get();
-        $articleCategories = ArticleCategory::select('name', 'slug')->with('articles')->get();
+        $articleCategories = ArticleCategory::select('name', 'slug')
+            ->published()
+            ->with('articles')
+            ->get();
         // $resourceCategories = ResourceCategory::select('name', 'slug')->where('status', 'Active')->get();
 
         $pages = array_merge($customPages->toArray(),$articleCategories->toArray());
@@ -99,7 +102,10 @@ class PageModalController extends Controller
     public function edit(PageModal $pageModal)
     {
         $customPages = Page::select('name', 'slug')->where('parent_page_id', 0)->where('status', 'PUBLISHED')->get();
-        $articleCategories = ArticleCategory::select('name', 'slug')->with('articles')->get();
+        $articleCategories = ArticleCategory::select('name', 'slug')
+            ->published()
+            ->with('articles')
+            ->get();
         // $resourceCategories = ResourceCategory::select('name', 'slug')->where('status', 'Active')->get();
 
         $pages = array_merge($customPages->toArray(),$articleCategories->toArray());

@@ -21,6 +21,10 @@
 		============================================= -->
 		@include('theme.layouts.components.banner')
 
+		@hasSection('after-banner')
+			@yield('after-banner')
+		@endif
+
 		<!-- #slider end -->
 
 		<!-- Content

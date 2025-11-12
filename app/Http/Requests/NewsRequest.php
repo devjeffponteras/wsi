@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class NewsRequest extends FormRequest
 {
@@ -31,10 +32,23 @@ class NewsRequest extends FormRequest
      */
     public function rules(): array
     {
+        $currentCategoryId = optional($this->route('news'))->category_id;
+
         return [
             'name' => 'required|max:255',
             'date' => 'required|date',
-            'category_id' => 'nullable|exists:article_categories,id',
+            'category_id' => [
+                'nullable',
+                Rule::exists('article_categories', 'id')
+                    ->whereNull('deleted_at')
+                    ->where(function ($query) use ($currentCategoryId) {
+                        $query->where('status', 'Published');
+
+                        if ($currentCategoryId) {
+                            $query->orWhere('id', $currentCategoryId);
+                        }
+                    }),
+            ],
             'news_image' => 'nullable|image|max:5000',
             'news_thumbnail' => 'nullable|image|max:2000',
             'image_url' => 'nullable|url',

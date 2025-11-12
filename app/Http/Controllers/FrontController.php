@@ -109,7 +109,7 @@ class FrontController extends Controller
 
         $customPages = Page::where('name', '<>', 'footer')->where('status', 'PUBLISHED')->where('parent_page_id', 0)->orderBy('id','asc')->get();
 
-        $articleCategories = ArticleCategory::with('articles')->get();
+    $articleCategories = ArticleCategory::published()->with('articles')->get();
 
         return view('theme.pages.sitemap', compact(
             'page',
@@ -396,17 +396,12 @@ class FrontController extends Controller
         }
 
         $forceHomeBanner = false;
-        $forcePageBanner = false;
+        $forcePageBanner = true;
 
         $hasBanners = $page && $page->album && $page->album->banners && $page->album->banners->count() > 0;
 
-        if ($hasBanners) {
-            $forceHomeBanner = true;
-        } else {
-            $forcePageBanner = true;
-            if (empty($page->image_url)) {
-                $page->image_url = asset('theme/images/banners/no-banner.jpg');
-            }
+        if (!$hasBanners && empty($page->image_url)) {
+            $page->image_url = asset('theme/images/banners/no-banner.jpg');
         }
 
         $breadcrumb = $this->breadcrumb($page);
@@ -446,17 +441,12 @@ class FrontController extends Controller
         }
 
         $forceHomeBanner = false;
-        $forcePageBanner = false;
+        $forcePageBanner = true;
 
         $hasBanners = $page && $page->album && $page->album->banners && $page->album->banners->count() > 0;
 
-        if ($hasBanners) {
-            $forceHomeBanner = true;
-        } else {
-            $forcePageBanner = true;
-            if (empty($page->image_url)) {
-                $page->image_url = asset('theme/images/banners/no-banner.jpg');
-            }
+        if (!$hasBanners && empty($page->image_url)) {
+            $page->image_url = asset('theme/images/banners/no-banner.jpg');
         }
 
         $breadcrumb = $this->breadcrumb($page);
@@ -562,7 +552,7 @@ class FrontController extends Controller
                 return \Carbon\Carbon::parse($article->date)->format('F j, Y');
             });
 
-        $categories = \App\Models\ArticleCategory::with(['news' => function($query) {
+    $categories = \App\Models\ArticleCategory::published()->with(['news' => function($query) {
                 $query->where('status', 'Published');
             }])
             ->get();

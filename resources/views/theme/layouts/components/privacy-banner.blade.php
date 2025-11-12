@@ -3,8 +3,8 @@
     <div class="privacy-inner" style="display:flex; align-items:center; justify-content:center; gap:12px; max-width:1200px; margin:0 auto; flex-wrap:wrap;">
         <div class="privacy-text" style="flex:1; text-align:center; font-size:14px; line-height:1.2; max-width:900px;">
             By using the site, you agree to our
-            <a href="{{ route('privacy-terms') }}" style="color: #ff0000; text-decoration: underline; cursor: pointer;">Privacy Policy & Terms of Use</a>.
-            <button id="agreeButton" type="button" data-redirect="{{ route('home') }}" class="privacy-cta-inline" style="background-color: #4CCD99; color: white; border: none; padding: 8px 14px; margin-left: 8px; cursor: pointer; border-radius: 20px; display: inline-block;" onclick="if (typeof window.acceptPrivacy === 'function') { window.acceptPrivacy(this.dataset.redirect); } else { window.location.href = this.dataset.redirect; }">I Agree</button>
+            <a id="privacyPolicyLink" href="{{ route('privacy-terms') }}" style="color: #ff0000; text-decoration: underline; cursor: pointer;">Privacy Policy & Terms of Use</a>.
+            <button id="agreeButton" type="button" data-redirect="{{ route('home') }}" class="privacy-cta-inline" style="background-color: #4CCD99; color: white; border: none; padding: 8px 14px; margin-left: 8px; cursor: pointer; border-radius: 20px; display: inline-block;" onclick="if (this.disabled) { return; } if (typeof window.acceptPrivacy === 'function') { window.acceptPrivacy(this.dataset.redirect); } else { window.location.href = this.dataset.redirect; }" disabled>I Agree</button>
         </div>
     </div>
 </div>
@@ -23,4 +23,49 @@
         #privacyBanner .privacy-text { font-size: 12px; }
         #privacyBanner .privacy-cta-inline { padding: 9px !important; }
     }
+
+    #privacyBanner .privacy-cta-inline[disabled] {
+        background-color: #b5b5b5 !important;
+        cursor: not-allowed !important;
+        opacity: 0.7;
+    }
+
+    #privacyBanner .privacy-cta-inline:not([disabled]) {
+        background-color: #4CCD99 !important;
+        cursor: pointer !important;
+        opacity: 1;
+    }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var banner = document.getElementById('privacyBanner');
+        if (!banner) {
+            return;
+        }
+
+        var link = document.getElementById('privacyPolicyLink');
+        var agreeButton = document.getElementById('agreeButton');
+
+        if (!link || !agreeButton) {
+            return;
+        }
+
+        var enableAgreeButton = function () {
+            if (!agreeButton.disabled) {
+                return;
+            }
+
+            agreeButton.disabled = false;
+        };
+
+        if (window.location.pathname.indexOf('/privacy-terms') !== -1) {
+            enableAgreeButton();
+        }
+
+        link.addEventListener('click', function () {
+            enableAgreeButton();
+            agreeButton.focus();
+        });
+    });
+</script>

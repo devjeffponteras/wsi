@@ -79,14 +79,14 @@
             </ul>
         </li>
     @endif
-    @if (auth()->user()->has_access_to_pages_module() || auth()->user()->has_access_to('services') || auth()->user()->role_id == '9')
+    {{-- @if (auth()->user()->has_access_to_pages_module() || auth()->user()->has_access_to('services') || auth()->user()->role_id == '9')
         <li class="nav-item with-sub @if (request()->routeIs('services*')) active show @endif">
             <a href="" class="nav-link"><i data-feather="layers"></i> <span>Services</span></a>
             <ul>
                 <li @if (\Route::current()->getName() == 'services.edit' || \Route::current()->getName() == 'services.index' || \Route::current()->getName() == 'services.index.advance-search') class="active" @endif><a href="{{ route('services.index') }}">Manage Services</a></li>
             </ul>
         </li>
-    @endif
+    @endif --}}
 
     @if (auth()->user()->is_an_admin() || auth()->user()->has_access_to('settings'))
         <li class="nav-item with-sub @if (request()->routeIs('account*') || request()->routeIs('website-settings*') || request()->routeIs('audit*')) active show @endif">

@@ -72,14 +72,45 @@ class NewsController extends Controller
      */
     public function change_status(Request $request)
     {
-        $news = News::findOrFail($request->id);
-        $news->status = $request->status;
-        $news->save();
+        $status = $request->status === 'Published' ? 'Published' : 'Private';
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Status updated successfully!'
-        ]);
+        $ids = [];
+
+        if ($request->filled('id')) {
+            $ids[] = (int) $request->id;
+        }
+
+        if ($request->filled('pages')) {
+            $ids = array_merge($ids, array_filter(array_map('intval', explode('|', trim($request->pages, '|')))));
+        }
+
+        $ids = array_values(array_unique(array_filter($ids)));
+
+        if (empty($ids)) {
+            $message = 'No news selected for status update.';
+
+            if ($request->ajax() || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $message,
+                ], 422);
+            }
+
+            return redirect()->route('news.index')->with('error', $message);
+        }
+
+        News::whereIn('id', $ids)->update(['status' => $status]);
+
+        $message = __('standard.news.article.status_success', ['STATUS' => strtoupper($status)]);
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+            ]);
+        }
+
+        return redirect()->route('news.index')->with('success', $message);
     }
 
     /**
@@ -128,9 +159,10 @@ class NewsController extends Controller
     /**
      * Restore deleted news article.
      */
-    public function restore(News $news)
+    public function restore($news)
     {
-        $news->restore();
+        $newsItem = News::withTrashed()->findOrFail($news);
+        $newsItem->restore();
 
         return redirect()->route('news.index')->with('success', 'News article restored successfully!');
     }

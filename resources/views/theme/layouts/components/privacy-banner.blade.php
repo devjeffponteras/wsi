@@ -35,6 +35,11 @@
         cursor: pointer !important;
         opacity: 1;
     }
+
+    #privacyBanner .privacy-cta-inline.privacy-cta-loading {
+        opacity: 0.6 !important;
+        cursor: progress !important;
+    }
 </style>
 
 <script>
@@ -57,15 +62,20 @@
             }
 
             agreeButton.disabled = false;
+            agreeButton.classList.remove('privacy-cta-loading');
         };
 
         if (window.location.pathname.indexOf('/privacy-terms') !== -1) {
             enableAgreeButton();
         }
 
-        link.addEventListener('click', function () {
-            enableAgreeButton();
-            agreeButton.focus();
-        });
+        if (!link.hasAttribute('data-click-handler')) {
+            link.setAttribute('data-click-handler', 'true');
+
+            link.addEventListener('click', function () {
+                agreeButton.disabled = true;
+                agreeButton.classList.add('privacy-cta-loading');
+            });
+        }
     });
 </script>

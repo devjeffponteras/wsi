@@ -134,7 +134,7 @@
         border-bottom: 1px solid #e2e8f0;
         padding: 0;
         position: sticky;
-        top: 80px;
+        top: 10px;
         z-index: 100;
     }
 
@@ -144,15 +144,42 @@
         padding: 0 20px;
     }
 
+    .newsroom-nav-container {
+        position: relative;
+    }
+
+    .newsroom-nav-container::before,
+    .newsroom-nav-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 30px;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+    }
+
+    .newsroom-nav-container::before {
+        left: 0;
+        background: linear-gradient(90deg, #f8fafc 0%, rgba(248, 250, 252, 0));
+    }
+
+    .newsroom-nav-container::after {
+        right: 0;
+        background: linear-gradient(270deg, #f8fafc 0%, rgba(248, 250, 252, 0));
+    }
+
     .newsroom-nav-list {
         display: flex;
         justify-content: center;
         list-style: none;
         margin: 0;
-        padding: 0;
+        padding: 8px 24px 12px;
         overflow-x: auto;
         scrollbar-width: none;
         -ms-overflow-style: none;
+        gap: 18px;
+        scroll-snap-type: x mandatory;
     }
 
     .newsroom-nav-list::-webkit-scrollbar {
@@ -160,7 +187,7 @@
     }
 
     .newsroom-nav-item {
-        padding: 20px 30px;
+        padding: 18px 28px;
         font-weight: 600;
         color: #64748b;
         cursor: pointer;
@@ -168,6 +195,7 @@
         position: relative;
         white-space: nowrap;
         border-bottom: 3px solid transparent;
+        scroll-snap-align: start;
     }
 
     .newsroom-nav-item:hover {
@@ -447,11 +475,6 @@
     }
 
     /* Prevent CTA decorative images from creating horizontal overflow */
-    .section-cta { overflow: hidden; }
-    .section-cta .hero-decor { max-width: 770px; width: 42%; height: auto; bottom: 0; }
-    @media (max-width: 768px) {
-        .section-cta .hero-decor { display: none !important; }
-    }
 
     /* Press Releases specific styling */
     .press-releases-section {
@@ -522,6 +545,28 @@
     }
 
     @media (max-width: 768px) {
+        .newsroom-nav {
+            top: 64px;
+        }
+
+        .newsroom-nav-list {
+            justify-content: flex-start;
+            padding: 8px 16px 12px;
+            gap: 12px;
+        }
+
+        .newsroom-nav-item {
+            flex: 0 0 auto;
+            padding: 14px 20px;
+            font-size: 0.95rem;
+            border-bottom-width: 2px;
+        }
+
+        .newsroom-nav-container::before,
+        .newsroom-nav-container::after {
+            width: 18px;
+        }
+
         .newsroom-hero {
             min-height: 60vh;
             margin-top: -20px;
@@ -555,6 +600,13 @@
         .cta-buttons {
             flex-direction: column;
             align-items: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .newsroom-nav-item {
+            padding: 12px 16px;
+            font-size: 0.85rem;
         }
     }
 </style>
@@ -764,6 +816,7 @@
         position: relative;
         z-index: 2;
         max-width: 800px;
+        margin-top: 35px;
     }
 
     .article-breadcrumb {
@@ -1190,6 +1243,7 @@
 
         .article-hero-content {
             padding: 20px;
+            margin-top: 60px;
         }
 
         .sharing-buttons {
@@ -1415,92 +1469,7 @@
     </section>
     @endforeach
 
-    <!-- CTA Section -->
-    <section class="section-cta position-relative">
-        <div class="cta-container scroll-animate">
-            <div class="cta-content">
-                <div class="row col-12 contact-us-page">
-                    <div class="col-12 col-md-7">
-                        <div class="content-wordings">
-                            <div class="content-title">
-                                <h1 style="font-size: 58px;" class="text-white mb-3"><b>Power up your <br/> growth today.</b></h1>
-                            </div>
-                            <div class="content-description">
-                                <p style="font-size: 22px;">Drop us a line and guide you to the right solution</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-5">
-                        <div class="card p-4 shadow pb-0">
-                            <h3 class="font-primary"><b>Leave Us a Message</b></h3>
-                            @if(session()->has('success'))
-                                <div class="style-msg successmsg">
-                                    <div class="sb-msg"><i class="icon-thumbs-up"></i><strong>Success!</strong> {{ session()->get('success') }}</div>
-                                    {{-- <button type="button" class="btn-close btn-sm" data-dismiss="alert" aria-hidden="true">&times;</button> --}}
-                                </div>
-                            @endif
-
-                            @if(session()->has('error'))
-                                <div class="style-msg successmsg">
-                                    <div class="sb-msg"><i class="icon-thumbs-up"></i><strong>Success!</strong> {{ session()->get('error') }}</div>
-                                    {{-- <button type="button" class="btn-close btn-sm" data-dismiss="alert" aria-hidden="true">&times;</button> --}}
-                                </div>
-                            @endif
-                            <p><strong>Note:</strong> Please do not leave required fields (<span class="text-danger">*</span>) empty.</p>
-                            <div class="form-style fs-sm">
-                                <form id="contactUsForm" action="{{ route('contact-us') }}" method="POST">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="fullName" class="fs-6 fw-semibold text-initial nols">Full Name <span class="text-danger">*</span></label>
-                                        <input type="text" id="fullName" class="form-control form-input" name="name" placeholder="First and Last Name" />
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="emailAddress" class="fs-6 fw-semibold text-initial nols">E-mail Address <span class="text-danger">*</span></label>
-                                        <input type="email" id="emailAddress" class="form-control form-input" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" placeholder="hello@email.com" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="contactNumber" class="fs-6 fw-semibold text-initial nols">Contact Number <span class="text-danger">*</span></label>
-                                        <input type="number" id="contactNumber" class="form-control form-input" name="contact" placeholder="Landline or Mobile" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="message" class="fs-6 fw-semibold text-initial nols">Message <span class="text-danger">*</span></label>
-                                        <textarea name="message" id="message" class="form-control form-input textarea" rows="5"></textarea>
-                                    </div>
-
-                                    <div class="row g-2">
-                                        <div class="col-md-6">
-                                            <!-- <a class="button button-circle border-bottom ms-0 text-initial nols fw-normal button-large d-block text-center" href="javascript:void(0)" onclick="document.getElementById('contactUsForm').submit()">Submit</a> -->
-                                            <button name="submit" type="submit" id="submit-button" tabindex="5" value="Submit" class="button button-3d m-0" href="javascript:void(0)" onclick="document.getElementById('contactUsForm').submit()" style="background-color: #2b56d3;">
-                                                <i class="bi-send" style="margin-right: 5px;"></i> Submit
-                                            </button>
-                                        </div>
-                                        <div class="col-md-6 d-flex justify-content-end">
-                                            <!-- <a href="javascript:void(0)" class="button button-circle button-dark border-bottom ms-0 text-initial nols fw-normal button-large d-block text-center" onclick="resetForm();">Reset</a> -->
-                                            <button name="reset" type="reset" id="reset-button" tabindex="5" class="button button-3d m-0 reset-button" href="javascript:void(0)" onclick="resetForm();">
-                                                <i class="bi-arrow-counterclockwise" style="margin-right: 5px;"></i>Reset
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    {{-- hidden inputs --}}
-                                    <div class="form-group" style="display:none;">
-                                        <input type="text" id="services" class="form-control form-input" name="services" placeholder="Enter Subject" value="Design" required/>
-                                        <input type="text" id="subject" class="form-control form-input" name="subject" placeholder="Enter Subject" value="Design" required/>
-                                    </div>
-
-                                </form>
-                                {{-- captcha script --}}
-                                <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    <img class="position-absolute hero-decor" src="{{ asset('images/hero.svg') }}" style="transform: rotateY(180deg); left: 10%;">
-    </section>
+    @include('theme.pages.partials.news-cta')
 </div>
 @endisset
 @endsection

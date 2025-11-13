@@ -3,38 +3,141 @@
 @section('pagecss')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+@endsection
+
+@php
+    $contents = $page->contents;
+
+// LATEST NEWS
+    $featuredArticles = \App\Models\News::where('is_featured', 1)->where('status', 'Published')->skip(0)->take(3)->get();
+    if($featuredArticles->count()) {
+
+        $featuredArticlesHTML = '';
+
+        $prefooter = asset('theme/images/pre-footer.jpg');
+
+        foreach ($featuredArticles as $index => $article) {
+            $imageUrl = (empty($article->thumbnail_image)) ? asset('theme/images/misc/no-image.jpg') : $article->thumbnail;
+
+
+            $featuredArticlesHTML .= '
+
+                <div class="slide" data-thumb="'. $imageUrl .'">
+                    <div class="d-block position-relative">
+                        <div class="row">
+                            <div class="col-md-6 half-one position-default">
+                                <div class="floating-panel">
+                                    <h2 class="h2 fw-semibold lh-base featured-article-title">'. $article->name .'</h2>
+                                    <small class="featured-article-meta">Date posted: '. $article->date_posted() .'</small>
+                                    <p class="text-muted mt-4">'. $article->teaser .'</p>
+                                    <a href="'. $article->get_url() .'" class="button button-3d button-mini button-rounded button-blue">Learn More &nbsp; ></a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 p-5">
+                                <img class="rounded-corners" src="'. $imageUrl .'" alt="'. htmlspecialchars($article->name) .'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                ';
+
+            if (\App\Models\News::has_featured_limit() && $index >= env('FEATURED_NEWS_LIMIT')) {
+                break;
+            }
+        }
+
+    } else {
+        $featuredArticlesHTML = '';
+    }
+
+    $keywords   = ['{Featured Articles}'];
+    $variables  = [$featuredArticlesHTML];
+    $contents = str_replace($keywords,$variables,$contents);
+
+@endphp
+
+@section('content')
+
+    {!! $contents !!}
+{{-- <!-- BEGIN Home Page Copy Snippet (copy this block plus the Swiper CSS/JS includes below into Manage > Pages > Edit) -->
     <style>
-        .counter-cards {
-            padding: 100px 0;
-            background-color: #f9f9f9;
-        }
+            .counter-cards {
+                padding: 100px 0;
+                background-color: #f9f9f9;
+            }
 
-        #counter-cards-container {
-            max-width: 1400px;
-            transform: translateY(145px);
-            transition: all 1s ease;
-            opacity: 0;
-        }
+            #counter-cards-container {
+                max-width: 1400px;
+                transition: transform 1s ease, opacity 1s ease;
+                transform: translateY(0);
+                opacity: 1;
+            }
 
-        .feature-card-bordered {
-            border: 1px solid #c5c5c5;
-        }
+            .icon-carousel-section {
+                padding: 90px 0;
+                background-color: #fff;
+            }
 
-        .logo-cards {
-            background-color: transparent;
-            background-image: url('images/map.png');
-            background-repeat: no-repeat;
-            background-size: cover;
-            padding-bottom: 200px;
-            margin-bottom: 0;
-        }
+            .icon-carousel-heading p {
+                max-width: 520px;
+                margin: 12px auto 0;
+                color: #5a5a5a;
+            }
 
-        .see-customer-btn .btn {
-            width: fit-content;
-            max-width: fit-content;
-        }
+            .logo-carousel {
+                position: relative;
+                overflow: hidden;
+                padding: 20px 32px;
+            }
 
-        .testi-cards {
+            .logo-swiper {
+                width: 100%;
+                padding: 8px 0;
+            }
+
+            .logo-carousel .swiper-wrapper {
+                align-items: center;
+            }
+
+            .logo-carousel .swiper-slide {
+                width: auto !important;
+                display: flex;
+                justify-content: center;
+            }
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 12px;
+            }
+
+            .icon-item i {
+                font-size: 42px;
+                color: #0f4c81;
+            }
+
+            .icon-item span {
+                font-size: 16px;
+                font-weight: 600;
+                color: #1f1f1f;
+            }
+
+            .logo-item {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .logo-item img {
+                width: 115px;
+                max-width: 115px;
+                height: auto;
+                background: transparent;
+                filter: none;
+                opacity: 1;
+                transition: transform 0.3s ease;
+            }
             margin-top: 0;
             padding-top: 0;
         }
@@ -67,6 +170,12 @@
             word-break: break-word;
         }
 
+        #testimonials-swiper .testi-content p::before,
+        #testimonials-swiper .testi-content p::after,
+        #testimonials-swiper .testi-meta::before {
+            content: none !important;
+        }
+
         /* Prevent page jump when testimonials slide changes */
         .testimonials-swiper {
             min-height: 220px; /* keep a stable container height */
@@ -93,31 +202,151 @@
             color: #878787;
         }
 
-        #logo-swiper .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-            width: auto !important;
-            background: transparent !important;
+        .logo-carousel {
+            position: relative;
+            overflow: hidden;
+            padding: 22px 72px;
         }
 
-        #logo-swiper img {
-            width: 110px;
-            max-width: 110px;
+        .logo-swiper {
+            width: 100%;
+            padding: 0;
+        }
+
+        .logo-carousel .swiper-wrapper {
+            align-items: center;
+        }
+
+        .logo-carousel .swiper-slide {
+            width: auto !important;
+            display: flex;
+            justify-content: center;
+        }
+
+        .logo-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(15, 76, 129, 0.25);
+            background: rgba(255, 255, 255, 0.9);
+            color: #0f4c81;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            z-index: 3;
+            box-shadow: 0 4px 18px rgba(15, 76, 129, 0.12);
+        }
+
+        .logo-nav:hover,
+        .logo-nav:focus {
+            background: #0f4c81;
+            color: #fff;
+        }
+
+        .logo-nav.logo-prev {
+            left: 16px;
+        }
+
+        .logo-nav.logo-next {
+            right: 16px;
+        }
+
+        .logo-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-item img {
+            width: 128px;
+            max-width: 128px;
             height: auto;
             background: transparent;
+            filter: none;
+            opacity: 1;
+            transition: transform 0.3s ease;
         }
 
-        #logo-swiper .swiper-pagination {
-            position: static;
-            margin-top: 16px;
-            display: flex;
-            justify-content: center;
+        .logo-item img:hover {
+            transform: scale(1.05);
         }
 
-        #logo-swiper .swiper-pagination-bullet {
-            margin: 0 4px;
+        @keyframes logo-scroll {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .icon-carousel-section {
+                padding: 72px 0;
+            }
+
+            .icon-track {
+                gap: 32px;
+            }
+
+            .icon-item {
+                min-width: 130px;
+            }
+
+            .icon-item i {
+                font-size: 38px;
+            }
+
+            .logo-carousel {
+                padding: 20px 56px;
+            }
+
+            .logo-nav {
+                width: 40px;
+                height: 40px;
+            }
+
+            .logo-item img {
+                width: 94px;
+                max-width: 94px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .icon-carousel-section {
+                padding: 60px 0;
+            }
+
+            .icon-track {
+                gap: 24px;
+            }
+
+            .icon-item {
+                min-width: 110px;
+            }
+
+            .icon-item i {
+                font-size: 32px;
+            }
+
+            .logo-carousel {
+                padding: 18px 40px;
+            }
+
+            .logo-nav {
+                width: 36px;
+                height: 36px;
+            }
+
+            .logo-item img {
+                width: 84px;
+                max-width: 84px;
+            }
         }
 
         #portfolio-swiper .swiper-slide {
@@ -183,65 +412,9 @@
         .portfolio-card a:hover {
             text-decoration: underline;
         }
-    </style>
-@endsection
+</style>
 
-@php
-    $contents = $page->contents;
-
-// LATEST NEWS
-    $featuredArticles = \App\Models\News::where('is_featured', 1)->where('status', 'Published')->skip(0)->take(3)->get();
-    if($featuredArticles->count()) {
-
-        $featuredArticlesHTML = '';
-
-        $prefooter = asset('theme/images/pre-footer.jpg');
-
-        foreach ($featuredArticles as $index => $article) {
-            $imageUrl = (empty($article->thumbnail_image)) ? asset('theme/images/misc/no-image.jpg') : $article->thumbnail;
-
-
-            $featuredArticlesHTML .= '
-
-                <div class="slide" data-thumb="'. $imageUrl .'">
-                    <div class="d-block position-relative">
-                        <div class="row">
-                            <div class="col-md-6 half-one position-default">
-                                <div class="floating-panel">
-                                    <h2 class="h2 fw-semibold lh-base featured-article-title">'. $article->name .'</h2>
-                                    <small class="featured-article-meta">Date posted: '. $article->date_posted() .'</small>
-                                    <p class="text-muted mt-4">'. $article->teaser .'</p>
-                                    <a href="'. $article->get_url() .'" class="button button-3d button-mini button-rounded button-blue">Learn More &nbsp; ></a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 p-5">
-                                <img class="rounded-corners" src="'. $imageUrl .'" alt="'. htmlspecialchars($article->name) .'">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                ';
-
-            if (\App\Models\News::has_featured_limit() && $index >= env('FEATURED_NEWS_LIMIT')) {
-                break;
-            }
-        }
-
-    } else {
-        $featuredArticlesHTML = '';
-    }
-
-    $keywords   = ['{Featured Articles}'];
-    $variables  = [$featuredArticlesHTML];
-    $contents = str_replace($keywords,$variables,$contents);
-
-@endphp
-
-@section('content')
-
-    {!! $contents !!}
- {{-- <div class="section mt-0 clearfix counter-cards">
+<div class="section mt-0 clearfix counter-cards">
         <div class="container-fluid">
             <div class="mx-auto" id="counter-cards-container">
                 <div class="row g-4">
@@ -347,74 +520,67 @@
                 <br />
                 <br />
 
-                <div id="logo-swiper" data-gjs-type="swiper-container" class="swiper hidden-up">
-                    <div class="swiper-wrapper" data-gjs-type="swiper-wrapper">
-                        <div class="swiper-slide" data-gjs-type="swiper-slide">
-                            <img data-gjs-type="image" src="images/clients/logo37.jpg" alt="Client logo">
-                        </div>
-                        <div class="swiper-slide" data-gjs-type="swiper-slide">
-                            <img data-gjs-type="image" src="images/clients/logo32.jpg" alt="Client logo">
-                        </div>
-                        <div class="swiper-slide" data-gjs-type="swiper-slide">
-                            <img data-gjs-type="image" src="images/clients/logo4.jpg" alt="Client logo">
-                        </div>
-                        <div class="swiper-slide" data-gjs-type="swiper-slide">
-                            <img data-gjs-type="image" src="images/clients/logo3.jpg" alt="Client logo">
-                        </div>
-                        <div class="swiper-slide" data-gjs-type="swiper-slide">
-                            <img data-gjs-type="image" src="images/clients/logo13.jpg" alt="Client logo">
-                        </div>
-                        <div class="swiper-slide" data-gjs-type="swiper-slide">
-                            <img data-gjs-type="image" src="images/clients/logo8.jpg" alt="Client logo">
-                        </div>
-                        <div class="swiper-slide" data-gjs-type="swiper-slide">
-                            <img data-gjs-type="image" src="images/clients/logo6.jpg" alt="Client logo">
-                        </div>
-                        <div class="swiper-slide" data-gjs-type="swiper-slide">
-                            <img data-gjs-type="image" src="images/clients/logo21.jpg" alt="Client logo">
-                        </div>
-                        <div class="swiper-slide" data-gjs-type="swiper-slide">
-                            <img data-gjs-type="image" src="images/clients/logo63.jpg" alt="Client logo">
-                        </div>
-                        <div class="swiper-slide" data-gjs-type="swiper-slide">
-                            <img data-gjs-type="image" src="images/clients/logo53.jpg" alt="Client logo">
-                        </div>
-                            <!-- Duplicate set for seamless loop -->
+                <div class="logo-carousel hidden-up" data-gjs-type="default">
+                    <button class="logo-nav logo-prev" type="button" aria-label="Previous logos">
+                        <i class="icon-line-arrow-left"></i>
+                    </button>
+                    <div class="logo-swiper swiper" data-gjs-type="swiper-container">
+                        <div class="swiper-wrapper" data-gjs-type="swiper-wrapper">
                             <div class="swiper-slide" data-gjs-type="swiper-slide">
-                                <img data-gjs-type="image" src="images/clients/logo37.jpg" alt="Client logo">
+                                <a class="logo-item" data-gjs-type="link" href="https://www.sampleclient.com" target="_blank" rel="noopener" aria-label="Client 37">
+                                    <img src="/images/clients/logo37.jpg" alt="Client logo">
+                                </a>
                             </div>
                             <div class="swiper-slide" data-gjs-type="swiper-slide">
-                                <img data-gjs-type="image" src="images/clients/logo32.jpg" alt="Client logo">
+                                <a class="logo-item" data-gjs-type="link" href="https://www.sampleclient.com" target="_blank" rel="noopener" aria-label="Client 32">
+                                    <img src="/images/clients/logo32.jpg" alt="Client logo">
+                                </a>
                             </div>
                             <div class="swiper-slide" data-gjs-type="swiper-slide">
-                                <img data-gjs-type="image" src="images/clients/logo4.jpg" alt="Client logo">
+                                <a class="logo-item" data-gjs-type="link" href="https://www.sampleclient.com" target="_blank" rel="noopener" aria-label="Client 4">
+                                    <img src="/images/clients/logo4.jpg" alt="Client logo">
+                                </a>
                             </div>
                             <div class="swiper-slide" data-gjs-type="swiper-slide">
-                                <img data-gjs-type="image" src="images/clients/logo3.jpg" alt="Client logo">
+                                <a class="logo-item" data-gjs-type="link" href="https://www.sampleclient.com" target="_blank" rel="noopener" aria-label="Client 3">
+                                    <img src="/images/clients/logo3.jpg" alt="Client logo">
+                                </a>
                             </div>
                             <div class="swiper-slide" data-gjs-type="swiper-slide">
-                                <img data-gjs-type="image" src="images/clients/logo13.jpg" alt="Client logo">
+                                <a class="logo-item" data-gjs-type="link" href="https://www.sampleclient.com" target="_blank" rel="noopener" aria-label="Client 13">
+                                    <img src="/images/clients/logo13.jpg" alt="Client logo">
+                                </a>
                             </div>
                             <div class="swiper-slide" data-gjs-type="swiper-slide">
-                                <img data-gjs-type="image" src="images/clients/logo8.jpg" alt="Client logo">
+                                <a class="logo-item" data-gjs-type="link" href="https://www.sampleclient.com" target="_blank" rel="noopener" aria-label="Client 8">
+                                    <img src="/images/clients/logo8.jpg" alt="Client logo">
+                                </a>
                             </div>
                             <div class="swiper-slide" data-gjs-type="swiper-slide">
-                                <img data-gjs-type="image" src="images/clients/logo6.jpg" alt="Client logo">
+                                <a class="logo-item" data-gjs-type="link" href="https://www.sampleclient.com" target="_blank" rel="noopener" aria-label="Client 6">
+                                    <img src="/images/clients/logo6.jpg" alt="Client logo">
+                                </a>
                             </div>
                             <div class="swiper-slide" data-gjs-type="swiper-slide">
-                                <img data-gjs-type="image" src="images/clients/logo21.jpg" alt="Client logo">
+                                <a class="logo-item" data-gjs-type="link" href="https://www.sampleclient.com" target="_blank" rel="noopener" aria-label="Client 21">
+                                    <img src="/images/clients/logo21.jpg" alt="Client logo">
+                                </a>
                             </div>
                             <div class="swiper-slide" data-gjs-type="swiper-slide">
-                                <img data-gjs-type="image" src="images/clients/logo63.jpg" alt="Client logo">
+                                <a class="logo-item" data-gjs-type="link" href="https://www.sampleclient.com" target="_blank" rel="noopener" aria-label="Client 63">
+                                    <img src="/images/clients/logo63.jpg" alt="Client logo">
+                                </a>
                             </div>
                             <div class="swiper-slide" data-gjs-type="swiper-slide">
-                                <img data-gjs-type="image" src="images/clients/logo53.jpg" alt="Client logo">
+                                <a class="logo-item" data-gjs-type="link" href="https://www.sampleclient.com" target="_blank" rel="noopener" aria-label="Client 53">
+                                    <img src="/images/clients/logo53.jpg" alt="Client logo">
+                                </a>
                             </div>
+                        </div>
                     </div>
-                    <div class="swiper-button-prev" data-gjs-type="swiper-prev" tabindex="0" role="button" aria-label="Previous slide" aria-disabled="false"></div>
-                    <div class="swiper-button-next" data-gjs-type="swiper-next" tabindex="0" role="button" aria-label="Next slide" aria-disabled="false"></div>
-                    <div class="swiper-pagination" data-gjs-type="swiper-pagination"></div>
-                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                    <button class="logo-nav logo-next" type="button" aria-label="Next logos">
+                        <i class="icon-line-arrow-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -431,7 +597,7 @@
                     <div class="grid-inner">
                         <div class="portfolio-image">
                             <a href="portfolio-single.html">
-                                <img src="images/portfolio/clinica.png" alt="Console Activity">
+                                <img data-gjs-type="image" src="/images/portfolio/clinica.png" alt="Clinica Manila homepage preview">
                             </a>
                             <div class="bg-overlay">
                                 <div class="bg-overlay-content dark flex-column" data-hover-animate="fadeIn">
@@ -441,7 +607,7 @@
                                     </div>
 
                                     <div class="d-flex">
-                                        <a href="images/portfolio/clinica.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="Clinica Manila"><i class="icon-line-plus"></i></a>
+                                        <a href="/images/portfolio/clinica.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="Clinica Manila"><i class="icon-line-plus"></i></a>
                                         <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
                                     </div>
                                 </div>
@@ -460,7 +626,7 @@
                     <div class="grid-inner">
                         <div class="portfolio-image">
                             <a href="portfolio-single.html">
-                                <img src="images/portfolio/exp.png" alt="Console Activity">
+                                <img data-gjs-type="image" src="/images/portfolio/exp.png" alt="EXP Controls dashboard preview">
                             </a>
                             <div class="bg-overlay">
                                 <div class="bg-overlay-content dark flex-column" data-hover-animate="fadeIn">
@@ -470,7 +636,7 @@
                                     </div>
 
                                     <div class="d-flex">
-                                        <a href="images/portfolio/exp.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="EXP Controls"><i class="icon-line-plus"></i></a>
+                                        <a href="/images/portfolio/exp.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="EXP Controls"><i class="icon-line-plus"></i></a>
                                         <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
                                     </div>
                                 </div>
@@ -489,7 +655,7 @@
                     <div class="grid-inner">
                         <div class="portfolio-image">
                             <a href="portfolio-single.html">
-                                <img src="images/portfolio/lydias.png" alt="Console Activity">
+                                <img data-gjs-type="image" src="/images/portfolio/lydias.png" alt="Lydia's Lechon website preview">
                             </a>
                             <div class="bg-overlay">
                                 <div class="bg-overlay-content dark flex-column" data-hover-animate="fadeIn">
@@ -499,7 +665,7 @@
                                     </div>
 
                                     <div class="d-flex">
-                                        <a href="images/portfolio/lydias.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="Lydia's Lechon"><i class="icon-line-plus"></i></a>
+                                        <a href="/images/portfolio/lydias.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="Lydia's Lechon"><i class="icon-line-plus"></i></a>
                                         <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
                                     </div>
                                 </div>
@@ -518,7 +684,7 @@
                     <div class="grid-inner">
                         <div class="portfolio-image">
                             <a href="portfolio-single.html">
-                                <img src="images/portfolio/precious.png" alt="Console Activity">
+                                <img data-gjs-type="image" src="/images/portfolio/precious.png" alt="Precious Hearts Pages landing page">
                             </a>
                             <div class="bg-overlay">
                                 <div class="bg-overlay-content dark flex-column" data-hover-animate="fadeIn">
@@ -528,7 +694,7 @@
                                     </div>
 
                                     <div class="d-flex">
-                                        <a href="images/portfolio/precious.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="Precious Hearts Pages"><i class="icon-line-plus"></i></a>
+                                        <a href="/images/portfolio/precious.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="Precious Hearts Pages"><i class="icon-line-plus"></i></a>
                                         <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
                                     </div>
                                 </div>
@@ -547,7 +713,7 @@
                     <div class="grid-inner">
                         <div class="portfolio-image">
                             <a href="portfolio-single.html">
-                                <img src="images/portfolio/taikisha.png" alt="Console Activity">
+                                <img data-gjs-type="image" src="/images/portfolio/taikisha.png" alt="Taikisha interface preview">
                             </a>
                             <div class="bg-overlay">
                                 <div class="bg-overlay-content dark flex-column" data-hover-animate="fadeIn">
@@ -557,7 +723,7 @@
                                     </div>
 
                                     <div class="d-flex">
-                                        <a href="images/portfolio/taikisha.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="Image"><i class="icon-line-plus"></i></a>
+                                        <a href="/images/portfolio/taikisha.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="Taikisha"><i class="icon-line-plus"></i></a>
                                         <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
                                     </div>
                                 </div>
@@ -576,7 +742,7 @@
                     <div class="grid-inner">
                         <div class="portfolio-image">
                             <a href="portfolio-single.html">
-                                <img src="images/portfolio/taisho.png" alt="Console Activity">
+                                <img data-gjs-type="image" src="/images/portfolio/taisho.png" alt="Taisho UI showcase">
                             </a>
                             <div class="bg-overlay">
                                 <div class="bg-overlay-content dark flex-column" data-hover-animate="fadeIn">
@@ -586,7 +752,7 @@
                                     </div>
 
                                     <div class="d-flex">
-                                        <a href="images/portfolio/taisho.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="Image"><i class="icon-line-plus"></i></a>
+                                        <a href="/images/portfolio/taisho.png" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350" data-lightbox="image" title="Taisho"><i class="icon-line-plus"></i></a>
                                         <a href="portfolio-single.html" class="overlay-trigger-icon bg-light text-dark" data-hover-animate="fadeInUpSmall" data-hover-animate-out="fadeOutDownSmall" data-hover-speed="350"><i class="icon-line-ellipsis"></i></a>
                                     </div>
                                 </div>
@@ -626,7 +792,7 @@
                                     <div class="testi-content">
                                         <p>Quickly redefine resource sucking web services after exceptional customer service. Professionally coordinate focused platforms before visionary architectures.</p>
                                         <div class="testi-meta d-flex align-items-center">
-                                            <img src="{{ asset('images/testi/face.jpg') }}" alt="Face" width="30">
+                                            <img src="/images/testi/face.jpg" alt="Client portrait" width="30">
                                             <div class="d-flex flex-column">
                                                 John Doe
                                                 <span class="ps-0">XYZ Inc.</span>
@@ -639,9 +805,9 @@
                             <div class="swiper-slide">
                                 <div class="testimonial border-0 shadow-none bg-transparent">
                                     <div class="testi-content">
-                                        <p>Dramatically mesh user friendly solutions whereas sticky human capital. Assertively fashion impactful "outside the box".</p>
+                                        <p>Dramatically mesh user friendly solutions whereas sticky human capital. Assertively fashion impactful outside the box.</p>
                                         <div class="testi-meta d-flex align-items-center">
-                                            <img src="{{ asset('images/testi/face2.jpg') }}" alt="Face" width="30">
+                                            <img src="/images/testi/face2.jpg" alt="Client portrait" width="30">
                                             <div class="d-flex flex-column">
                                                 John Doe
                                                 <span class="ps-0">XYZ Inc.</span>
@@ -656,7 +822,7 @@
                                     <div class="testi-content">
                                         <p>Progressively productivate customer directed meta-services without magnetic bandwidth.</p>
                                         <div class="testi-meta d-flex align-items-center">
-                                            <img src="{{ asset('images/testi/face3.jpg') }}" alt="Face" width="30">
+                                            <img src="/images/testi/face3.jpg" alt="Client portrait" width="30">
                                             <div class="d-flex flex-column">
                                                 John Doe
                                                 <span class="ps-0">XYZ Inc.</span>
@@ -672,11 +838,12 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <img src="{{ asset('images/testi/bg.svg') }}" alt="">
+                    <img src="/images/testi/bg.svg" alt="Testimonials illustration">
                 </div>
             </div>
         </div>
-    </div>  --}}
+    </div>
+<!-- END Home Page Copy Snippet --> --}}
 @endsection
 
 
@@ -690,39 +857,6 @@
             animate.style.transform = 'translate(0px, 0px)';
             animate.style.opacity = '1';
         }
-
-        const logoSwiper = new Swiper('#logo-swiper', {
-            loop: true,
-            speed: 2000,
-            spaceBetween: 75,
-            slidesPerView: 5,
-            centeredSlides: false,
-            autoplay: {
-                delay: 1,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: false,
-                waitForTransition: false
-            },
-            allowTouchMove: true,
-            navigation: {
-                nextEl: '#logo-swiper .swiper-button-next',
-                prevEl: '#logo-swiper .swiper-button-prev'
-            },
-            pagination: {
-                el: '#logo-swiper .swiper-pagination',
-                clickable: true
-            },
-            breakpoints: {
-                320: { slidesPerView: 2, spaceBetween: 30 },
-                480: { slidesPerView: 3, spaceBetween: 40 },
-                768: { slidesPerView: 4, spaceBetween: 50 },
-                992: { slidesPerView: 5, spaceBetween: 60 },
-                1200: { slidesPerView: 6, spaceBetween: 70 },
-                1400: { slidesPerView: 7, spaceBetween: 75 }
-            },
-            loopedSlides: 10,
-            loopAdditionalSlides: 10,
-        });
 
         const portfolioSwiper = new Swiper('#portfolio-swiper', {
             loop: true,
@@ -766,6 +900,62 @@
             }
         });
 
+        document.querySelectorAll('.logo-carousel').forEach((carousel) => {
+            const swiperEl = carousel.querySelector('.logo-swiper');
+            if (!swiperEl) {
+                return;
+            }
+
+            const slidesCount = swiperEl.querySelectorAll('.swiper-slide').length;
+            const MIN_SLIDES = 12;
+
+            if (slidesCount < MIN_SLIDES) {
+                const wrapper = swiperEl.querySelector('.swiper-wrapper');
+                const slides = Array.from(wrapper.children);
+                const clonesNeeded = Math.ceil(MIN_SLIDES / slidesCount) - 1;
+
+                for (let i = 0; i < clonesNeeded; i++) {
+                    slides.forEach((slide) => {
+                        const clone = slide.cloneNode(true);
+                        clone.classList.add('logo-slide-clone');
+                        wrapper.appendChild(clone);
+                    });
+                }
+            }
+
+            const effectiveSlides = swiperEl.querySelectorAll('.swiper-slide').length;
+
+            const prevBtn = carousel.querySelector('.logo-nav.logo-prev');
+            const nextBtn = carousel.querySelector('.logo-nav.logo-next');
+
+            const logoSwiper = new Swiper(swiperEl, {
+                loop: true,
+                loopedSlides: effectiveSlides,
+                loopAdditionalSlides: effectiveSlides,
+                speed: 4000,
+                allowTouchMove: false,
+                autoplay: {
+                    delay: 0,
+                    disableOnInteraction: false,
+                    stopOnLastSlide: false,
+                    pauseOnMouseEnter: false
+                },
+                slidesPerView: 'auto',
+                spaceBetween: 92,
+                freeMode: true,
+                freeModeMomentum: false,
+                centeredSlides: false,
+                navigation: {
+                    prevEl: prevBtn,
+                    nextEl: nextBtn
+                }
+            });
+
+            if (logoSwiper.autoplay && typeof logoSwiper.autoplay.start === 'function') {
+                logoSwiper.autoplay.start();
+            }
+        });
+
         const observerUp = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -778,4 +968,3 @@
     });
 </script>
 @endsection
-

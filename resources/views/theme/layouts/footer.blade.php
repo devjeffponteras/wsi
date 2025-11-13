@@ -73,6 +73,7 @@
     }
 
     .social-icon {
+        margin-top: 30px;
         width: 40px;
         height: 40px;
         font-size: 1.2rem;
@@ -82,19 +83,15 @@
     .social-icon:hover {
         transform: scale(1.2);
     }
-    
+
 
     .award-img {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         border-radius: 8px;
+        margin-bottom: 20px;
         filter: brightness(0.9);
     }
 
-    .award-img:hover {
-        transform: scale(1.1);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        filter: brightness(1);
-    }
 
     /* Responsive Adjustments */
     @media (max-width: 767px) {
@@ -107,4 +104,10 @@
             font-size: 1rem;
         }
     }
+            #footer .container img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
 </style>

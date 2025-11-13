@@ -91,8 +91,8 @@ Manage News
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @if(auth()->user()->has_access_to_route('news.change.status'))
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="change_status('PUBLISHED')">{{__('common.publish')}}</a>
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="change_status('PRIVATE')">{{__('common.private')}}</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="change_status('Published')">{{__('common.publish')}}</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="change_status('Private')">{{__('common.private')}}</a>
                                             @endif
                                             @if(auth()->user()->has_access_to_route('news.delete'))
                                                 <a class="dropdown-item tx-danger" href="javascript:void(0)" onclick="delete_page()">{{__('common.delete')}}</a>
@@ -186,10 +186,10 @@ Manage News
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-right">
                                                             @if (auth()->user()->has_access_to_route('news.change.status'))
-                                                                @if(strtoupper($new->status)=='PUBLISHED')
-                                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="post_form('{{route('news.change.status')}}','PRIVATE',{{$new->id}})"> Private</a>
+                                                                @if($new->status === 'Published')
+                                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="post_form('{{route('news.change.status')}}','Private',{{$new->id}})"> Private</a>
                                                                 @else
-                                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="post_form('{{route('news.change.status')}}','PUBLISHED',{{$new->id}})"> Publish</a>
+                                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="post_form('{{route('news.change.status')}}','Published',{{$new->id}})"> Publish</a>
                                                                 @endif
                                                             @endif
 
@@ -465,6 +465,8 @@ Manage News
                 selected_pages += fid.substring(2, fid.length)+'|';
             });
 
+            selected_pages = selected_pages.replace(/\|$/,'');
+
             if(parseInt(counter) < 1){
                 $('#prompt-no-selected').modal('show');
                 return false;
@@ -472,11 +474,11 @@ Manage News
             else{
 
                 if(parseInt(counter) > 1){ // ask for confirmation when multiple pages was selected
-                    let statusName = (status == 'PUBLISHED') ? 'PUBLISH' : status;
-                    $('#newsStatus').html(statusName)
+                    let statusLabel = (status === 'Published') ? 'publish' : 'set as private';
+                    $('#newsStatus').text(statusLabel);
                     $('#prompt-update-status').modal('show');
 
-                    $('#btnUpdateStatus').on('click', function() {
+                    $('#btnUpdateStatus').off('click').on('click', function() {
                         post_form('{{route('news.change.status')}}',status,selected_pages);
                     });
                 }
@@ -490,6 +492,9 @@ Manage News
         function post_form(url,status,pages){
 
             var pageValue = (pages !== undefined && pages !== null) ? pages.toString() : '';
+            if (pageValue && pageValue.indexOf('|') !== -1) {
+                pageValue = pageValue.split('|').filter(Boolean).join('|');
+            }
 
             $('#posting_form').attr('action',url);
             $('#status').val(status);

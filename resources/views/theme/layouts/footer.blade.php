@@ -14,11 +14,11 @@
     }
     $socmedHTML .= '</div>';
 
-    // If the placeholder exists in the DB content, replace it.
+
     if (strpos($contents, '{Social Media Icons}') !== false) {
         $footerContents = str_replace('{Social Media Icons}', $socmedHTML, $contents);
     } else {
-        // Otherwise, just append it at the end.
+
         $footerContents = $contents . $socmedHTML;
     }
 @endphp
@@ -28,7 +28,7 @@
 <footer id="footer" class="dark" style="background: linear-gradient(135deg, #1e3a8a 0%; padding: 80px 0 20px;">
     <div class="container" style="margin-top: 2rem;">
         {!! $footerContents !!}
-        <!-- Bottom -->
+
         <div class="text-center mt-5 pt-4 border-top border-white border-opacity-10">
             <p class="text-white-50 mb-0">Copyright © {{ date('Y') }} Webfocus Solutions Inc. All Rights Reserved.</p><br>
         </div>

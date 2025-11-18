@@ -489,9 +489,11 @@
             div#banner.home-slider:not(.no-slider-banner) .slick-list.draggable .slick-track .slick-slide .hero-slide .banner-caption p.slide-content2 {
                 font-size: clamp(0.62rem, 2.3vw, 0.98rem) !important;
                 line-height: 1.35;
-                max-width: clamp(230px, 74vw, 380px);
+                max-width: clamp(220px, 62vw, 320px);
                 margin-left: auto;
                 margin-right: auto;
+                padding-left: clamp(0.75rem, 6vw, 1.5rem);
+                padding-right: clamp(0.75rem, 6vw, 1.5rem);
             }
             div#banner.home-slider:not(.no-slider-banner) .slick-list.draggable .slick-track .slick-slide .hero-slide .banner-caption .d-flex.mt-5 {
                 margin-top: clamp(0.85rem, 5.5vw, 1.5rem) !important;
@@ -508,14 +510,41 @@
             }
             div#banner.home-slider:not(.no-slider-banner) .slick-prev,
             div#banner.home-slider:not(.no-slider-banner) .slick-next {
-                width: clamp(30px, 10vw, 40px);
-                height: clamp(30px, 10vw, 40px);
-                background: transparent !important;
-                border: 1px solid rgba(255, 255, 255, 0.45) !important;
-                border-radius: 50%;
-                box-shadow: none !important;
+                width: clamp(38px, 12vw, 48px);
+                height: clamp(38px, 12vw, 48px);
+                background: rgba(44, 44, 44, 0.85) !important;
+                border: none !important;
+                border-radius: 10px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.18) !important;
                 top: 50% !important;
                 transform: translateY(-50%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: background 0.2s;
+            }
+            div#banner.home-slider:not(.no-slider-banner) .slick-prev:before,
+            div#banner.home-slider:not(.no-slider-banner) .slick-next:before {
+                color: #fff;
+                opacity: 0.92;
+                font-size: 2rem;
+                line-height: 1;
+            }
+            @media only screen and (max-width: 575.98px) {
+                div#banner.home-slider:not(.no-slider-banner) .slick-prev,
+                div#banner.home-slider:not(.no-slider-banner) .slick-next {
+                    width: 32px;
+                    height: 32px;
+                    background: rgba(44, 44, 44, 0.85) !important;
+                    border: none !important;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.18) !important;
+                }
+                div#banner.home-slider:not(.no-slider-banner) .slick-prev:before,
+                div#banner.home-slider:not(.no-slider-banner) .slick-next:before {
+                    font-size: 1.3rem;
+                }
+            }
             }
             div#banner.home-slider:not(.no-slider-banner) .slick-prev {
                 left: clamp(0.6rem, 4vw, 1.4rem) !important;

@@ -871,15 +871,18 @@
     .service-card .arrow-btn {
         position: static;
         margin-top: 1.25rem;
-        transform: none;
+        transform: none !important;
         opacity: 1;
         align-self: center;
         margin-left: auto;
         margin-right: auto;
+        left: auto;
+        right: auto;
+        transition: none;
     }
 
     .service-card .arrow-btn:hover {
-        transform: translateY(-2px);
+        transform: none;
     }
 }
 </style>

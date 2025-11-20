@@ -275,9 +275,6 @@ text-center.mb-12 {
     margin-bottom: 1rem;
 }
 
-#package_price {
-    margin-bottom:14rem;
-}
 
 .package-features {
     list-style: none;
@@ -704,6 +701,9 @@ packages-wrapper .packages-grid {
 #plan2:checked ~ .packages-wrapper .year2 {
     display: grid;
 }
+.year2{
+    display: none;
+}
 
 /* PACKAGE CARDS */
 .package-card {
@@ -724,23 +724,7 @@ packages-wrapper .packages-grid {
 }
 
 /* Inner sections stretch */
-.package-header,
-.package-price,
-.package-features,
-.package-cta {
-    flex-shrink: 0; /* prevent collapsing */
-}
 
-.package-features {
-    flex-grow: 1; /* stretch features to fill remaining space */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* distribute evenly */
-}
-
-.package-cta {
-    margin-top: auto; /* push CTA to bottom */
-}
 .package-features li {
     padding: 0.5rem 0;
     border-bottom: 1px solid #f3f4f6;
@@ -816,6 +800,7 @@ packages-wrapper .packages-grid {
     .price-large { font-size: 2.6rem; }
 }
 </style>
+
 @endsection
 
 @section('content')
@@ -833,6 +818,30 @@ packages-wrapper .packages-grid {
 
 @section('pagejs')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const plan1 = document.getElementById("plan1");
+    const plan2 = document.getElementById("plan2");
+    const year1 = document.querySelector(".year1");
+    const year2 = document.querySelector(".year2");
+
+    // Show year1 initially
+    year1.style.display = "grid";
+
+    function toggleYears() {
+        if (plan1.checked) {
+            year1.style.display = "grid";
+            year2.style.display = "none";
+        } else if (plan2.checked) {
+            year1.style.display = "none";
+            year2.style.display = "grid";
+        }
+    }
+
+    plan1.addEventListener("change", toggleYears);
+    plan2.addEventListener("change", toggleYears);
+});
+    </script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Intersection Observer for scroll animations

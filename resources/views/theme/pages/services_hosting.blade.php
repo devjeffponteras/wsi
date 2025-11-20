@@ -132,20 +132,7 @@ text-center.mb-12 {
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-.hosting-card_fc {
-    background: #f9fafb;
-    border-radius: 1rem;
-    border: 1px solid #e5e7eb;
-    padding: 2rem;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 350px;
-    width:300px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+
 
 .hosting-card_fc:hover {
     transform: translateY(-5px);
@@ -211,8 +198,6 @@ text-center.mb-12 {
     justify-content: center;
     align-items: stretch; /* ensures cards stretch to equal height */
 }
-
-
 
 
 .package-card {
@@ -745,6 +730,10 @@ packages-wrapper .packages-grid {
     margin-bottom: 14rem;
 }
 
+#package_price-2 {
+    margin-bottom: 14rem;
+}
+
 /* PACKAGE CTA */
 .package-cta a {
     background: linear-gradient(180deg,#2b56d3,#1f4fd1);
@@ -798,6 +787,9 @@ packages-wrapper .packages-grid {
 }
 @media (max-width: 480px) {
     .price-large { font-size: 2.6rem; }
+}
+.focuscare-card {
+    margin-bottom: 1em;
 }
 </style>
 

@@ -132,14 +132,6 @@ text-center.mb-12 {
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
-
-
-.hosting-card_fc:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    border-color: #3b82f6;
-}
-
 .hosting-title {
     font-size: 1.5rem;
     font-weight: 700;
@@ -639,12 +631,12 @@ packages-wrapper .packages-grid {
 }
 
 /* HOSTING CARDS */
-.hosting-grid, .hosting-grid_fc {
+.hosting-grid {
     display: grid;
     gap: 2rem;
     margin: 2rem 1.5rem;
 }
-.hosting-card, .hosting-card_fc {
+.hosting-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -654,7 +646,7 @@ packages-wrapper .packages-grid {
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.hosting-card:hover, .hosting-card_fc:hover {
+.hosting-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
@@ -792,6 +784,7 @@ packages-wrapper .packages-grid {
     margin-bottom: 1em;
 }
 </style>
+
 
 @endsection
 

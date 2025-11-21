@@ -132,6 +132,27 @@ text-center.mb-12 {
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
+.hosting-card_fc {
+    background: #f9fafb;
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+    width:300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hosting-card_fc:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-color: #3b82f6;
+}
+
 .hosting-title {
     font-size: 1.5rem;
     font-weight: 700;
@@ -631,12 +652,18 @@ packages-wrapper .packages-grid {
 }
 
 /* HOSTING CARDS */
-.hosting-grid {
+.hosting-grid, .hosting-grid_fc {
     display: grid;
     gap: 2rem;
     margin: 2rem 1.5rem;
 }
-.hosting-card {
+
+.hosting-card_fc p {
+    text-align: center;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+.hosting-card{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -646,7 +673,7 @@ packages-wrapper .packages-grid {
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.hosting-card:hover {
+.hosting-card:hover, .hosting-card_fc:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
@@ -722,10 +749,6 @@ packages-wrapper .packages-grid {
     margin-bottom: 14rem;
 }
 
-#package_price-2 {
-    margin-bottom: 14rem;
-}
-
 /* PACKAGE CTA */
 .package-cta a {
     background: linear-gradient(180deg,#2b56d3,#1f4fd1);
@@ -779,9 +802,6 @@ packages-wrapper .packages-grid {
 }
 @media (max-width: 480px) {
     .price-large { font-size: 2.6rem; }
-}
-.focuscare-card {
-    margin-bottom: 1em;
 }
 </style>
 

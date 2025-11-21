@@ -785,7 +785,10 @@ packages-wrapper .packages-grid {
     background: #2b56d3;
     color: white;
 }
-
+ .focuscare-card{
+        margin-bottom: 1rem;
+    }
+    
 /* RESPONSIVE */
 @media (max-width: 1279px) {
     .packages-wrapper .packages-grid {

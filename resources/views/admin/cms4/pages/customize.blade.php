@@ -15,18 +15,20 @@
 
     <div class="container pd-x-0">
         <div class="d-sm-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
-            <div>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb breadcrumb-style1 mg-b-10">
-                        <li class="breadcrumb-item" aria-current="page"><a href="{{route('dashboard')}}">CMS</a></li>
-                        <li class="breadcrumb-item" aria-current="page"><a href="{{route('pages.index')}}">Pages</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit a Page</li>
-                    </ol>
-                </nav>
-                <h4 class="mg-b-0 tx-spacing--1">Edit a Page</h4>
-            </div>
-            <div>
-                <a class="btn btn-outline-primary btn-sm" href="{{$page->get_url()}}" target="_blank">Preview Page</a>
+            <div class="d-flex align-items-center justify-content-between mg-b-20 mg-lg-b-25 mg-xl-b-30">
+                <div>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb breadcrumb-style1 mg-b-10">
+                            <li class="breadcrumb-item" aria-current="page"><a href="{{route('dashboard')}}">CMS</a></li>
+                            <li class="breadcrumb-item" aria-current="page"><a href="{{route('pages.index')}}">Pages</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Edit a Page</li>
+                        </ol>
+                    </nav>
+                    <h4 class="mg-b-0 tx-spacing--1">Edit a Page</h4>
+                </div>
+                <div>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ url($page->get_url()) }}" target="_blank">Preview Page</a>
+                </div>
             </div>
         </div>
         <form id="editForm" action="{{ route('pages.update-customize',$page->id) }}" method="post" enctype="multipart/form-data">
@@ -39,7 +41,7 @@
                         <label class="d-block">{{ $page->name }}</label>
                         <label>
                             <small id="page_slug">
-                                <a target="_blank" href="{{ $page->get_url() }}">{{ $page->get_url() }}</a>
+                                <a target="_blank" href="{{ url($page->get_url()) }}">{{ url($page->get_url()) }}</a>
                             </small>
                         </label>
                     </div>

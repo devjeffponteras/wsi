@@ -21,6 +21,7 @@
 
             </ul>
         </li>
+
     @endif
 
     @if (auth()->user()->has_access_to_albums_module() || auth()->user()->has_access_to('albums'))
@@ -79,14 +80,6 @@
             </ul>
         </li>
     @endif
-    {{-- @if (auth()->user()->has_access_to_pages_module() || auth()->user()->has_access_to('services') || auth()->user()->role_id == '9')
-        <li class="nav-item with-sub @if (request()->routeIs('services*')) active show @endif">
-            <a href="" class="nav-link"><i data-feather="layers"></i> <span>Services</span></a>
-            <ul>
-                <li @if (\Route::current()->getName() == 'services.edit' || \Route::current()->getName() == 'services.index' || \Route::current()->getName() == 'services.index.advance-search') class="active" @endif><a href="{{ route('services.index') }}">Manage Services</a></li>
-            </ul>
-        </li>
-    @endif --}}
 
     @if (auth()->user()->is_an_admin() || auth()->user()->has_access_to('settings'))
         <li class="nav-item with-sub @if (request()->routeIs('account*') || request()->routeIs('website-settings*') || request()->routeIs('audit*')) active show @endif">
@@ -120,6 +113,14 @@
                 <li @if (request()->routeIs('role*')) class="active" @endif><a href="{{ route('role.index') }}">Roles</a></li>
                 <li @if (request()->routeIs('access*')) class="active" @endif><a href="{{ route('access.index') }}">Access Rights</a></li>
                 <li @if (request()->routeIs('permission*')) class="active" @endif><a href="{{ route('permission.index') }}">Permissions</a></li>
+            </ul>
+        </li>
+
+                <!-- Services Section -->
+        <li class="nav-item with-sub @if (request()->routeIs('admin.services*') || request()->routeIs('admin.hosting*')) active show @endif">
+            <a href="#" class="nav-link"><i data-feather="server"></i> <span>Services</span></a>
+            <ul>
+                <li @if (request()->routeIs('admin.hosting*')) class="active" @endif><a href="#">Hosting</a></li>
             </ul>
         </li>
     @endif

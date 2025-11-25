@@ -23,11 +23,12 @@ use App\Models\TemplateCategory;
 use App\Models\Template;
 use App\Models\EmailRecipient;
 use App\Models\ArticleCategory;
-use App\Models\Ecommerce\{BannerAd, BannerAdPage, Product};
+use App\Models\Ecommerce\{BannerAd, BannerAdPage};
 
 use Auth;
 use DB;
 use Session;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 
@@ -150,25 +151,85 @@ class FrontController extends Controller
             ->orderBy('name', 'asc')
             ->get();
 
+        // // Products (books)
         // $products = Product::where('status', 'PUBLISHED')
         //     ->whereRaw('LOWER(book_type) NOT IN (?, ?)', ['ebook', 'e-book'])
         //     ->where(function ($query) use ($searchtxt) {
         //         $query->where('name', 'like', '%' . $searchtxt . '%')
-        //         ->orWhere('author', 'like', '%' . $searchtxt . '%');
+        //             ->orWhere('author', 'like', '%' . $searchtxt . '%');
         //     })
-        //     // ->select('name', "book-details/".'slug')
-        //     ->select('name', DB::raw("CONCAT('book-details/', slug) as slug"))
+        //     ->select('name', 'slug')
         //     ->orderBy('name', 'asc')
         //     ->get();
 
         // $products = Product::select('products.*')->leftJoin('product_additional_infos', 'products.id', '=', 'product_additional_infos.product_id')
         // ->where('products.status', 'PUBLISHED')->get();
 
-        $totalItems = $pages->count()+$news->count();
+        // Resources (cases)
+        $resources = Resource::where('status', 'Active')
+            ->where(function ($query) use ($searchtxt) {
+                $query->where('name', 'like', '%' . $searchtxt . '%')
+                    ->orWhere('description', 'like', '%' . $searchtxt . '%');
+            })
+            ->select('name', 'slug')
+            ->orderBy('name', 'asc')
+            ->get();
 
-        $searchResult = collect($pages)->merge($news)->paginate(10);
+        // products are not relevant for this search context — exclude them
+        // $totalItems = $pages->count() + $news->count() + $products->count() + $resources->count();
+        $totalItems = $pages->count() + $news->count() + $resources->count();
+
+        // If exactly one result, redirect straight to that page/article for better UX
+        if ($totalItems === 1) {
+            if ($pages->count() === 1) {
+                $slug = $pages->first()->slug;
+                return redirect(url($slug));
+            }
+            if ($news->count() === 1) {
+                $slug = $news->first()->slug;
+                return redirect(route('news.front.show', $slug));
+            }
+            // products intentionally excluded from single-result redirect
+            if ($resources->count() === 1) {
+                $slug = $resources->first()->slug;
+                return redirect(route('resource-details.front.show', $slug));
+            }
+            // Fallback: pick first merged item and check existence
+            $first = collect($pages)->merge($news)->merge($resources)->first();
+            if ($first) {
+                $slug = $first->slug ?? null;
+                if ($slug) {
+                    if (Page::where('slug', $slug)->exists()) return redirect(url($slug));
+                    if (Article::where('slug', $slug)->exists()) return redirect(route('news.front.show', $slug));
+                }
+            }
+        }
+
+        // Exclude products from search results for now
+        // $searchResult = collect($pages)->merge($news)->merge($products)->merge($resources);
+        $searchResult = collect($pages)->merge($news)->merge($resources);
+
+        // Simple manual pagination for collections (10 per page)
+        $perPage = 10;
+        $currentPage = (int) ($request->get('page', 1));
+        $currentItems = $searchResult->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $searchResult = new LengthAwarePaginator($currentItems, $searchResult->count(), $perPage, $currentPage, [
+            'path' => $request->url(),
+        ]);
 
         return view('theme.pages.search-result', compact('searchResult', 'totalItems', 'page','breadcrumb'));
+    }
+
+    /**
+     * Wrapper for /search route — accepts `q` param from header and forwards
+     * it to the existing seach_result handler (which expects `searchtxt`).
+     */
+    public function search(Request $request)
+    {
+        // map `q` => `searchtxt` so existing logic can be reused
+        $q = $request->get('q', $request->get('searchtxt', ''));
+        $request->merge(['searchtxt' => $q]);
+        return $this->seach_result($request);
     }
 
     public function page($slug = "home")

@@ -225,29 +225,20 @@
             position: absolute;
             z-index: 1;
             min-width: 50%;
-            max-width: 50%;
-            min-height: 60%;
-            left: 5%;
-            top: 10%;
-            background-color: #85a1ccc7;
-            border-radius: 14px;
-            border: none;
+            .primary-label {
+                color: #0c4499 !important;
+                background-color: #dfecfd !important;
+                padding: 2px 15px;
+                font-size: 32px !important;
+                max-width: fit-content;
+                border-radius: 14px;
+            }
             text-align: left;
             color: white;
         }
         .col-md-6.text-center.flex-center-center .position-relative.overflow-hidden a .card .card-header {
             border: none;
         }
-        i.bi-facebook,
-        i.bi-linkedin {
-            font-size: 35px;
-            margin-right: 12px;
-            margin-left: 12px;
-        }
-        .modair-primary-logo {
-            min-width: 210px;
-        }
-
         /*our services animations*/
         a.img-services-wrapper {
             position: relative;
@@ -307,17 +298,18 @@
         #copyrights .copyright-links a {
             color: rgba(255, 255, 255, 0.4);
         }
+        /* Ensure header does not create extra vertical space above the banner */
         #header .header-wrap-clone {
-            height: 100% !important;
+            height: 0 !important;
+            display: none !important;
+        }
+        header#header,
+        header#header div#header-wrap {
+            margin-bottom: 0 !important;
+            padding-bottom: 0 !important;
         }
 
-        /*section#slider.slick-wrapper.clearfix .banner-wrapper:not(.no-slider-banner),
-        section#slider.slick-wrapper.clearfix div#banner.home-slider.slick-initialized:not(.no-slider-banner) {
-            height: 443px !important;
-        }*/
-        /*.slick-slide .hero-slide .banner-caption .row.align-items-center .col-lg-12 h2.text-center.slide-content {
-            margin-top: -15%;
-        }*/
+        /* (removed unused experimental banner-height and slide-caption rules) */
         section#slider.slick-wrapper.clearfix.subpage-banner .banner-wrapper {
             position: relative;
         }
@@ -596,7 +588,107 @@
             }
         }
 
+        /* Tablet-specific fixes to remove white gap under banner (iPad widths) */
+        @media only screen and (max-width: 1024px) {
+            /* Tablet: maximize banner vertical presence (phones unchanged) */
+            section#slider.home-slider-banner img,
+            section#slider .hero-slide img {
+                transform: none !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                bottom: 0 !important;
+            }
+
+            /* Remove top spacing from the content that follows the banner */
+            section#slider + * {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+            }
+
+            /* Remove top padding from main content containers that follow the banner */
+            .light-body,
+            .dark-body {
+                padding-top: 0 !important;
+            }
+
+            /* Ensure banner wrapper has no bottom spacing */
+            section#slider .banner-wrapper,
+            section#slider .banner-wrapper > .container-fluid,
+            section#slider .banner-wrapper > .container {
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+            }
+        }
+
     </style>
+
+    <!-- Aggressive fix (not applied to phones): remove any remaining gap under the banner and between banner and next section -->
+    <style>
+    @media only screen and (min-width: 576px) {
+        /* Banner containers and slides */
+        section#slider,
+        section#slider .banner-wrapper,
+        section#slider .banner-wrapper > .container,
+        section#slider .banner-wrapper > .container-fluid,
+        section#slider .banner-wrapper .slick-list,
+        section#slider .banner-wrapper .slick-track,
+        section#slider .banner-wrapper .slick-slide,
+        section#slider .hero-slide {
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+            min-height: 0 !important;
+        }
+
+        /* Immediate following content: remove top spacing so banner sits flush */
+        section#slider + *,
+        section#slider + .light-body,
+        section#slider + .dark-body,
+        section#slider + div {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        /* If the following container uses inner .container padding, collapse it only for the direct follower */
+        section#slider + * .container,
+        section#slider + * .container-fluid {
+            padding-top: 0 !important;
+        }
+
+        /* Prevent slick slider controls or pseudo elements creating visual gap */
+        section#slider .hero-slide::after,
+        section#slider .banner-wrapper::after {
+            display: none !important;
+        }
+    }
+    </style>
+        <style>
+        @media only screen and (min-width: 768px) and (max-width: 1366px) {
+            /* Reduce banner vertical height on tablet/desktop to avoid overly-tall hero */
+            /* Home banner: 45vh, Subpage banner: 35vh (kept min/max safeguards) */
+            div#banner.home-slider:not(.no-slider-banner) .slick-list.draggable .slick-track .slick-slide .hero-slide {
+                height: 45vh !important;
+                min-height: 220px !important;
+                max-height: 800px !important;
+            }
+
+            section#slider.slick-wrapper.clearfix.subpage-banner #banner .hero-slide {
+                height: 35vh !important;
+                min-height: 180px !important;
+                max-height: 600px !important;
+            }
+
+            /* Ensure images cover the area for both home and subpage banners */
+            div#banner.home-slider .hero-slide > img,
+            section#slider.slick-wrapper.clearfix.subpage-banner #banner .hero-slide > img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+                display: block !important;
+            }
+        }
+        </style>
 
     <style>
         @php
@@ -621,4 +713,7 @@
     @endif
 
     @yield('pagecss')
+    <!-- Hide header search and CTA on tablet (iPad) sizes -->
+
+
 </head>

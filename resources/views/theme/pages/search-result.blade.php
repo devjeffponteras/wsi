@@ -16,16 +16,24 @@
             </form>
             @foreach($searchResult as $rs)
                 @php
-                    if($rs->getTable() == 'articles'){
-                        $link = 'news/'.$rs->slug;
+                    $link = null;
+                    $table = method_exists($rs, 'getTable') ? $rs->getTable() : null;
+                    if ($table == 'articles') {
+                        $link = route('news.front.show', $rs->slug);
+                    } elseif ($table == 'products') {
+                        $link = route('product.details', $rs->slug);
+                    } elseif ($table == 'resources') {
+                        $link = route('resource-details.front.show', $rs->slug);
+                    } elseif ($table == 'pages') {
+                        $link = url('/' . $rs->slug);
                     } else {
-                        $link = $rs->slug;
+                        $link = url('/' . ($rs->slug ?? ''));
                     }
                 @endphp
                 <div>
                     <blockquote>
                         <h4 class="m-0">{{ $rs->name }}</h4>
-                        <a href="{{ url('/'.$link) }}" target="_blank"><small>{{ url('/'.$link) }}</small></a>
+                        <a href="{{ $link }}" target="_blank"><small>{{ $link }}</small></a>
                     </blockquote>
                 </div>
             @endforeach

@@ -20,38 +20,6 @@
 
 @section('pagecss')
 <style>
-/* Hero Section */
-    .hero-section {
-        color: white;
-        min-height: 70vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-        margin-top: -30px;
-        padding-top: 0;
-    }
-
-    .hero-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: 0;
-    }
-
-    .hero-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(43, 86, 211, 0.5);
-        z-index: 1;
-    }
 
     .hero-content {
         text-align: center;

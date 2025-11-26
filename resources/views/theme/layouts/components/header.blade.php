@@ -67,6 +67,7 @@
         const primaryMenuTrigger = document.getElementById('primary-menu-trigger');
         const mobileMenuSearchInput = document.querySelector('.mobile-menu-search-input');
         const primaryMenu = document.getElementById('primary-menu');
+        const headerCustomWrapper = document.querySelector('.header-custom-menu-wrapper');
         // monitor menu open/close using body classes for robust behavior
         const bodyEl = document.body;
         const classObserver = new MutationObserver(function(mutations) {
@@ -75,9 +76,20 @@
                     const isOpen = bodyEl.classList.contains('primary-menu-open');
                     if (primaryMenu) primaryMenu.setAttribute('aria-hidden', String(!isOpen));
                     if (primaryMenuTrigger) primaryMenuTrigger.setAttribute('aria-expanded', String(isOpen));
-                    if (isOpen && window.innerWidth <= 991.98) {
+                    if (isOpen) {
                         // short delay for menu animation to finish
                         setTimeout(function() { mobileMenuSearchInput?.focus() }, 60);
+                        // on tablet sizes (and below a larger threshold), hide the header custom wrapper to avoid duplicates
+                        try{
+                            if(window.innerWidth <= 1366){
+                                headerCustomWrapper?.style.setProperty('display','none','important');
+                            }
+                        }catch(e){}
+                    } else {
+                        // restore header wrapper when menu closes
+                        try{
+                            headerCustomWrapper?.style.removeProperty('display');
+                        }catch(e){}
                     }
                 }
             });

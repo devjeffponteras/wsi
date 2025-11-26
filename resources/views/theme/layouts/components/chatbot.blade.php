@@ -1,21 +1,81 @@
-<!-- Chatbot Icon
-============================================= -->
-<div id="chatBotIcon" style="position: fixed; bottom: 100px; right: 25px; width: 50px; height: 50px; background-color: #dd3451; border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; z-index: 2000; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: flex; align-items: center; justify-content: center; user-select: none;">
-	💬
-</div>
+@php
+	$fwcSrc = env('FWC_SCRIPT_SRC', null); /* e.g. //fw-cdn.com/11419951/4091723.js */
+	$fcToken = env('FRESHCHAT_TOKEN', null);
+	$fcHost = env('FRESHCHAT_HOST', 'https://wchat.freshchat.com');
+	$fcForce = env('FORCE_FRESHCHAT', false);
+	$fcDirection = env('FRESHCHAT_DIRECTION', null); /* 'ltr' or 'rtl' */
+	$fcCssClass = env('FRESHCHAT_CSS_CLASS', null); /* e.g. custom_fc_frame */
+	$fcRight = env('FRESHCHAT_CSS_RIGHT', '50px');
+	$fcBottom = env('FRESHCHAT_CSS_BOTTOM', '30px');
+@endphp
 
-<!-- Chatbot Widget
-============================================= -->
-<div id="chatBot" style="position: fixed; bottom: 80px; right: 20px; width: 320px; height: 450px; background: linear-gradient(135deg, #f0f4f8, #ffffff); border: 2px solid #f5a9bc; z-index: 2000; cursor: default; padding: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border-radius: 15px; display: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-	<div id="chatBotHeader" style="background-color: #dd3451; color: white; padding: 12px; border-top-left-radius: 12px; border-top-right-radius: 12px; user-select: none; font-weight: bold; display: flex; align-items: center; justify-content: space-between; font-size: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-		<span style="display: flex; align-items: center;">💬 Chat with Us</span>
-		<button id="closeChatBot" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer; padding: 0 5px; line-height: 1;">×</button>
-	</div>
-	<div id="chatBotContent" style="height: calc(100% - 90px); overflow-y: auto; background-color: #ffffff; padding: 15px; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; margin-bottom: 10px;">
-		<p style="margin: 8px 0; color: #444; font-size: 14px;">Welcome to our chat! How can we assist you today?</p>
-	</div>
-	<div style="padding: 5px; display: flex; gap: 10px;">
-		<input type="text" id="chatInput" style="flex: 1; padding: 8px; border: 1px solid #f5a9bc; border-radius: 6px; box-sizing: border-box; font-size: 14px; transition: border-color 0.3s;" placeholder="Type your message...">
-		<button id="sendButton" style="background-color: #dd3451; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 6px; font-size: 14px; transition: background-color 0.3s;">Send</button>
-	</div>
-</div>
+@if(!empty($fwcSrc))
+	<!-- External fw-cdn chat script provided by user -->
+	<script src="{{ $fwcSrc }}" chat="true"></script>
+@else
+	@if(!empty($fcToken) && (app()->environment('production') || $fcForce))
+		<!-- Freshchat Widget (loaded in production or when FORCE_FRESHCHAT=true) -->
+		<script>
+			window.fcSettings = {
+				token: "{{ $fcToken }}",
+				host: "{{ $fcHost }}",
+				config: {
+					headerProperty: {
+						direction: "{{ $fcDirection ?? 'ltr' }}"
+					}
+				}
+			};
+		</script>
+		<script src="{{ rtrim($fcHost, '/') }}/js/widget.js" async></script>
+
+		@if(!empty($fcCssClass))
+			<script>
+				window.fcWidgetMessengerConfig = {
+					config: {
+						cssNames: {
+							widget: "{{ $fcCssClass }}"
+						}
+					}
+				};
+			</script>
+			<style>
+				.{{ $fcCssClass }} {
+					right: {{ $fcRight }} !important;
+					bottom: {{ $fcBottom }} !important;
+				}
+			</style>
+		@endif
+	@else
+		<!-- Freshchat not loaded (non-production or missing token). Set env FRESHCHAT_TOKEN and FORCE_FRESHCHAT=true to enable locally. -->
+	@endif
+@endif
+
+<!-- Floating launcher (calls chat widget programmatically if available). Visible always; button will warn if widget isn't ready. -->
+<button id="freshchatLauncher" onclick="openFreshchat()" aria-label="Open chat" title="Chat with us"
+	style="position: fixed; bottom: 95px; right: 22px; width: 52px; height: 52px; background-color: #dd3451; border: none; border-radius: 50%; color: white; font-size: 22px; cursor: pointer; z-index: 2000; box-shadow: 0 6px 18px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center;">
+	💬
+</button>
+
+<script>
+	function openFreshchat() {
+		try {
+			/* If fw-cdn script provides a global open method, try common names first */
+			if (typeof window.openFWChat === 'function') {
+				window.openFWChat();
+				return;
+			}
+			if (typeof window.openFwChat === 'function') {
+				window.openFwChat();
+				return;
+			}
+			/* Freshchat widget */
+			if (window.fcWidget && typeof window.fcWidget.open === 'function') {
+				window.fcWidget.open();
+				return;
+			}
+			console.warn('Chat widget not ready. To test locally enable FORCE_FRESHCHAT=true and set FRESHCHAT_TOKEN, or set FWC_SCRIPT_SRC in .env to the fw-cdn script URL.');
+		} catch (e) {
+			console.warn('Chat open failed', e);
+		}
+	}
+</script>

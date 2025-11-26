@@ -54,7 +54,75 @@
 	@include('theme.layouts.components.privacy-terms-combined-modal')
 	<!-- Chatbot
 	============================================= -->
-    @include('theme.layouts.components.chatbot')
+	<!-- Embedded chat snippet provided by user -->
+	<script>
+	  window.fcSettings = {
+	    token: "WEB_CHAT_TOKEN",
+	    host: "WEB_HOST_URL",
+	    config: {
+	      headerProperty: {
+	        direction: 'ltr' //will move widget to left side of the screen
+	      }
+	    }
+	  };
+	</script>
+	<script src="WEB_HOST_URL/js/widget.js" async></script>
+
+	<style>
+	  .custom_fc_frame {
+	    right:20px !important;
+	    bottom: 100px !important;
+	  }
+	</style>
+
+	<script>
+	  window.fcWidgetMessengerConfig = {
+	    config: {
+	      cssNames: {
+	          widget: "custom_fc_frame"
+	      }
+	    }
+	  }
+	</script>
+
+	<script src='//fw-cdn.com/11419951/4091723.js' chat='true'></script>
+
+	<!-- Ensure chat widget sits above the "Go to Top" button -->
+	<style>
+		/* Ensure the Go To Top stays under chat (lower z) */
+		#gotoTop {
+			z-index: 800 !important;
+			pointer-events: auto !important;
+		}
+
+		/* Aggressively raise common chat widget containers, frames and iframes above #gotoTop */
+		.custom_fc_frame,
+		#freshchatLauncher,
+		.fc-widget,
+		.fc-frame,
+		.fc-button,
+		.fw-chat,
+		.fw-widget,
+		.fw-widget-container,
+		.fw-cdn-widget,
+		.wh-widget,
+		.wh-widget-container,
+		.wh-popup,
+		iframe[src*="fw-cdn.com"],
+		iframe[src*="wchat.freshchat.com"],
+		div[id^="fcWidget"],
+		div[class*="fc-"],
+		div[class*="fw-"],
+		div[class*="wh-"] {
+			z-index: 20000 !important;
+			pointer-events: auto !important;
+		}
+
+		/* If the chat launcher is positioned near gotoTop, nudge it up slightly */
+		#freshchatLauncher {
+			bottom: calc(30px + 24px) !important; /* move launcher slightly above typical gotoTop */
+		}
+	</style>
 
 	{{-- /* FOR CAPTCHA */ --}}
 

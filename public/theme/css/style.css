@@ -38,10 +38,10 @@
         }
 
         .feature-cards .card-animate:hover .icon-line-arrow-right.i-animate {
-            color: #ffffff;
+            color: #ffffff !important;
         }
 
-        #counter-cards-container .counter-card {
+        /* #counter-cards-container .counter-card {
             position: relative;
             overflow: hidden;
         }
@@ -71,4 +71,4 @@
             position: absolute;
             top: -102px;
             left: -18px;
-        }
+        } */

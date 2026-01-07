@@ -33,6 +33,42 @@
         }
 
         #i2uc, #i7y2m, #ij337 {
-            transform: translate(300px, 0px);
+            transform: translate(0px, 350px);
             transition: all .75s ease;
+        }
+
+        .feature-cards .card-animate:hover .icon-line-arrow-right.i-animate {
+            color: #ffffff;
+        }
+
+        #counter-cards-container .counter-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        div#i2uc:after {
+            content: "\265C";
+            opacity: .11;
+            font-size: 238px;
+            position: absolute;
+            top: -102px;
+            left: -18px;
+        }
+
+        div#i7y2m:after {
+            content: "\2691";
+            opacity: .11;
+            font-size: 238px;
+            position: absolute;
+            top: -102px;
+            left: -18px;
+        }
+
+        div#ij337:after {
+            content: "\2714";
+            opacity: .11;
+            font-size: 238px;
+            position: absolute;
+            top: -102px;
+            left: -18px;
         }

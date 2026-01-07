@@ -967,9 +967,9 @@
         document.querySelectorAll('.hidden-up').forEach((el) => observerUp.observe(el));
 
         // add-ons animation
-        document.getElementById('i2uc').style.transform = 'translate(0px, 0px)';
-        document.getElementById('i7y2m').style.transform = 'translate(0px, 0px)';
-        document.getElementById('ij337').style.transform = 'translate(0px, 0px)';
+        // document.getElementById('i2uc').style.transform = 'translate(0px, 0px)';
+        // document.getElementById('i7y2m').style.transform = 'translate(0px, 0px)';
+        // document.getElementById('ij337').style.transform = 'translate(0px, 0px)';
 
     });
 </script>

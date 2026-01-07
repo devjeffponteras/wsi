@@ -32,10 +32,10 @@
             padding: 24px 20px 64px 20px;
         }
 
-        #i2uc, #i7y2m, #ij337 {
+        /* #i2uc, #i7y2m, #ij337 {
             transform: translate(0px, 350px);
             transition: all .75s ease;
-        }
+        } */
 
         .feature-cards .card-animate:hover .icon-line-arrow-right.i-animate {
             color: #ffffff !important;

@@ -26,4 +26,13 @@
             font-size: 1.25rem;
             color: #666;
             margin-top: 10px;
+            margin-bottom: 0px;
+        }
+        #website-content #i9kyt {
+            padding: 24px 20px 64px 20px;
+        }
+
+        #i2uc, #i7y2m, #ij337 {
+            transform: translate(300px, 0px);
+            transition: all .75s ease;
         }

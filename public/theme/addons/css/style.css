@@ -33819,3 +33819,76 @@ div#related-portfolio article.portfolio-item .portfolio-image a img {
     width: 100% !important;
   }
 }
+
+/* added new @ 1-9-2026 */
+div#ipog.counter-cards {
+  padding: 40px 10px !important;
+}
+
+#iams8, #iqq52, #ix929, #iuej5, #ib1vq, #iy2hf, #i9kqt, #imxep {
+  border-right: none !important;
+  border-bottom: none !important;
+}
+
+#iwjsv {
+  border-top: none !important;
+}
+
+#ibepd {
+  border: none !important;
+}
+
+#ib1vq {
+  border-left: none !important;
+}
+
+#i2uc #itlj, #iwm63 #i7y2m, #io0lu #ij337 {
+  background: var(--bg_color, #0E2A47) url('/theme/addons/images/svg/sladge.jpg') 
+  no-repeat center center; 
+  background-size: 100% auto;
+}
+
+#i9kyt #ibepd {
+  background: url('/theme/addons/images/svg/subtle.jpg') 
+  no-repeat center center; 
+  background-size: 100% auto;
+}
+
+#i9kyt #iwjsv {
+  background: url('/theme/addons/images/svg/subtle.jpg') 
+  no-repeat center center; 
+  background-size: 100% auto;
+  background-position: top;
+}
+
+.slick-next, .slick-prev {
+  background: #33333300 !important;
+}
+
+div#banner .slick-track {
+  background-color: black;
+}
+
+h3#ifq3jm {
+  margin-top: 100px;
+  color: var(--cnvs-themecolor);
+  font-size: 1.75rem;
+}
+
+p#i1sask {
+  margin-bottom: 48px;
+  color: var(--cnvs-themecolor);
+  font-size: 1.75rem;
+}
+
+section#inwu5g {
+  padding-top: 48px;
+  margin-bottom: 100px;
+}
+
+@media only screen and (min-width: 1990px) {
+  #slider div#banner.home-slider:not(.no-slider-banner) .slick-list.draggable .slick-track .slick-slide .hero-slide {
+    max-height: 1000px;
+    min-height: 100% !important;
+  }
+}

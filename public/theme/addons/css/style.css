@@ -33918,6 +33918,7 @@ section#i5sqph {
   align-items: center;
   justify-content: center;
   padding:  52px 0;
+  background: linear-gradient(152deg, #021b64 65%, #FF5600);
 }
 
 .swiper-wrapper article .grid-inner .content-body.p-3.mb-2.mt-2 p.card-text {

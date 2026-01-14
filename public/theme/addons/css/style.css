@@ -33843,19 +33843,19 @@ div#ipog.counter-cards {
 }
 
 #i2uc #itlj, #iwm63 #i7y2m, #io0lu #ij337 {
-  background: url('/theme/addons/images/svg/sladge.jpg') 
+  background: url('{{ asset("/theme/addons/images/svg/sladge.jpg") }}')
   no-repeat center center; 
   background-size: 100% auto;
 }
 
 #i9kyt #ibepd {
-  background: url('/theme/addons/images/svg/subtle.jpg') 
+  background: url('{{ asset("/theme/addons/images/svg/subtle.jpg") }}')
   no-repeat center center; 
   background-size: 100% auto;
 }
 
 #i9kyt #iwjsv {
-  background: url('/theme/addons/images/svg/subtle.jpg') 
+  background: url('{{ asset("theme/addons/images/svg/subtle.jpg") }}')
   no-repeat center center; 
   background-size: 100% auto;
   background-position: top;

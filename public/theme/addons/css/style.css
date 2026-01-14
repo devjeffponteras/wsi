@@ -33871,14 +33871,17 @@ div#banner .slick-track {
 
 h3#ifq3jm {
   margin-top: 100px;
-  color: var(--cnvs-themecolor);
-  font-size: 1.75rem;
+  color: #454545;
+  /* color: var(--cnvs-themecolor); */
+  font-size: 2.5rem;
+  font-weight: 600 !important;
 }
 
 p#i1sask {
   margin-bottom: 48px;
-  color: var(--cnvs-themecolor);
+  color: #333333;
   font-size: 1.75rem;
+  text-shadow:0px 4px 3px #999999;
 }
 
 section#inwu5g {
@@ -33915,6 +33918,13 @@ section#i5sqph {
   align-items: center;
   justify-content: center;
   padding:  52px 0;
+}
+
+.swiper-wrapper article .grid-inner .content-body.p-3.mb-2.mt-2 p.card-text {
+  font-size: 14px;
+  margin-bottom: 16px;
+  line-height: 1.8;
+  opacity: .9;
 }
 
 @media only screen and (min-width: 1990px) {

@@ -33927,6 +33927,10 @@ section#i5sqph {
   opacity: .9;
 }
 
+#itdimv.swiper-container-horizontal.swiper-container-autoheight .swiper-wrapper .swiper-slide img {
+  max-height: 144px;
+}
+
 @media only screen and (min-width: 1990px) {
   #slider div#banner.home-slider:not(.no-slider-banner) .slick-list.draggable .slick-track .slick-slide .hero-slide {
     max-height: 1000px;

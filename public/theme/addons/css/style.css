@@ -33931,6 +33931,10 @@ section#i5sqph {
   max-height: 144px;
 }
 
+div#i7ifig.swiper-button-next {
+  transform: translate(-120px, 0px);
+}
+
 @media only screen and (min-width: 1990px) {
   #slider div#banner.home-slider:not(.no-slider-banner) .slick-list.draggable .slick-track .slick-slide .hero-slide {
     max-height: 1000px;

@@ -33937,6 +33937,11 @@ div#i7ifig.swiper-button-next {
   transform: translate(-120px, 0px);
 }
 
+/* logo img hide */
+#ij3co6-2, #i50yco-2, #i37nlh-2, #i5ks9i-2, #idsl4b-3, #i87ioh-3, #iit07i-2, #ir47ag-2, #i37nlh, #i50yco {
+  display: none;
+}
+
 @media only screen and (min-width: 1990px) {
   #slider div#banner.home-slider:not(.no-slider-banner) .slick-list.draggable .slick-track .slick-slide .hero-slide {
     max-height: 1000px;

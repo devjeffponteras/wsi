@@ -33944,7 +33944,7 @@ div#i7ifig.swiper-button-next {
 
 @media only screen and (min-width: 1990px) {
   #slider div#banner.home-slider:not(.no-slider-banner) .slick-list.draggable .slick-track .slick-slide .hero-slide {
-    max-height: 1000px;
+    max-height: 940px;
     min-height: 100% !important;
   }
 }

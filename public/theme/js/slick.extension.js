@@ -26,24 +26,45 @@ $(document).ready(function() {
     doAnimationIn($animatingElements);
   });
 
+  // $(bannerSlick).slick({
+  //   autoplay: true,
+  //   autoplaySpeed: autoPlayTimeout,
+  //   dots: false,
+  //   fade: true,
+  //   arrows: true,
+	// cssEase:'linear',
+	// infinite: true,
+	// prevArrow: '<i class="icon-chevron-right1 NextArrow"></i>',
+  //   nextArrow: '<i class="icon-chevron-left1 PrevArrow"></i>'
+	//   /*responsive: [
+	// 	{
+	// 	  breakpoint: 480,
+	// 	  settings: {
+	// 		arrows: false
+	// 	  }
+	// 	}
+	//   ]*/
+  // });
+
   $(bannerSlick).slick({
-    autoplay: true,
-    autoplaySpeed: autoPlayTimeout,
-    dots: false,
-    fade: true,
-    arrows: true,
-	cssEase:'linear',
-	infinite: true,
-	prevArrow: '<i class="icon-chevron-right1 NextArrow"></i>',
-    nextArrow: '<i class="icon-chevron-left1 PrevArrow"></i>'
-	  /*responsive: [
-		{
-		  breakpoint: 480,
-		  settings: {
-			arrows: false
-		  }
-		}
-	  ]*/
+      accessibility: false,
+      autoplay: true,
+      autoplaySpeed: autoPlayTimeout,
+      dots: false,
+      fade: true,
+      arrows: true,
+      infinite: true,
+      cssEase: 'linear',
+
+      prevArrow:
+          '<button type="button" class="slick-prev PrevArrow" aria-label="Previous">' +
+              '<i class="icon-chevron-left1"></i>' +
+          '</button>',
+
+      nextArrow:
+          '<button type="button" class="slick-next NextArrow" aria-label="Next">' +
+              '<i class="icon-chevron-right1"></i>' +
+          '</button>'
   });
 
   function doAnimationIn(elements) {

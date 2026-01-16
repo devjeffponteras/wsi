@@ -55,19 +55,18 @@
 	<!-- Chatbot
 	============================================= -->
 	<!-- Embedded chat snippet provided by user -->
-	<script>
+	<!-- <script>
 	  window.fcSettings = {
 	    token: "WEB_CHAT_TOKEN",
 	    host: "WEB_HOST_URL",
 	    config: {
 	      headerProperty: {
-	        direction: 'ltr' //will move widget to left side of the screen
+	        direction: 'ltr' //will move widget to right side of the screen
 	      }
 	    }
 	  };
-	</script>
-	<script src="WEB_HOST_URL/js/widget.js" async></script>
-
+	</script> -->
+	
 	<style>
 	  .custom_fc_frame {
 	    right:20px !important;
@@ -75,7 +74,7 @@
 	  }
 	</style>
 
-	<script>
+	<!-- <script>
 	  window.fcWidgetMessengerConfig = {
 	    config: {
 	      cssNames: {
@@ -83,7 +82,9 @@
 	      }
 	    }
 	  }
-	</script>
+	</script> -->
+
+	<!-- <script src="WEB_HOST_URL/js/widget.js" defer></script> -->
 
 	<script src='//fw-cdn.com/11419951/4091723.js' chat='true'></script>
 
@@ -130,7 +131,7 @@
 
 	{{-- /* FOR ANALYTICS */ --}}
 
-    <script src="{{ asset('js/chatbot.js') }}"></script>
+    <!-- <script src="{{ asset('js/chatbot.js') }}"></script> -->
 
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-HR35693H16"></script>

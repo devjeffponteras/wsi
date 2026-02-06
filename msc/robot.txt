@@ -1,0 +1,11 @@
+# robots.txt for https://cms4.webfocusprod.wsiph2.com/wsi/public
+
+User-agent: *
+Disallow: /admin/
+Disallow: /storage/
+Disallow: /vendor/
+Disallow: /node_modules/
+Allow: /
+
+# Add sitemap URL (if you generate one)
+Sitemap: https://cms4.webfocusprod.wsiph2.com/wsi/public/sitemap.xml

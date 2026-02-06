@@ -131,9 +131,10 @@
                                         <label class="custom-control-label" for="checkbox_all"></label>
                                     </div>
                                 </th>
-                                <th scope="col" width="30%">Category Name</th>
-                                <th scope="col" width="35%">Url</th>
+                                <th scope="col" width="25%">Category Name</th>
+                                <th scope="col" width="30%">Url</th>
                                 <th scope="col" width="10%">Total News</th>
+                                <th scope="col" width="15%">Status</th>
                                 <th scope="col" width="20%">Options</th>
                             </tr>
                             </thead>
@@ -147,9 +148,12 @@
                                         </div>
                                     </th>
                                     <td><strong @if($category->trashed()) style="text-decoration:line-through;" @endif> {{ $category->name }}</strong></td>
-                                    <td><a target="_blank" href="{{route('news.front.index')}}?type=category&criteria={{$category->id}}" @if($category->get_total_articles() == 0) class="disabled" @endif>
-                                            {{route('news.front.index')."?type=category&criteria=".$category->id}}</a></td>
-                                    <td>{{ $category->get_total_articles() }}</td>
+                    <td><a target="blank" href="{{route('news.front.index')}}?type=category&criteria={{$category->id}}" @if($category->get_total_news() == 0) class="disabled" @endif>
+                        {{route('news.front.index')."?type=category&criteria=".$category->id}}</a></td>
+                    <td>{{ $category->get_total_news() }}</td>
+                                    <td>
+                                        <span class="badge {{ $category->status === 'Published' ? 'badge-success' : 'badge-secondary' }}">{{ $category->status }}</span>
+                                    </td>
                                     <td>
                                         @if($category->trashed())
                                             @if (auth()->user()->has_access_to_route('news-categories.restore'))
@@ -171,7 +175,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <th colspan="5" style="text-align: center;"> <p class="text-danger">No categories found.</p></th>
+                                    <th colspan="6" style="text-align: center;"> <p class="text-danger">No categories found.</p></th>
                                 </tr>
                             @endforelse
                             </tbody>

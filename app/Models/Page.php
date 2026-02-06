@@ -160,7 +160,7 @@ class Page extends Model
         elseif (Article::where('slug', '=', $slug)->exists()) {
             return true;
         }
-        elseif (ArticleCategory::where('slug', '=', $slug)->exists()) {
+    elseif (ArticleCategory::where('slug', '=', $slug)->where('status', 'Published')->exists()) {
             return true;
         }
         else{
@@ -229,7 +229,7 @@ class Page extends Model
         'label' => 'label',
         'contents' => 'contents',
         'status' => 'status',
-        'image_url' => 'image', 
+        'image_url' => 'image',
         'meta_title' => 'meta title',
         'meta_keyword' => 'meta keywords',
         'meta_description' => 'meta description',

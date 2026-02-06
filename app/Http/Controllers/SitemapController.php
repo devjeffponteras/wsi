@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\{Page, ArticleCategory};
 use Illuminate\Http\Request;
 
+
 class SitemapController extends Controller
 {
     /**
@@ -14,28 +15,30 @@ class SitemapController extends Controller
      */
     public function index()
     {
-        $page = new Page();
-        $page->name = "Sitemap";
+        // Create a temporary Page instance for breadcrumb and page title
+    $page = new Page();
+    $page->name = 'Sitemap';
 
-        $breadcrumb = $this->breadcrumb($page);
+    // Generate breadcrumb trail
+    $breadcrumb = $this->breadcrumb($page);
 
-        $customPages = Page::where('name', '<>', 'footer')->where('status', 'PUBLISHED')->where('parent_page_id', 0)->orderBy('id','asc')->get();
-        
-        $articleCategories = ArticleCategory::with('articles')->get();
+    // Get all top-level published pages except 'footer'
+    $customPages = Page::where('name', '<>', 'footer')
+        ->where('status', 'PUBLISHED')
+        ->where('parent_page_id', 0)
+        ->orderBy('id', 'asc')
+        ->get();
 
+    // Load article categories with their published articles
+    $articleCategories = ArticleCategory::published()->with('articles')->get();
 
-        return view('theme.sitemap', compact(
-            'page', 
-            'breadcrumb', 
-            'articleCategories', 
-            'customPages'
-        ));
-
-        // return response()->view('theme.sitemap', [
-        //     'pages' => $pages,
-        //     'articleCategories' => $articleCategories,
-        //     'page'
-        // ]);
+    // Return the sitemap view with the collected data
+    return view('theme.sitemap', compact(
+        'page',
+        'breadcrumb',
+        'customPages',
+        'articleCategories'
+    ));
     }
 
     /**
@@ -110,5 +113,21 @@ class SitemapController extends Controller
             'Home' => url('/'),
             $page->name => url('/').'/'.$page->slug
         ];
+    }
+
+     public function xml()
+    {
+        $customPages = Page::where('name', '<>', 'footer')
+            ->where('status', 'PUBLISHED')
+            ->where('parent_page_id', 0)
+            ->orderBy('id', 'asc')
+            ->with('subPages')
+            ->get();
+
+    $articleCategories = ArticleCategory::published()->with('articles')->get();
+
+        return response()
+            ->view('theme.sitemap-xml', compact('customPages', 'articleCategories'))
+            ->header('Content-Type', 'application/xml');
     }
 }

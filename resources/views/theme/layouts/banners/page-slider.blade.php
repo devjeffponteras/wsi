@@ -66,7 +66,7 @@
 </section> --}}
 
 
-<section id="slider" class="slick-wrapper clearfix include-header">
+<section id="slider" class="slick-wrapper clearfix include-header subpage-banner">
 
     <div class="banner-wrapper">
 
@@ -74,17 +74,17 @@
 
             <div class="row">
 
-                <div class="col-lg-12" style="padding:0;">
+                <div class="col-12 p-0">
 
-                    <div class="sub-banner-caption">
+                    <div class="sub-banner-caption dark">
 
-                        <div class="container" style="position: relative;">
+                        <div class="container position-relative">
 
                             <h2 class="text-center excerpt-1 text-light">{{$page->name}}</h2>
 
                             <div class="sub-banner-flex">
 
-                                <ol class="breadcrumb nobottommargin flex-nowrap justify-content-center">
+                                <ol class="breadcrumb nobottommargin justify-content-center">
 
                                     <li class="breadcrumb-item text-nowrap"><a href="{{ route('home') }}" class="text-light"><i class="icon-home"></i></a></li>
 
@@ -104,7 +104,7 @@
 
                         <div class="hero-slide dark">
 
-                            <img src="{{ url($banner->image_path) }}" alt="{{ $banner->title }}">
+                            <img src="{{ url($banner->image_path) }}" alt="{{ $banner->title ?? $page->name }} banner">
 
                             {{-- <img src="{{ url('storage/' . str_after($banner->image_path, 'storage/')) }}" alt="{{ $banner->title }}"> /> --}}
 

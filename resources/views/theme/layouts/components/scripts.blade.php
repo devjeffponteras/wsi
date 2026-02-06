@@ -126,5 +126,95 @@
     }
 </script>
 
+<script>
+    // Shared acceptance utility available globally
+    window.acceptPrivacy = function(redirectTo) {
+        try {
+            localStorage.setItem('privacyAccepted', 'true');
+            localStorage.setItem('popState', 'shown');
+        } catch (e) {}
+        if (typeof jQuery !== 'undefined' && jQuery('#privacyBanner').length) {
+            jQuery('#privacyBanner').fadeOut();
+        }
+        if (redirectTo) {
+            window.location.href = redirectTo;
+        }
+    };
+
+    // Privacy Banner and Unified Modal functionality
+    $(document).ready(function() {
+        // Show privacy banner if not accepted
+        if(localStorage.getItem('privacyAccepted') != 'true'){
+            $('#privacyBanner').show();
+        }
+
+        // Handle I Agree button click (use shared function) and redirect to Home
+        $('#agreeButton').click(function() {
+            if (typeof window.acceptPrivacy === 'function') {
+                window.acceptPrivacy("{{ route('home') }}");
+            } else {
+                // Fallback
+                $('#privacyBanner').fadeOut();
+                try { localStorage.setItem('privacyAccepted', 'true'); } catch(e) {}
+                try { localStorage.setItem('popState','shown'); } catch(e) {}
+                window.location.href = "{{ route('home') }}";
+            }
+        });
+
+        // Handle Privacy & Terms link click
+        $('#privacyTermsLink').click(function(e) {
+            e.preventDefault();
+            resetModal();
+            $('#privacyTermsModal').show();
+        });
+
+        // Handle modal close button
+        $('#privacyTermsModalClose').click(function() {
+            $('#privacyTermsModal').hide();
+        });
+
+        // Handle checkbox change to enable/disable accept button
+        $('#unifiedAcceptCheck').change(function() {
+            $('#unifiedAcceptButton').prop('disabled', !this.checked);
+        });
+
+        // Handle Unified Accept button
+        $('#unifiedAcceptButton').click(function() {
+            if ($('#unifiedAcceptCheck').is(':checked')) {
+                localStorage.setItem('privacyAccepted', 'true');
+                $('#privacyTermsModal').hide();
+                $('#privacyBanner').fadeOut();
+
+                // Show success message
+                if (typeof $.notify !== 'undefined') {
+                    $.notify('Privacy Policy and Terms of Use accepted successfully!', 'success');
+                } else {
+                    alert('Privacy Policy and Terms of Use accepted successfully!');
+                }
+            }
+        });
+
+        // Reset modal state
+        function resetModal() {
+            $('#unifiedAcceptCheck').prop('checked', false);
+            $('#unifiedAcceptButton').prop('disabled', true);
+        }
+
+        // Close modal when clicking outside of it
+        $(window).click(function(event) {
+            if (event.target == document.getElementById('privacyTermsModal')) {
+                $('#privacyTermsModal').hide();
+            }
+        });
+
+        // Close modal with Escape key
+        $(document).keydown(function(event) {
+            if (event.keyCode == 27) { // Escape key
+                $('#privacyTermsModal').hide();
+            }
+        });
+    });
+</script>
+
 
 @yield('pagejs')

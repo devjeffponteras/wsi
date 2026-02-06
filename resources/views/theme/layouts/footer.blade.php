@@ -1,128 +1,323 @@
 @php
-    $contents = Setting::getFooter()->contents;
+    // Load footer page via settings (keep object for styles/content)
+    $footerPage = Setting::getFooter();
+    $contents = $footerPage->contents ?? '';
 
     $socmed = \App\Models\MediaAccounts::all();
 
-    $socmedHTML = '<div class="mt-4 clearfix">';
-    	foreach($socmed as $sm){
-    		$socmedHTML .= '
-    			<a href="'.$sm->media_account.'" class="social-icon si-small si-rounded si-colored si-'.$sm->name.'" title="'.$sm->name.'" target="_blank">
-	                <i class="icon-'.$sm->name.'"></i>
-	                <i class="icon-'.$sm->name.'"></i>
-	            </a>
-    		';
-    	}
-
+    // Build social HTML and include the 'social-media' class so CSS matches
+    $socmedHTML = '<div class="social-media mt-0 d-flex justify-content-center gap-3">';
+    foreach($socmed as $sm){
+        $name = strtolower(trim($sm->name));
+        $url = e($sm->media_account);
+        $title = e($sm->name);
+        $socmedHTML .= "\n            <a href=\"{$url}\" class=\"social-icon si-small si-rounded si-colored si-{$name}\" title=\"{$title}\" target=\"_blank\" aria-label=\"Follow us on {$title}\">\n                <i class=\"icon-{$name}\"></i>\n                <i class=\"icon-{$name}\"></i>\n            </a>\n        ";
+    }
     $socmedHTML .= '</div>';
 
-
-    $keywords   = ['{Social Media Icons}'];
-    $variables  = [$socmedHTML];
-
-    $footerContents = str_replace($keywords,$variables,$contents);
+    // Support both placeholder tokens to be safe
+    if (strpos($contents, '{Social Media Icons}') !== false) {
+        $footerContents = str_replace('{Social Media Icons}', $socmedHTML, $contents);
+    } elseif (strpos($contents, '{{social_media}}') !== false || strpos($contents, '[[social_media]]') !== false) {
+        $footerContents = str_replace(['{{social_media}}','[[social_media]]'],$socmedHTML,$contents);
+    } else {
+        // Append social icons after stored content
+        $footerContents = $contents . $socmedHTML;
+    }
 @endphp
 
-
-{!! $footerContents !!}
-
-<!-- Footer
-============================================= -->
-<footer id="footer" class="dark">
-	<!-- Copyrights
-	============================================= -->
-	<div id="copyrights">
-		<div class="container">
-
-			<div class="row justify-content-between col-mb-30">
-				<div class="col-12 col-lg-auto text-center text-lg-start order-last order-lg-first">
-					<a href="{{ url('/') }}" class="standard-logo">
-					    <img src="{{ asset('images/logos/logo-webfocus.png') }}"
-					         alt="{{ Setting::info()->company_name ?? 'Company Name' }}" style="height: 35px">
-					</a>
-					<br />
-					<br />
-					Copyrights &copy; 2025 All Rights Reserved by Webfocus Inc.
-				</div>
-
-				<div class="col-12 col-lg-auto text-center text-lg-end">
-					<div class="copyrights-menu copyright-links">
-						<a href="#">Home</a>/<a href="#">About</a>/<a href="#">Features</a>/<a href="#">Portfolio</a>/<a href="#">FAQs</a>/<a href="#">Contact</a>
-					</div>
-					<a href="#" class="social-icon inline-block si-small si-borderless mb-0 si-facebook">
-						<i class="icon-facebook"></i>
-						<i class="icon-facebook"></i>
-					</a>
-
-					<a href="#" class="social-icon inline-block si-small si-borderless mb-0 si-twitter">
-						<i class="icon-twitter"></i>
-						<i class="icon-twitter"></i>
-					</a>
-
-					<a href="#" class="social-icon inline-block si-small si-borderless mb-0 si-gplus">
-						<i class="icon-gplus"></i>
-						<i class="icon-gplus"></i>
-					</a>
-
-					<a href="#" class="social-icon inline-block si-small si-borderless mb-0 si-pinterest">
-						<i class="icon-pinterest"></i>
-						<i class="icon-pinterest"></i>
-					</a>
-
-					<a href="#" class="social-icon inline-block si-small si-borderless mb-0 si-vimeo">
-						<i class="icon-vimeo"></i>
-						<i class="icon-vimeo"></i>
-					</a>
-
-					<a href="#" class="social-icon inline-block si-small si-borderless mb-0 si-github">
-						<i class="icon-github"></i>
-						<i class="icon-github"></i>
-					</a>
-
-					<a href="#" class="social-icon inline-block si-small si-borderless mb-0 si-yahoo">
-						<i class="icon-yahoo"></i>
-						<i class="icon-yahoo"></i>
-					</a>
-
-					<a href="#" class="social-icon inline-block si-small si-borderless mb-0 si-linkedin">
-						<i class="icon-linkedin"></i>
-						<i class="icon-linkedin"></i>
-					</a>
-				</div>
-			</div>
-
-		</div>
-	</div><!-- #copyrights end -->
-</footer><!-- #footer end -->
+@if(!empty($footerPage->styles))
+    <style>
+        {!! $footerPage->styles !!}
+    </style>
+@endif
 
 
-<!-- Subscribe Form modal
-============================================= -->
+<!-- Footer ============================================= -->
+        {!! $footerContents !!}
 
-<div class="modal1 mfp-hide" id="modal-subscribe">
-	<div class="card mx-auto" style="max-width: 540px;">
-		<div class="card-body" style="background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.3)), url('images/misc/subscribe.jpeg') no-repeat center center / cover; padding: 60px 50px; border: 12px solid #FFF">
-			<div class="d-flex justify-content-between">
-				<h2 class="card-title text-white font-body">Subscribe to our Newsletter!</h2>
-			</div>
-			<p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum nisi beatae temporibus nobis optio eos?</p>
+        <div class="text-center mt-5 pt-4 border-top border-white border-opacity-10">
+            <p class="text-white-50 mb-0">Copyright © {{ date('Y') }} Webfocus Solutions Inc. All Rights Reserved.</p><br>
+        </div>
 
-			<div class="subscribe-widget" data-loader="button">
 
-				<div class="widget-subscribe-form-result"></div>
+{{-- <style>
+    /* Footer Styles */
 
-				<form action="{{route('mailing-list.front.subscribe')}}" role="form" method="post" class="mb-0">
-					@csrf
-					<label for="subscriber_name" class="text-light">Name <span>*</span></label>
-					<input type="text" name="name" id="subscriber_name" class="form-control required not-dark" placeholder="your name" required>
+    .footer-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+    }
 
-					<label for="subscriber_email" class="text-light">Email Address <span>*</span></label>
-					<input type="email" name="email" id="subscriber_email" class="form-control required not-dark" placeholder="name@email.com" required>
+    /* Company Info Section */
+    .footer-company {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
 
-					<button class="btn rounded btn-danger py-2 mt-3 w-100 text-uppercase ls1 fw-semibold" type="submit">Subscribe</button>
-				</form>
+    .footer-logo {
+        margin-bottom: 10px;
+    }
 
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Subscribe form end modal -->
+    .footer-logo-img {
+        max-width: 250px;
+        height: auto;
+        display: block;
+    }
+
+    .footer-logo span {
+        display: block;
+        font-size: 1.2rem;
+        font-weight: 400;
+        opacity: 0.9;
+    }
+
+    .footer-contact {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .contact-item i {
+        font-size: 1.1rem;
+        margin-top: 3px;
+        color: #60a5fa;
+    }
+
+    .contact-item a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .contact-item a:hover {
+        color: #60a5fa;
+    }
+
+    /* Quick Links Section */
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer-links h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: white;
+    }
+
+    .footer-links ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links a {
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .footer-links a:hover {
+        color: #60a5fa;
+        transform: translateX(5px);
+    }
+
+    /* Awards Section */
+    .footer-awards {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+    }
+
+    .award-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .award-badge-img {
+        max-width: 160px;
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .security-badge-img {
+        max-width: 250px;
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .award-text {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .award-text h4 {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+        color: white;
+    }
+
+    .award-text p {
+        font-size: 0.85rem;
+        opacity: 0.9;
+        line-height: 1.4;
+        color: white;
+    }
+
+    .security-badge {
+        background: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .security-badge i {
+        font-size: 2rem;
+        color: #1e3a8a;
+    }
+
+    .security-text {
+        text-align: left;
+        color: #1e3a8a;
+    }
+
+    .security-text strong {
+        font-size: 1.1rem;
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .security-text span {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #dc2626;
+    }
+
+    /* Social Media */
+    .social-media {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .social-link {
+        width: 45px;
+        height: 45px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+
+    .social-link.facebook {
+        background: #3b5998;
+    }
+
+    .social-link.twitter {
+        background: #1da1f2;
+    }
+
+    .social-link.youtube {
+        background: #ff0000;
+    }
+
+    .social-link.instagram {
+        background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    }
+
+    .social-link:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Copyright */
+    .footer-copyright {
+        text-align: center;
+        padding-top: 30px;
+        margin-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 0.9rem;
+        opacity: 0.9;
+        color:aliceblue;
+
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .footer-container {
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-awards {
+            grid-column: 1 / -1;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .award-item {
+            width: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer-container {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+        }
+
+        .award-badge-img {
+            width: 140px;
+        }
+
+        .security-badge-img {
+            width: 200px;
+        }
+
+        .footer-awards {
+            flex-direction: column;
+        }
+
+        .footer {
+            padding: 40px 20px 20px;
+        }
+    }
+</style> --}}

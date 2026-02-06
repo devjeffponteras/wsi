@@ -23,11 +23,12 @@ use App\Models\TemplateCategory;
 use App\Models\Template;
 use App\Models\EmailRecipient;
 use App\Models\ArticleCategory;
-use App\Models\Ecommerce\{BannerAd, BannerAdPage, Product};
+use App\Models\Ecommerce\{BannerAd, BannerAdPage};
 
 use Auth;
 use DB;
 use Session;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 
 
@@ -68,6 +69,37 @@ class FrontController extends Controller
 
     }
 
+    public function privacy_terms()
+    {
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+
+        $content = Page::where('slug', 'privacy-terms')
+            ->orWhere('slug', 'privacy-policy-terms-of-use')
+            ->orWhere('name', 'Privacy Policy & Terms of Use')
+            ->first();
+
+        $page = $content ?? new Page();
+        if (empty($page->name)) {
+            $page->name = 'Privacy Policy & Terms of Use';
+        }
+
+
+
+        $breadcrumb = $this->breadcrumb($page);
+
+        $forcePageBanner = true;
+        $forceHomeBanner = false;
+
+        return view('theme.pages.privacy-terms', [
+            'page' => $page,
+            'footer' => $footer,
+            'breadcrumb' => $breadcrumb,
+            'content' => $content,
+            'forcePageBanner' => $forcePageBanner,
+            'forceHomeBanner' => $forceHomeBanner,
+        ]);
+    }
+
     public function sitemap()
     {
         // return $this->page('sitemap');
@@ -78,7 +110,7 @@ class FrontController extends Controller
 
         $customPages = Page::where('name', '<>', 'footer')->where('status', 'PUBLISHED')->where('parent_page_id', 0)->orderBy('id','asc')->get();
 
-        $articleCategories = ArticleCategory::with('articles')->get();
+    $articleCategories = ArticleCategory::published()->with('articles')->get();
 
         return view('theme.pages.sitemap', compact(
             'page',
@@ -119,25 +151,85 @@ class FrontController extends Controller
             ->orderBy('name', 'asc')
             ->get();
 
+        // // Products (books)
         // $products = Product::where('status', 'PUBLISHED')
         //     ->whereRaw('LOWER(book_type) NOT IN (?, ?)', ['ebook', 'e-book'])
         //     ->where(function ($query) use ($searchtxt) {
         //         $query->where('name', 'like', '%' . $searchtxt . '%')
-        //         ->orWhere('author', 'like', '%' . $searchtxt . '%');
+        //             ->orWhere('author', 'like', '%' . $searchtxt . '%');
         //     })
-        //     // ->select('name', "book-details/".'slug')
-        //     ->select('name', DB::raw("CONCAT('book-details/', slug) as slug"))
+        //     ->select('name', 'slug')
         //     ->orderBy('name', 'asc')
         //     ->get();
 
         // $products = Product::select('products.*')->leftJoin('product_additional_infos', 'products.id', '=', 'product_additional_infos.product_id')
         // ->where('products.status', 'PUBLISHED')->get();
 
-        $totalItems = $pages->count()+$news->count();
+        // Resources (cases)
+        $resources = Resource::where('status', 'Active')
+            ->where(function ($query) use ($searchtxt) {
+                $query->where('name', 'like', '%' . $searchtxt . '%')
+                    ->orWhere('description', 'like', '%' . $searchtxt . '%');
+            })
+            ->select('name', 'slug')
+            ->orderBy('name', 'asc')
+            ->get();
 
-        $searchResult = collect($pages)->merge($news)->paginate(10);
+        // products are not relevant for this search context — exclude them
+        // $totalItems = $pages->count() + $news->count() + $products->count() + $resources->count();
+        $totalItems = $pages->count() + $news->count() + $resources->count();
+
+        // If exactly one result, redirect straight to that page/article for better UX
+        if ($totalItems === 1) {
+            if ($pages->count() === 1) {
+                $slug = $pages->first()->slug;
+                return redirect(url($slug));
+            }
+            if ($news->count() === 1) {
+                $slug = $news->first()->slug;
+                return redirect(route('news.front.show', $slug));
+            }
+            // products intentionally excluded from single-result redirect
+            if ($resources->count() === 1) {
+                $slug = $resources->first()->slug;
+                return redirect(route('resource-details.front.show', $slug));
+            }
+            // Fallback: pick first merged item and check existence
+            $first = collect($pages)->merge($news)->merge($resources)->first();
+            if ($first) {
+                $slug = $first->slug ?? null;
+                if ($slug) {
+                    if (Page::where('slug', $slug)->exists()) return redirect(url($slug));
+                    if (Article::where('slug', $slug)->exists()) return redirect(route('news.front.show', $slug));
+                }
+            }
+        }
+
+        // Exclude products from search results for now
+        // $searchResult = collect($pages)->merge($news)->merge($products)->merge($resources);
+        $searchResult = collect($pages)->merge($news)->merge($resources);
+
+        // Simple manual pagination for collections (10 per page)
+        $perPage = 10;
+        $currentPage = (int) ($request->get('page', 1));
+        $currentItems = $searchResult->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $searchResult = new LengthAwarePaginator($currentItems, $searchResult->count(), $perPage, $currentPage, [
+            'path' => $request->url(),
+        ]);
 
         return view('theme.pages.search-result', compact('searchResult', 'totalItems', 'page','breadcrumb'));
+    }
+
+    /**
+     * Wrapper for /search route — accepts `q` param from header and forwards
+     * it to the existing seach_result handler (which expects `searchtxt`).
+     */
+    public function search(Request $request)
+    {
+        // map `q` => `searchtxt` so existing logic can be reused
+        $q = $request->get('q', $request->get('searchtxt', ''));
+        $request->merge(['searchtxt' => $q]);
+        return $this->seach_result($request);
     }
 
     public function page($slug = "home")
@@ -326,6 +418,11 @@ class FrontController extends Controller
 
     }
 
+    /**
+     * Return quick links (latest articles) for a given category slug or 'all'.
+     * Responds with JSON array of articles {name, slug, date}
+     */
+
     public function portfolio() {
         $page = new Page();
         $page->name = 'Portfolio';
@@ -336,11 +433,262 @@ class FrontController extends Controller
         public function aboutus()
     {
         \Log::info('Loading about page with partials: theme.pages.about-history, theme.pages.about-company, theme.pages.about-mission-vision');
+
+        $pageRecord = Page::with(['album.banners' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }])
+            ->where(function ($query) {
+                $query->where('slug', 'about-us')->orWhere('name', 'About Us');
+            })
+            ->first();
+
+        if ($pageRecord) {
+            $page = $pageRecord;
+            if (empty($page->slug)) {
+                $page->slug = 'about-us';
+            }
+            if (empty($page->name)) {
+                $page->name = 'About Us';
+            }
+        } else {
+            $page = new Page();
+            $page->name = 'About Us';
+            $page->slug = 'about-us';
+        }
+
+        $forceHomeBanner = false;
+        $forcePageBanner = true;
+
+        $hasBanners = $page && $page->album && $page->album->banners && $page->album->banners->count() > 0;
+
+        if (!$hasBanners && empty($page->image_url)) {
+            $page->image_url = asset('theme/images/banners/no-banner.jpg');
+        }
+
+        $breadcrumb = $this->breadcrumb($page);
+        $content = $pageRecord ?? Page::where('name', 'About Us')->first();
+        if (!$content) {
+            $content = new Page();
+        }
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+
+        return view('theme.pages.about-us', compact('content','footer', 'page', 'breadcrumb', 'forceHomeBanner', 'forcePageBanner'));
+    }
+
+
+      public function services()
+    {
+        \Log::info('Loading about page with partials: theme.pages.about-history, theme.pages.about-company, theme.pages.about-mission-vision');
+        $pageRecord = Page::with(['album.banners' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }])
+            ->where(function ($query) {
+                $query->where('slug', 'services')->orWhere('name', 'Services');
+            })
+            ->first();
+
+        if ($pageRecord) {
+            $page = $pageRecord;
+            if (empty($page->slug)) {
+                $page->slug = 'services';
+            }
+            if (empty($page->name)) {
+                $page->name = 'Services';
+            }
+        } else {
+            $page = new Page();
+            $page->name = 'Services';
+            $page->slug = 'services';
+        }
+
+        $forceHomeBanner = false;
+        $forcePageBanner = true;
+
+        $hasBanners = $page && $page->album && $page->album->banners && $page->album->banners->count() > 0;
+
+        if (!$hasBanners && empty($page->image_url)) {
+            $page->image_url = asset('theme/images/banners/no-banner.jpg');
+        }
+
+        $breadcrumb = $this->breadcrumb($page);
+        $content = $pageRecord ?? Page::where('name', 'Services')->first();
+        if (!$content) {
+            $content = new Page();
+        }
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+        return view('theme.pages.services', compact('content','footer', 'page', 'breadcrumb', 'forceHomeBanner', 'forcePageBanner'));
+    }
+        public function services_domain()
+    {
+        \Log::info('Loading services page with partials: theme.pages.service_domain');
         $page = new Page();
-        $page->name = 'About Us';
-        $page->slug = 'about-us';
+        $page->name = 'Domain';
+        $page->slug = 'services/services_domain';
+        $breadcrumb = $this->breadcrumb($page);
+        $content = Page::where('name', 'Domain')->first();
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+        //return $content;
+        return view('theme.pages.services_domain', compact('content','footer', 'page', 'breadcrumb'));
+    }
+
+        public function services_webdev()
+    {
+        \Log::info('Loading services page with partials: theme.pages.services_webdev');
+        $page = new Page();
+        $page->name = 'Web Development';
+        $page->slug = 'services/services_webdev';
+        $breadcrumb = $this->breadcrumb($page);
+        $content = Page::where('name', 'Web Development')->first();
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+        return view('theme.pages.services_webdev', compact('content','footer', 'page', 'breadcrumb'));
+
+}
+        public function services_hosting()
+    {
+        \Log::info('Loading services page with partials: theme.pages.services_hosting');
+        $page = new Page();
+        $page->name = 'Hosting';
+        $page->slug = 'services/services_hosting';
+        $breadcrumb = $this->breadcrumb($page);
+        $content = Page::where('name', 'Hosting')->first();
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+        return view('theme.pages.services_hosting', compact('content','footer', 'page', 'breadcrumb'));
+
+}
+
+        public function services_dms()
+    {
+        \Log::info('Loading services page with partials: theme.pages.services_dms');
+        $page = new Page();
+        $page->name = 'DMS';
+        $page->slug = 'services/services_dms';
+        $breadcrumb = $this->breadcrumb($page);
+        $content = Page::where('name', 'DMS')->first();
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+        return view('theme.pages.services_dms', compact('content','footer', 'page', 'breadcrumb'));
+        //return $content;
+}
+
+     public function news()
+    {
+        \Log::info('Loading news page with database articles');
+        $page = Page::with(['album.banners' => function ($query) {
+                $query->orderBy('order', 'asc');
+            }])
+            ->where('slug', 'news')
+            ->first();
+
+        if (!$page) {
+            $page = new Page();
+            $page->name = 'News';
+            $page->slug = 'news';
+        }
         $breadcrumb = $this->breadcrumb($page);
         $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
-        return view('theme.pages.about-us', compact('footer', 'page', 'breadcrumb'));
+
+        // Fetch articles from new News model
+        $featuredArticle = \App\Models\News::where('status', 'Published')
+            ->where('is_featured', 1)
+            ->with('category')
+            ->latest('date')
+            ->first();
+
+        $latestArticles = \App\Models\News::where('status', 'Published')
+            ->with('category')
+            ->latest('date')
+            ->limit(6)
+            ->get()
+            ->map(function($article) {
+                $article->excerpt = $article->teaser ? \Illuminate\Support\Str::limit($article->teaser, 120) : '';
+                return $article;
+            });
+
+        $quickLinkArticles = \App\Models\News::where('status', 'Published')
+            ->with('category')
+            ->orderByDesc('date')
+            ->skip(1)
+            ->take(8)
+            ->get()
+            ->groupBy(function ($article) {
+                return \Carbon\Carbon::parse($article->date)->format('F j, Y');
+            });
+
+    $categories = \App\Models\ArticleCategory::published()->with(['news' => function($query) {
+                $query->where('status', 'Published');
+            }])
+            ->get();
+
+        // Group articles by category for different sections
+        $pressReleases = \App\Models\News::where('status', 'Published')
+            ->whereHas('category', function($q) {
+                $q->where('name', 'LIKE', '%Press Release%')
+                  ->orWhere('name', 'LIKE', '%Announcements%');
+            })
+            ->with('category')
+            ->latest('date')
+            ->limit(3)
+            ->get();
+
+        $companyUpdates = \App\Models\News::where('status', 'Published')
+            ->whereHas('category', function($q) {
+                $q->where('name', 'LIKE', '%Company%')
+                  ->orWhere('name', 'LIKE', '%Events%');
+            })
+            ->with('category')
+            ->latest('date')
+            ->limit(3)
+            ->get()
+            ->map(function($article) {
+                $article->excerpt = $article->teaser ? \Illuminate\Support\Str::limit($article->teaser, 120) : '';
+                return $article;
+            });
+
+        $thoughtLeadership = \App\Models\News::where('status', 'Published')
+            ->whereHas('category', function($q) {
+                $q->where('name', 'LIKE', '%Thought%')->orWhere('name', 'LIKE', '%Leadership%');
+            })
+            ->with('category')
+            ->latest('date')
+            ->limit(3)
+            ->get()
+            ->map(function($article) {
+                $article->excerpt = $article->teaser ? \Illuminate\Support\Str::limit($article->teaser, 120) : '';
+                return $article;
+            });
+
+        return view('theme.pages.news', compact(
+            'footer', 'page', 'breadcrumb', 'featuredArticle', 'latestArticles',
+            'quickLinkArticles', 'categories', 'pressReleases', 'companyUpdates', 'thoughtLeadership'
+        ));
     }
+
+    public function news_detail($slug)
+    {
+        // Fetch the specific article
+        $news = \App\Models\News::where('slug', $slug)
+            ->where('status', 'Published')
+            ->with(['category', 'user'])
+            ->first();
+
+        if (!$news) {
+            abort(404, 'Article not found');
+        }
+
+        // Fetch latest articles for sidebar (excluding current article)
+        $latestArticles = \App\Models\News::where('status', 'Published')
+            ->where('id', '!=', $news->id)
+            ->with('category')
+            ->latest('date')
+            ->limit(5)
+            ->get();
+
+        $breadcrumb = ['Home' => url('/'), 'News' => url('/news'), $news->name => '#'];
+        $page = new Page();
+        $page->name = $news->name;
+        $page->slug = $slug;
+        $footer = Page::where('slug', 'footer')->where('name', 'footer')->first();
+
+        return view('theme.pages.news', compact('news', 'latestArticles', 'breadcrumb', 'page', 'footer'));
+    }
+
 }

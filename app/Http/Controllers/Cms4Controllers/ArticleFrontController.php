@@ -71,12 +71,12 @@ class ArticleFrontController extends Controller
                     $articles = Article::where(function($query){
                         $query->where('name','like','%'.$_GET['criteria'].'%')
                         ->orWhere('contents','like','%'.$_GET['criteria'].'%');
-                    })->whereStatus('Published'); 
+                    })->whereStatus('Published');
                 }
-                
+
                 session(['search_value' => $_GET['criteria']]);
 
-            } 
+            }
             elseif($_GET['type'] == 'category'){
                 if($_GET['criteria'] == 0)
                     $articles = Article::where(function($query){
@@ -85,31 +85,31 @@ class ArticleFrontController extends Controller
                                 ->whereStatus('Published');
                 else
                     $articles = Article::where('category_id','=',$_GET['criteria'])->whereStatus('Published');
-            } 
+            }
             elseif($_GET['type'] == 'month'){
                 list($year, $month) = explode('-', $_GET['criteria']);
 
                 $articles = Article::whereYear('date', '=', $year)
                                     ->whereMonth('date', '=', $month)
                                     ->whereStatus('Published');
-            } 
+            }
             elseif($_GET['type'] == 'archives'){
                 $articles = Article::whereYear('date', $year)->whereStatus('Published');
-            } 
+            }
             else {
                 $articles = Article::whereStatus('Published');
             }
 
             $articles = $articles->orderBy('date', 'desc')->paginate($pageLimit);
-            
+
             $totalSearchedArticle = $articles->count();
 
             if($criteria){
                 $categories = $this->categories($_GET['criteria']);
             } else {
                 $categories = $this->categories(0);
-            }           
-            
+            }
+
         } else {
             $articles = Article::whereStatus('Published');
 
@@ -124,7 +124,7 @@ class ArticleFrontController extends Controller
             $articles = $articles->paginate($pageLimit);
 
             $totalSearchedArticle = $articles->count();
-            
+
             $categories = $this->categories(0);
         }
 
@@ -138,7 +138,7 @@ class ArticleFrontController extends Controller
         $search = ($request->has('criteria')) ? $request->criteria : "";
 
         $latestArticles = Article::whereStatus('Published')->orderBy('date', 'desc')->take(5)->get();
-        
+
         //FOR BANNER ADS
         $used_page = BannerAdPage::where('page_id', 4)->first();
         $banner_ads = BannerAd::where('id', $used_page->banner_ad_id ?? 0)->where('status', 1)->where('expiration_date', '>', now())->get();
@@ -183,7 +183,7 @@ class ArticleFrontController extends Controller
 
     public function categories($criteria){
 
-        $categories = DB::select('SELECT ifnull(c.name, "Uncategorized") as cat, ifnull(c.id,0) as cid,count(ifnull(c.id,0)) as total_articles FROM `articles` a left join article_categories c on c.id=a.category_id where a.deleted_at is null and status="Published" GROUP BY c.name,c.id ORDER BY c.id');
+    $categories = DB::select('SELECT IFNULL(c.name, "Uncategorized") AS cat, IFNULL(c.id,0) AS cid, COUNT(IFNULL(c.id,0)) AS total_articles FROM `articles` a LEFT JOIN article_categories c ON c.id=a.category_id WHERE a.deleted_at IS NULL AND a.status="Published" AND (c.id IS NULL OR c.status="Published") GROUP BY c.name,c.id ORDER BY c.id');
 
         $data = '<ul class="mb-0 pb-0">';
                     foreach($categories as $category){

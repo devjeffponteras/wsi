@@ -9,7 +9,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\{FileDownloadCategoryController, FileDownloadController, MemberController, PageModalController, SitemapController, FacebookDataDeletionController, GoogleDataDeletionController, FacebookController, QrCodeController, ResourceCategoryController, ResourceController};
 
 use App\Http\Controllers\Cms4Controllers\{
-    ArticleCategoryController, ArticleFrontController, ArticleController, AlbumController, MobileAlbumController, PageController, MenuController, FileManagerController
+    ArticleCategoryController, ArticleFrontController, ArticleController, AlbumController, MobileAlbumController, PageController, MenuController, FileManagerController, NewsController, ServicesController
 };
 
 // Settings
@@ -53,14 +53,27 @@ Route::get('/phpinfo', function () {
 
     Route::get('/about-us', [FrontController::class, 'aboutus'])->name('about-us'); // New route
 
+    //News
+    Route::get('/news-2', [FrontController::class, 'news'])->name('news-2'); // New route
+
+    //Services
+    Route::get('/services', [FrontController::class, 'services'])->name('services'); // New route
+    Route::get('/services/hosting', [FrontController::class, 'services_hosting'])->name('services.hosting'); // New route for services
+    Route::get('/services/domain', [FrontController::class, 'services_domain'])->name('services.domain'); // New route for services
+    Route::get('/services/web-development', [FrontController::class, 'services_webdev'])->name('services.web-development'); // New route for services
+    Route::get('/services/dms', [FrontController::class, 'services_dms'])->name('services.dms'); // New route for services
+    Route::get('/services/pages', [ServicesController::class, 'services_index'])->name('services.index');
+    Route::get('/services_edit/{page}', [ServicesController::class, 'edit'])->name('services.edit');
+
     Route::get('/privacy-policy/', [FrontController::class, 'privacy_policy'])->name('privacy-policy');
+    Route::get('/privacy-terms', [FrontController::class, 'privacy_terms'])->name('privacy-terms');
     Route::post('/contact-us', [FrontController::class, 'contact_us'])->name('contact-us');
 
     Route::get('/search', [FrontController::class, 'search'])->name('search');
 
     //News Frontend
-        Route::get('/news/', [ArticleFrontController::class, 'news_list'])->name('news.front.index');
-        Route::get('/news/{slug}', [ArticleFrontController::class, 'news_view'])->name('news.front.show');
+        Route::get('/news/', [FrontController::class, 'news'])->name('news.front.index');
+        Route::get('/news/{slug}', [FrontController::class, 'news_detail'])->name('news.front.show');
         Route::get('/news/{slug}/print', [ArticleFrontController::class, 'news_print'])->name('news.front.print');
         Route::post('/news/{slug}/share', [ArticleFrontController::class, 'news_share'])->name('news.front.share');
 
@@ -70,7 +83,7 @@ Route::get('/phpinfo', function () {
 
     // Sitemap
         Route::get('/sitemap', [FrontController::class, 'sitemap'])->name('sitemap');
-        // Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
+        Route::get('/xml', [SitemapController::class, 'xml']);
     //
 
     // Portfolio
@@ -325,12 +338,12 @@ Route::group(['prefix' => 'admin-panel'], function (){
             //
 
             // News
-                Route::resource('/news', ArticleController::class)->except(['show', 'destroy']);
-                Route::get('/news-advance-search', [ArticleController::class, 'advance_index'])->name('news.index.advance-search');
-                Route::post('/news-get-slug', [ArticleController::class, 'get_slug'])->name('news.get-slug');
-                Route::post('/news-change-status', [ArticleController::class, 'change_status'])->name('news.change.status');
-                Route::post('/news-delete', [ArticleController::class, 'delete'])->name('news.delete');
-                Route::get('/news-restore/{news}', [ArticleController::class, 'restore'])->name('news.restore');
+                Route::resource('/news', NewsController::class)->except(['show', 'destroy']);
+                Route::get('/news-advance-search', [NewsController::class, 'advance_index'])->name('news.index.advance-search');
+                Route::post('/news-get-slug', [NewsController::class, 'get_slug'])->name('news.get-slug');
+                Route::post('/news-change-status', [NewsController::class, 'change_status'])->name('news.change.status');
+                Route::post('/news-delete', [NewsController::class, 'delete'])->name('news.delete');
+                Route::get('/news-restore/{news}', [NewsController::class, 'restore'])->name('news.restore');
 
                 // News Category
                 Route::resource('/news-categories', ArticleCategoryController::class)->except(['show']);;
@@ -338,7 +351,6 @@ Route::group(['prefix' => 'admin-panel'], function (){
                 Route::post('/news-categories/delete', [ArticleCategoryController::class, 'delete'])->name('news-categories.delete');
                 Route::get('/news-categories/restore/{id}', [ArticleCategoryController::class, 'restore'])->name('news-categories.restore');
             //
-
             // File Manager
                 Route::get('laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show')->name('file-manager.show');
                 Route::post('laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload')->name('unisharp.lfm.upload');

@@ -283,21 +283,40 @@ class FrontController extends Controller
 
 
     public function contact_us(Request $request)
-    {
-        // dd($request);
-        $email_recipients  = EmailRecipient::all();
-        $client = $request->all();
+{
+    $validated = $request->validate([
+        'name'     => 'required|string|max:255',
+        'email'    => 'required|email|max:255',
+        'contact'  => 'required|string|max:50',
+        'message'  => 'required|string',
+        'services' => 'nullable|string|max:255',
+        'subject'  => 'nullable|string|max:255',
+    ], [
+        'name.required'    => 'Full Name is required.',
+        'email.required'   => 'E-mail Address is required.',
+        'email.email'      => 'Please enter a valid email address.',
+        'contact.required' => 'Contact Number is required.',
+        'message.required' => 'Message is required.',
+    ]);
 
-        \Mail::to($client['email'])->send(new InquiryMail(Setting::info(), $client));
+    $settings = Setting::info();
 
-        foreach ($email_recipients as $email_recipient) {
-            \Mail::to($email_recipient->email)->send(new InquiryAdminMail(Setting::info(), $client, $email_recipient));
-        }
+    // Send confirmation to client (only if email is valid)
+    Mail::to($validated['email'])->send(new InquiryMail($settings, $validated));
 
-        session()->flash('success', 'Email sent!');
+    // Send to admins - FILTER OUT invalid/empty emails
+    $emailRecipients = EmailRecipient::query()
+        ->whereNotNull('email')
+        ->where('email', '!=', '')
+        ->get()
+        ->filter(fn ($r) => filter_var($r->email, FILTER_VALIDATE_EMAIL));
 
-        return redirect()->back();
+    foreach ($emailRecipients as $recipient) {
+        Mail::to($recipient->email)->send(new InquiryAdminMail($settings, $validated, $recipient));
     }
+
+    return back()->with('success', 'Email sent!');
+}
 
     // public function contact_us(ContactUsRequest $request)
     // {
